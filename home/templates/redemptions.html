@@ -1,0 +1,86 @@
+{% extends 'mobile_base.html' %}
+{% load none_filters %}
+{% load static %}
+{% block title %}
+    <title>兑换记录</title>
+{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'stylesheets/redepmtions.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <h3 class="text-with-red-line">兑换记录</h3>
+        </div>
+
+        <div id="records-list" class="records-list">
+        {% for item in redemption_list %}
+          <div class="record-item">
+              <img src="{{ item.prize.logo.url }}" alt="">
+              <div class="record-info">
+                <h3>龙狙</h3>
+                <p>兑换时间: {{ item.created_at }}</p>
+                <p>物流状态: {{ item.get_status_display }}</p>
+                <p>物流单号: {{ item.express_order | default_dash }}</p>
+                  <p>收货地址: <label id="address_{{ item.id }}">{{ item.shipping.full_address }}</label></p>
+                {% if item.status == 0 %}
+                  <select data-record-id="{{ item.id }}" class="dynamic-select">
+                    <option value="">请选择收货地址</option>
+                    {% for address in shipping_list %}
+                      <option value="{{ address.id }}" {% if item.shipping_id == address.id %} selected {% endif %} >
+                          {{ address.full_address }}
+                      </option>
+                    {% endfor %}
+                      <option value="add_new_shipping">添加新的收货地址</option>
+                  </select>
+               {% endif %}
+              </div>
+          </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <!-- 引入 jQuery 和 Select2 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- 初始化 Select2 -->
+<script>
+$(document).ready(function () {
+    // 获取所有 <select> 元素
+    const selectElements = $('select');
+
+    // 遍历每个 <select> 元素并初始化 Select2
+    selectElements.each(function () {
+        $(this).select2({
+            placeholder: '请选择收获地址',
+            width: '200px',
+        });
+    });
+
+    $('.dynamic-select').on('change', function () {
+        const selectedValue = $(this).val();
+        const recordId = $(this).data('record-id');
+        const full_address = $(this).find('option:selected').text();
+        if (selectedValue === 'add_new_shipping') {
+            window.location.href = '/shipping';
+        } else {
+            $('#address_' + recordId).text(full_address);
+        }
+        $.ajax({
+            url: '/set_redemption_shipping',
+            method: 'POST',
+            data: {
+                redemption_id: recordId,
+                shipping_id: selectedValue,
+            },
+            success: function (response) {
+
+            },
+        });
+    });
+});
+</script>
+{% endblock %}

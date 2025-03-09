@@ -1,0 +1,130 @@
+/* 基础样式 */
+.mobile-header {
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* 固定定位 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* 确保菜单在最上层 */
+    border-bottom: 1px solid #c8c9cc;
+    transition: background-color 0.3s ease; /* 背景色过渡效果 */
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: #000000;
+    margin-right: 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    opacity: 0; /* 初始透明度为 0 */
+    visibility: hidden; /* 初始隐藏 */
+    transition: opacity 2s ease, visibility 2s ease; /* 过渡效果 */
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    left: 0;
+}
+
+/* 菜单展开状态 */
+.mobile-menu.active {
+    opacity: 1; /* 完全不透明 */
+    visibility: visible; /* 显示 */
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+
+.mobile-menu ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 子菜单样式 */
+.submenu {
+  display: none;
+  padding-left: 20px;
+}
+
+.has-submenu:hover .submenu {
+  display: block;
+}
+
+/* 汉堡菜单 */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.hamburger-menu .bar {
+  width: 100%;
+  height: 4px;
+  background-color: #000000;
+  transition: all 0.3s ease; /* 动画效果 */
+}
+
+/* 鼠标悬停动画 */
+.hamburger-menu:hover .bar:first-child {
+  transform: translateY(7px) rotate(45deg); /* 第一条线旋转 */
+}
+
+.hamburger-menu:hover .bar:last-child {
+  transform: translateY(-7px) rotate(-45deg); /* 第二条线旋转 */
+}
+
+/* 菜单展开状态 */
+.header.menu-open {
+  height: auto; /* 调整高度 */
+}
+
+.header.menu-open .hamburger-menu .bar:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.header.menu-open .hamburger-menu .bar:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+.hidden-div {
+  visibility: hidden; /* 隐藏 div，但仍占用空间 */
+  height: 45px; /* 设置高度 */
+  background-color: #f0f0f0; /* 背景色 */
+  border: 1px solid #ccc; /* 边框 */
+  padding: 10px; /* 内边距 */
+}

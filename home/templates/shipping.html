@@ -1,0 +1,81 @@
+{% extends 'mobile_base.html' %}
+{% load static %}
+{% block title %}
+    <title>收获地址</title>
+{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'stylesheets/shipping.css' %}" />
+    <link href="{% static 'stylesheets/select2.css' %}" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <h3 class="text-with-red-line">收货地址</h3>
+            <div class="right">
+                <button class="add-btn" onclick="showModal()">新增地址</button>
+            </div>
+        </div>
+
+    <!-- 地址列表 -->
+        <div id="address-list">
+        <!-- 地址 1 -->
+            {% for item in shipping_list %}
+            <div class="address-container" data-id="{{ item.id }}">
+                <h3>{{ item.nick_name }}</h3>
+                <p>电话: {{ item.mobile }}</p>
+                <p>地址: {{ item.full_address }}</p>
+                <a style="color: #1E9FFF" onclick="editAddress({{ item.id }})">编辑</a>
+                <a style="color: #993333;text-decoration: none;" href="/delete_shipping?shipping_id={{ item.id }}">删除</a>
+                {% if item.is_default %}
+                <div class="default-marker"></div>
+                <div class="default-text">默认地址</div>
+                {% else %}
+                <a style="color: #e8962e;text-decoration: none;" href="/set_default_shipping?shipping_id={{ item.id }}">设为默认地址</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div id="modal-overlay" class="modal-overlay">
+            <div class="modal-content">
+                <h2 id="modal-title">地址管理</h2>
+                <form id="address-form">
+                    <input type="hidden" id="address-id">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="收件人" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="phone" placeholder="联系电话" maxlength="11" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="province" required>
+                            <option value="">请选择省份</option>
+                            {% for item in provinces_list %}
+                                <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="city" required><option value="">请选择城市</option></select>
+                    </div>
+                    <div class="form-group">
+                        <select id="district"><option value="">请选择区县</option></select>
+                    </div>
+                    <div class="form-group">
+                        <select id="street"><option value="">请选择街道</option></select>
+                    </div>
+                    <div class="form-group">
+                        <textarea style="width: 97%;" rows="5" id="address" placeholder="详细地址" required></textarea>
+                    </div>
+                    <button class="add-btn" type="submit">保存</button>
+                    <button class="cancel-btn" type="button" onclick="hideModal()">取消</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{%  static 'javascript/jquery-3.6.0.js' %}"></script>
+    <script src="{%  static 'javascript/select2.js' %}"></script>
+    <script src="{%  static 'javascript/shipping.js' %}"></script>
+{% endblock %}

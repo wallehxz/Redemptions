@@ -1,0 +1,297 @@
+/* 全局样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #d04a4d;
+    color: #333;
+}
+
+.container {
+    max-width: 480px;
+    margin: 5px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 头部样式 */
+.header {
+    display: flex;
+    margin-bottom: 20px;
+    .right {
+        margin-left: auto;
+        margin-top: 20px;
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+
+.text-with-red-line {
+  position: relative;
+  padding-left: 10px; /* 为文字和竖线之间提供一些间距 */
+}
+
+.text-with-red-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px; /* 竖线的宽度 */
+  height: 100%; /* 竖线的高度，可以根据需要调整 */
+  background-color: red; /* 竖线的颜色 */
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.draw-button {
+    background-color: #e04f47;
+    max-width: 480px;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.draw-button:hover {
+    background-color: #e64a19;
+}
+
+/* 兑换码样式 */
+.redeem-section {
+    margin-bottom: 20px;
+}
+
+.redeem-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.redeem-inputs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.redeem-input {
+    min-width: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+.dash {
+    font-size: 20px;
+    margin: 0 5px;
+    color: #333;
+}
+
+.redeem-button {
+    background-color: #d04a4d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+}
+.disabled-button {
+    background-color: #f7f7fb;
+    color: #d5d6dd;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* 使用说明样式 */
+.instructions {
+    margin-bottom: 20px;
+}
+
+.instructions h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.instructions ol {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* 系列活动样式 */
+.series-activities {
+    margin-bottom: 20px;
+}
+
+.series-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    .series-item {
+        flex: 1 1 calc(50% - 8px); /* 每行两个，减去间距 */
+        padding: 5px;
+        border: 1px solid #ccc;
+        text-align: center;
+        /*height: 240px;*/
+        border-radius: 10px;
+        box-sizing: border-box; /* 防止宽度溢出 */
+
+        img {
+            max-width: 100%; /* 图片宽度不超过父容器宽度 */
+            height: auto; /* 高度自适应，保持宽高比例 */
+        }
+
+        .name {
+            text-align: left;
+        }
+
+        .button {
+            text-align: right;
+        }
+
+        .view-prizes-button {
+            margin-left: auto;
+            background-color: #d04a4d;
+            color: #fff;
+            border: none;
+            padding: 1px 5px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+        .view-prizes-button:hover {
+            background-color: #1976d2;
+        }
+    }
+}
+
+/* 遮罩层 */
+.overlay {
+  display: none; /* 初始隐藏 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* 半透明背景 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 80%; /* 最大宽度 */
+  width: 100%;
+  max-height: 80vh; /* 最大高度为视口的80% */
+  overflow: hidden; /* 隐藏溢出内容 */
+}
+
+.close-btn {
+  font-size: 24px;
+  cursor: pointer;
+  float: right;
+}
+
+.close-btn:hover {
+  color: #ff0000;
+}
+
+#series-title {
+  margin-top: 0;
+}
+
+/* 奖品容器 */
+.prize-container {
+  width: 100%;
+  overflow-x: auto; /* 横向滚动 */
+  white-space: nowrap; /* 防止换行 */
+  margin-top: 20px;
+}
+
+/* 奖品列表 */
+.prize-list {
+  display: inline-flex; /* 横向排列 */
+  gap: 20px; /* 奖品之间的间距 */
+}
+
+/* 奖品卡片 */
+.prize-item {
+  display: inline-block;
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.prize-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.prize-item h3 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+}
+
+.prize-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 通知容器 */
+.notification {
+    position: fixed;
+    top: 75px;
+    right: -250px;
+    color: white; /* 文字颜色 */
+    padding: 1px 30px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 180px;
+    opacity: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.5s ease, opacity 1.5s ease; /* 动画效果 */
+}
+
+/* 显示通知 */
+.notification.show {
+    right: 10px;
+    opacity: 1;
+}
+
+.notification.success {
+    background-color: #4CAF50;
+}
+
+.notification.warning {
+    background-color: #e8962e;
+}
+
+.notification.error {
+    background-color: #AA3130;
+}

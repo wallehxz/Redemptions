@@ -1,0 +1,82 @@
+{% extends 'mobile_base.html' %}
+{% load static %}
+{% block title %}
+    <title>首页</title>
+{% endblock %}
+
+{% block body %}
+    <div id="notification" class="notification">
+        <p id="message">这是一个通知提示信息！</p>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h3 class="text-with-red-line">抽奖码</h3>
+        </div>
+
+        <div class="redeem-section">
+            <div class="redeem-inputs">
+                <input type="text" class="redeem-input" maxlength="4" placeholder="AAAA" oninput="this.value = this.value.toUpperCase()">
+                <span class="dash">-</span>
+                <input type="text" class="redeem-input" maxlength="4" placeholder="BBBB" oninput="this.value = this.value.toUpperCase()">
+                <span class="dash">-</span>
+                <input type="text" class="redeem-input" maxlength="4" placeholder="CCCC" oninput="this.value = this.value.toUpperCase()">
+                <span class="dash">-</span>
+                <input type="text" class="redeem-input" maxlength="4" placeholder="DDDD" oninput="this.value = this.value.toUpperCase()">
+            </div>
+            {% if user.is_authenticated %}
+                <button class="redeem-button" onclick="redemption()">立即抽奖</button>
+            {% else %}
+                <button class="disabled-button" disabled>登录抽奖</button>
+            {% endif %}
+        </div>
+        <hr style="border: none; height: 1px; background-color: #d3d3d3;">
+        <div class="instructions">
+            <h2>使用说明</h2>
+            <ol>
+                <li>线下购买福赏系列产品可参与「超级福中福」专属活动，在线下商铺每购买一抽福赏可获得一个「超级福中福」兑换码。</li>
+                <li>请输入「超级福中福」兑换码，每个兑换码仅可兑换一次，使用后将失效。兑换码有时效性，获得后请及时输入兑换。</li>
+                <li>兑换成功的商品请前往「个人中心」查看。</li>
+                <li>「超级福中福」的奖品为活动商品，不享受平台包邮规则，需自行支付邮费。</li>
+            </ol>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 10px;">
+        <div class="header">
+            <div class="left">
+                <h2 class="text-with-red-line">系列活动</h2>
+            </div>
+        </div>
+        <div class="series-activities">
+            <div class="series-list">
+                {% for item in series %}
+                	<div class="series-item">
+                        <div class="picture"></div>
+                            <img src="{{ item.logo.url }}"  alt=""/>
+                        <div class="name">
+                            {{ item.name }}
+                        </div>
+                        <div class="button">
+                            <button class="view-prizes-button" onclick="showPrizes({{ item.id }})">查看奖品</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+      <span id="close-btn" class="close-btn">&times;</span>
+      <h2 id="series-title">系列奖品</h2>
+      <div class="prize-container">
+        <div class="prize-list">
+          <!-- 奖品内容动态加载 -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'javascript/home_index.js' %}"></script>
+{% endblock %}

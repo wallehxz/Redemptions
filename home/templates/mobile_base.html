@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>超级福中福抽奖活动</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'stylesheets/home_index.css' %}">
+    <link rel="stylesheet" href="{% static 'stylesheets/header_menu.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
+    {% block stylesheet %}
+    {% endblock %}
+</head>
+<body>
+    <header class="mobile-header">
+        <div class="menu-container">
+            <img style="width: 30px" src="{% static 'images/logo.png' %}" alt="user">
+            <div class="user-status">
+                {% if user.is_authenticated %}
+                    Welcome, {{ user.mobile }}
+                {% else %}
+                    <a style="text-decoration: none;color: #000b16" href="/sign_in">请登录</a>
+                {% endif %}
+            </div>
+          </div>
+        <button class="menu-toggle" aria-label="打开菜单">
+             <div class="hamburger-menu" id="hamburger-menu">
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+        </button>
+        <nav class="mobile-menu">
+            <ul>
+            {% if user.is_authenticated %}
+              <li><a href="/">首页</a></li>
+              <li><a href="/redemptions">兑换记录</a></li>
+              <li><a href="/shipping">收货地址</a></li>
+              <li><a href="/account/logout" data-metho>注销登出</a></li>
+            {% else %}
+                <p>请使用手机号登录</p>
+            {% endif %}
+            </ul>
+          </nav>
+    </header>
+    <div class="hidden-div"></div>
+    {% block body %}
+    {% endblock %}
+    <script src="{% static 'javascript/header_menu.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>
