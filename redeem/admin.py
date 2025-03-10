@@ -6,9 +6,6 @@ from openpyxl.styles import Alignment,Font,PatternFill
 from datetime import datetime
 from .models import Redeem, Redemption
 
-def prize_list():
-    return Redeem.prize_list()
-
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
     list_display = ('number', 'prize', 'series_name','status', 'created_at')
@@ -124,7 +121,7 @@ class RedeemAdmin(AjaxAdmin):
             'size': 'small',
             'value': '',
             'require': True,
-            'options': prize_list(),
+            'options': Redeem.prize_list(),
         }]
     }
 

@@ -4,17 +4,17 @@
 
 ## 安装依赖库 
 
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
 
 ## 迁移数据库
-    python manage.py makemigrations
-    python manage.py migrate
+    python3.10 manage.py makemigrations
+    python3.10 manage.py migrate
 
 ## 添加管理员
 
-    python manage.py createsuperuser root
+    python3.10 manage.py createsuperuser root
 
 ## 启动项目
 
-    python manage.py runserver
+    python3.10 manage.py runserver
 
