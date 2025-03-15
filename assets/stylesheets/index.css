@@ -733,6 +733,7 @@
 .prize-list {
   display: inline-flex; /* 横向排列 */
   gap: 20px; /* 奖品之间的间距 */
+  padding: 25px;
 }
 
 /* 奖品卡片 */
