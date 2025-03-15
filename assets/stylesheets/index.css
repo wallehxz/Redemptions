@@ -220,8 +220,7 @@
 
 .box_series {
   min-height: 436px;
-  background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngc18b0ab89bde161b78407e947ae36cc05768a4fc40c6ddd820cc64ee632297f4)
-    100% no-repeat;
+  background: url('/assets/images/background.png') 100% no-repeat;
   background-size: 100% 100%;
   width: 351px;
   margin: 10px 0 12px 12px;
