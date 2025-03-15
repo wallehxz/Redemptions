@@ -6,6 +6,16 @@ from openpyxl.styles import Alignment,Font,PatternFill
 from datetime import datetime
 from .models import Redeem, Redemption
 
+
+def all_prizes():
+    from series.models import Prize
+    obj_list = Prize.objects.all()
+    prize_list = []
+    for obj in obj_list:
+        prize_list.append({'key': obj.id, 'label': f"{obj.series.name}-{obj.name}"})
+    return prize_list
+
+
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
     list_display = ('number', 'prize', 'series_name','status', 'created_at')
@@ -121,12 +131,16 @@ class RedeemAdmin(AjaxAdmin):
             'size': 'small',
             'value': '',
             'require': True,
-            'options': Redeem.prize_list(),
+            'options': all_prizes(),
         }]
     }
 
 @admin.register(Redemption)
 class RedemptionAdmin(admin.ModelAdmin):
-    list_display = ('prize','redeem','consumer', 'shipping', 'express_order','status', 'created_at')
-    fields = ('prize','redeem', 'consumer', 'shipping', 'express_order','status')
+    list_display = ('prize','redeem','consumer', 'shipping','status','express_info', 'created_at')
+    fields = ('prize','redeem', 'consumer', 'shipping','express_name', 'express_order','status')
+
+    def express_info(self,obj):
+        return f'{obj.express_name}-{obj.express_order}'
+    express_info.short_description = '快递信息'
 # Register your models here.

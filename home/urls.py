@@ -12,4 +12,6 @@ urlpatterns = [
     path('set_default_shipping', views.set_default_shipping, name='set_default_shipping'),
     path('delete_shipping', views.delete_shipping, name='delete_shipping'),
     path('set_redemption_shipping', views.set_redemption_shipping, name='set_redemption_shipping'),
+    path('redemptions/show/<int:id>', views.show_redemption, name='show_redemption'),
+    path('shipping/new', views.new_shipping, name='new_shipping'),
 ]

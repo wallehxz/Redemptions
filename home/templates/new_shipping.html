@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>新增地址</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/shipping_new.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/select2.css' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <form id="address-form">
+        <input type="hidden" id="redemption_id" value="{{ redemption_id }}">
+        <div class="block_1 flex-col justify-end">
+        <textarea id="fullAddress" class="text-wrapper_1 flex-col"
+                  placeholder="粘贴或输入完整地址                   例如：张三 13533339999 江苏省扬州市广陵区XX小区X楼xxx室"></textarea>
+        <div class="group_1 flex-col">
+            <div class="text-wrapper_6 flex-row justify-between">
+                <span class="text_2">收货人</span>
+                <input id="name" class="text_3" placeholder="姓名" required>
+            </div>
+            <img
+                    class="image_2"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/form_underline.png' %}"
+            />
+            <div class="text-wrapper_7 flex-row justify-between">
+                <span class="text_4">联系方式</span>
+                <input id="phone" class="text_5" maxlength="11" placeholder="手机号" required>
+            </div>
+            <img
+                    class="image_3"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/form_underline.png' %}"
+            />
+            <div class="section_2 flex-row justify-between">
+                <span class="text_6">选择地区</span>
+                <div class="province_select">
+                    <select id="province">
+                        <option value="">请选择省份</option>
+                        {% for item in provinces_list %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form_group" id="city_group" style="display: none">
+                        <select id="city" style="display: none">
+                            <option value="">请选择城市</option>
+                        </select>
+                    </div>
+                    <div class="form_group" id="district_group" style="display: none">
+                        <select id="district">
+                            <option value="">请选择区县</option>
+                        </select>
+                    </div>
+                    <div class="form_group" id="street_group" style="display: none">
+                        <select id="street">
+                            <option value="">请选择街道</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <img
+                    class="image_4"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/form_underline.png' %}"
+            />
+            <div class="text-wrapper_8 flex-row justify-between">
+                <span class="text_7">详细地址</span>
+                <textarea class="text_8" placeholder="小区楼栋" id="address" required></textarea>
+            </div>
+        </div>
+        <div class="group_2 flex-row justify-between">
+            <div class="text-group_3 flex-col justify-between">
+                <span class="text_9">设为默认</span>
+                <span class="text_10">系统自动发货时默认使用该地址</span>
+            </div>
+            <label class="custom-checkbox">
+              <input type="checkbox" name="is_default" id="set_default">
+              <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="group_3 flex-row">
+            <div class="image-text_2 flex-row justify-between">
+                <img
+                        class="thumbnail_2"
+                        referrerpolicy="no-referrer"
+                        src="{% static 'images/wechat.png' %}"
+                />
+                <span class="text-group_2">一键获取收货地址</span>
+            </div>
+        </div>
+        <div class="group_4 flex-col">
+            <div class="text-wrapper_5 flex-col">
+                <button type="submit" class="text_11">保存</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'javascript/select2.js' %}"></script>
+<script src="{% static 'javascript/shipping.js' %}"></script>
+<script>
+    document.getElementById('fullAddress').addEventListener('input', function () {
+        const fullAddress = this.value.trim(); // 获取完整地址
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
+
+        // 正则表达式匹配
+        const regex = /^(.*?)\s+(\d{11})\s+(.*)$/; // 匹配格式：收件人 手机号 地址
+        const match = fullAddress.match(regex);
+
+        if (match) {
+            const name = match[1]; // 收件人
+            const phone = match[2]; // 手机号
+            const address = match[3]; // 详细地址
+
+            // 填充到对应的输入框
+            nameInput.value = name;
+            phoneInput.value = phone;
+            addressInput.value = address;
+        } else {
+            // 如果格式不匹配，清空输入框
+            nameInput.value = '';
+            phoneInput.value = '';
+            addressInput.value = '';
+        }
+    });
+</script>
+</body>
+</html>

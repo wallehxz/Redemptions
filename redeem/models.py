@@ -46,18 +46,30 @@ class Redeem(models.Model):
         return prize_list
 
 
-
 class Redemption(models.Model):
     STATUS = (
         (0, '未发货'),
         (1, '已发货'),
         (2, '已收货')
     )
+    EXPRESS = (
+        ('顺丰速运', '顺丰速运'),
+        ('京东物流', '京东物流'),
+        ('中通快递', '中通快递'),
+        ('圆通速递', '圆通速递'),
+        ('申通快递', '申通快递'),
+        ('韵达快递', '韵达快递'),
+        ('百世快递', '百世快递'),
+        ('邮政快递', '邮政快递'),
+        ('德邦快递', '德邦快递'),
+        ('极兔速递', '极兔速递'),
+    )
     redeem = models.OneToOneField(Redeem, on_delete=models.CASCADE, related_name='redemption',verbose_name='兑换码')
     consumer = models.ForeignKey(Consumer, on_delete=models.SET_NULL, null=True, related_name='redemptions', verbose_name='用户')
-    shipping = models.ForeignKey(Shipping, on_delete=models.SET_NULL, null=True, related_name='shipping', verbose_name='收货地址')
+    shipping = models.ForeignKey(Shipping, on_delete=models.SET_NULL, null=True, blank=True,related_name='shipping', verbose_name='收货地址')
     prize = models.ForeignKey(Prize, on_delete=models.SET_NULL,null=True,related_name='redemptions', verbose_name='奖品')
-    express_order = models.CharField(max_length=30, null=True, blank=True, verbose_name='快递单号')
+    express_order = models.CharField(max_length=100, null=True, blank=True, verbose_name='快递单号')
+    express_name = models.CharField(max_length=50, choices=EXPRESS, null=True, blank=True, verbose_name='快递公司')
     status = models.SmallIntegerField(choices=STATUS, default=0, verbose_name='状态')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')

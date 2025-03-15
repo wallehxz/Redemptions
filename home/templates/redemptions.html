@@ -1,86 +1,137 @@
-{% extends 'mobile_base.html' %}
-{% load none_filters %}
 {% load static %}
-{% block title %}
-    <title>兑换记录</title>
-{% endblock %}
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'stylesheets/redepmtions.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-{% endblock %}
-{% block body %}
-    <div class="container">
-        <div class="header">
-            <h3 class="text-with-red-line">兑换记录</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>中奖记录</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/redeem_shipping.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link href="{% static 'stylesheets/select2.css' %}" rel="stylesheet" />
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu" href="/">首页</a>
+                <a class="text_menu active">中奖记录</a>
+                <a class="text_menu" href="{% url 'shipping' %}">收货地址</a>
+            </div>
         </div>
-
-        <div id="records-list" class="records-list">
-        {% for item in redemption_list %}
-          <div class="record-item">
-              <img src="{{ item.prize.logo.url }}" alt="">
-              <div class="record-info">
-                <h3>龙狙</h3>
-                <p>兑换时间: {{ item.created_at }}</p>
-                <p>物流状态: {{ item.get_status_display }}</p>
-                <p>物流单号: {{ item.express_order | default_dash }}</p>
-                  <p>收货地址: <label id="address_{{ item.id }}">{{ item.shipping.full_address }}</label></p>
-                {% if item.status == 0 %}
-                  <select data-record-id="{{ item.id }}" class="dynamic-select">
-                    <option value="">请选择收货地址</option>
-                    {% for address in shipping_list %}
-                      <option value="{{ address.id }}" {% if item.shipping_id == address.id %} selected {% endif %} >
-                          {{ address.full_address }}
-                      </option>
-                    {% endfor %}
-                      <option value="add_new_shipping">添加新的收货地址</option>
-                  </select>
-               {% endif %}
-              </div>
-          </div>
-        {% endfor %}
+        {% if redemption_list.count > 0 %}
+        <div class="box_redemptions flex-col">
+            {% for item in redemption_list %}
+            <div class="box_redemption_list flex-col">
+                <div class="box_redeem flex-row justify-between">
+                    <div class="box_redeem_prize flex-row justify-between">
+                        <img class="prize_img flex-col"
+                             src="{{ item.prize.logo.url }}"></img>
+                        <div class="prize_info flex-col justify-between">
+                            <span class="prize_name">{{ item.prize.name }}</span>
+                            <span class="redemption_info">{{ item.redeem.number }}</span>
+                            <span class="redemption_info">{{ item.created_at }}</span>
+                        </div>
+                    </div>
+                    <a href="/redemptions/show/{{ item.id }}">
+                        <img class="right_arrow" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                    </a>
+                </div>
+                <div class="logistics_info flex-row">
+                    <div class="logistics_img flex-row justify-between">
+                        <img
+                                class="logistics_truck"
+                                referrerpolicy="no-referrer"
+                                src="{% static 'images/logistics_truck.png' %}"
+                        />
+                        <span class="logistics_title">物流信息</span>
+                    </div>
+                    {% if item.shipping_id %}
+                        {% if item.express_order  %}
+                            <span class="logistics_status">{{ item.express_name }}&nbsp;{{ item.express_order }}</span>
+                            <span class="logistics_action" onclick="copyToClipboard('{{ item.express_order }}')">复制</span>
+                        {% else %}
+                            <span class="logistics_status">{{ item.get_status_display }}</span>
+                        {% endif %}
+                    {% else %}
+                        {% if shipping_list.count > 0 %}
+                            <div class="dynamic-select">
+                                <select data-record-id="{{ item.id }}" class="select_shipping">
+                                    <option value="">请选择收货地址</option>
+                                    {% for address in shipping_list %}
+                                        <option value="{{ address.id }}" {% if item.shipping_id == address.id %}
+                                                selected {% endif %} >
+                                            {{ address.full_address }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <span class="logistics_status">未填写收货地址</span>
+                            <a class="logistics_action add_shipping" href="/shipping/new?redemption_id={{ item.id }}">添加收货地址</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="no_redemption flex-col justify-between">
+            <img
+                    class="no_img"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/blank_redemptions.png' %}"
+            />
+            <span class="no_title">暂无中奖记录</span>
+        </div>
+        </div>
+        {% endif %}
     </div>
-{% endblock %}
-{% block script %}
-    <!-- 引入 jQuery 和 Select2 JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<!-- 初始化 Select2 -->
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'javascript/select2.js' %}"></script>
 <script>
-$(document).ready(function () {
-    // 获取所有 <select> 元素
-    const selectElements = $('select');
+    function copyToClipboard(text) {
+        // 使用 Clipboard API 复制内容
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert('物流单号: ' + text);
+            })
+            .catch((err) => {
+                console.error('复制失败: ', err);
+            });
+    }
 
-    // 遍历每个 <select> 元素并初始化 Select2
-    selectElements.each(function () {
-        $(this).select2({
-            placeholder: '请选择收获地址',
-            width: '200px',
+    $(document).ready(function () {
+        // 获取所有 <select> 元素
+        const selectElements = $('select');
+
+        // 遍历每个 <select> 元素并初始化 Select2
+        selectElements.each(function () {
+            $(this).select2({
+                placeholder: '请选择收货地址',
+                width: '230px',
+            });
+        });
+
+        $('.select_shipping').on('change', function () {
+            const selectedValue = $(this).val();
+            const recordId = $(this).data('record-id');
+            if (selectedValue) {
+                $.ajax({
+                    url: '/set_redemption_shipping',
+                    method: 'POST',
+                    data: {
+                        redemption_id: recordId,
+                        shipping_id: selectedValue,
+                    },
+                    success: function (response) {
+
+                    },
+                });
+                window.location.reload();
+            }
         });
     });
-
-    $('.dynamic-select').on('change', function () {
-        const selectedValue = $(this).val();
-        const recordId = $(this).data('record-id');
-        const full_address = $(this).find('option:selected').text();
-        if (selectedValue === 'add_new_shipping') {
-            window.location.href = '/shipping';
-        } else {
-            $('#address_' + recordId).text(full_address);
-        }
-        $.ajax({
-            url: '/set_redemption_shipping',
-            method: 'POST',
-            data: {
-                redemption_id: recordId,
-                shipping_id: selectedValue,
-            },
-            success: function (response) {
-
-            },
-        });
-    });
-});
 </script>
-{% endblock %}
+</body>
+</html>

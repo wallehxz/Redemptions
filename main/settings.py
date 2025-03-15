@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#!@f04+*5ct8^nm+$xpm8o=zs-g7=cswtcyt^)-(-d@=e8d3c-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,8 +141,12 @@ SIMPLEUI_FAVICON = '/assets/images/logo.png'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/assets/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+STATICFILES_DIRS = [
+    BASE_DIR / "assets",  # 确保你的静态文件存放在这里
+]
 
 AUTH_USER_MODEL = 'account.Consumer'
 SIMPLEUI_STATIC_OFFLINE = True

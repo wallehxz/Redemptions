@@ -1,0 +1,361 @@
+.page {
+    background-color: rgba(255, 255, 255, 1);
+    position: relative;
+    width: 375px;
+}
+
+.image_1 {
+    width: 375px;
+    height: 87px;
+}
+
+.block_1 {
+    background-color: rgba(247, 247, 247, 1);
+    width: 375px;
+}
+
+.text-wrapper_1 {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    height: 120px;
+    width: 351px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    margin: 12px 0 0 12px;
+}
+
+.text_1 {
+    width: 126px;
+    height: 20px;
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+    margin: 12px 0 0 12px;
+}
+
+.group_1 {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    width: 351px;
+    margin: 12px 0 0 12px;
+}
+
+.text-wrapper_6 {
+    width: 300px;
+    height: 21px;
+    margin: 15px 0 0 12px;
+}
+
+.text_2 {
+    width: 60px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_3 {
+    border: none;
+    outline: none;
+    width: 230px;
+    height: 25px;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.image_2 {
+    width: 327px;
+    height: 1px;
+    margin: 14px 0 0 12px;
+}
+
+.text-wrapper_7 {
+    width: 300px;
+    height: 21px;
+    margin: 15px 0 0 12px;
+}
+
+.text_4 {
+    width: 60px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_5 {
+    border: none;
+    outline: none;
+    width: 230px;
+    height: 25px;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.image_3 {
+    width: 327px;
+    height: 1px;
+    margin: 14px 0 0 12px;
+}
+
+.section_2 {
+    width: 310px;
+    margin: 15px 0 0 12px;
+}
+
+.text_6 {
+    width: 60px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.province_select {
+    width: 240px;
+}
+
+.form_group {
+    width: 240px;
+    margin-top: 10px;
+}
+
+.thumbnail_1 {
+    width: 6px;
+    height: 10px;
+    margin-top: 5px;
+}
+
+.image_4 {
+    width: 327px;
+    height: 1px;
+    margin: 14px 0 0 12px;
+}
+
+.text-wrapper_8 {
+    width: 320px;
+    height: 21px;
+    margin: 11px 0 88px 12px;
+}
+
+.text_7 {
+    width: 60px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_8 {
+    border: none;
+    outline: none;
+    width: 245px;
+    height: 105px;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    line-height: 21px;
+}
+
+.group_2 {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    width: 351px;
+    height: 64px;
+    margin: 10px 0 0 10px;
+}
+
+.text-group_3 {
+    width: 168px;
+    height: 40px;
+    margin: 12px 0 0 12px;
+}
+
+.text_9 {
+    width: 60px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_10 {
+    width: 168px;
+    height: 17px;
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin-top: 2px;
+}
+
+.image_5 {
+    width: 51px;
+    height: 31px;
+    margin: 17px 12px 0 0;
+}
+
+.group_3 {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    width: 351px;
+    height: 50px;
+    margin: 10px 0 0 10px;
+}
+
+.image-text_2 {
+    width: 150px;
+    height: 21px;
+    margin: 15px 0 0 103px;
+}
+
+.thumbnail_2 {
+    width: 20px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.text-group_2 {
+    width: 120px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.group_4 {
+    background-color: rgba(255, 255, 255, 1);
+    height: 64px;
+    margin-top: 10px;
+    width: 375px;
+}
+
+.text-wrapper_5 {
+    background-color: rgba(213, 48, 47, 1);
+    border-radius: 21px;
+    height: 40px;
+    width: 351px;
+    margin: 12px 0 0 13px;
+}
+
+.text_11 {
+    width: 30px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(255, 255, 255, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+    margin: 10px 0 0 161px;
+}
+
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    margin-top: 20px;
+    margin-right: 10px;
+    padding-left: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+    background-color: #ddd;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #AA3130;
+    border-color: #2196F3;
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkmark::after {
+    display: block;
+}

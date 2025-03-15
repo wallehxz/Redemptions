@@ -1,10 +1,11 @@
 // 获取所有输入框
-const inputs = document.querySelectorAll('.redeem-input');
+const inputs = document.querySelectorAll('.redeem_input.flex-col');
 
 // 为每个输入框添加事件监听
 inputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
         // 限制输入长度为 4
+        e.target.value = e.target.value.toUpperCase();
         if (e.target.value.length > 4) {
             e.target.value = e.target.value.slice(0, 4);
         }
@@ -58,7 +59,7 @@ function showPrizes(seriesId) {
         const prizeItem = document.createElement('div');
         prizeItem.classList.add('prize-item');
         prizeItem.innerHTML = `
-          <div style="width: 300px;height: 300px;"><img src="${prize.image}" alt="${prize.name}"></div>
+          <div><img src="${prize.image}" alt="${prize.name}"></div>
           <h2>${prize.name}</h2>
           <p>${prize.description}</p>
         `;
@@ -128,4 +129,20 @@ function showNotification(message, type='success') {
     setTimeout(() => {
     notification.classList.remove('show');
     }, 3000); // 5000 毫秒 = 5 秒
+}
+
+const desc_overlay = document.getElementById('desc_overlay');
+const desc_close = document.getElementById('desc_close');
+desc_overlay.addEventListener('click', (e) => {
+    if (e.target === desc_overlay) {
+        desc_overlay.style.display = 'none';
+    }
+});
+
+desc_close.addEventListener('click', (e) => {
+    desc_overlay.style.display = 'none';
+});
+
+function showDesc(){
+    desc_overlay.style.display = 'flex';
 }

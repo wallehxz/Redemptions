@@ -1,81 +1,74 @@
-{% extends 'mobile_base.html' %}
 {% load static %}
-{% block title %}
-    <title>收获地址</title>
-{% endblock %}
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'stylesheets/shipping.css' %}" />
-    <link href="{% static 'stylesheets/select2.css' %}" rel="stylesheet" />
-{% endblock %}
-{% block body %}
-    <div class="container">
-        <div class="header">
-            <h3 class="text-with-red-line">收货地址</h3>
-            <div class="right">
-                <button class="add-btn" onclick="showModal()">新增地址</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>收货地址</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/redeem_shipping.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu" href="/">首页</a>
+                <a class="text_menu" href="{% url 'redemptions' %}">中奖记录</a>
+                <a class="text_menu active">收货地址</a>
             </div>
         </div>
-
-    <!-- 地址列表 -->
-        <div id="address-list">
-        <!-- 地址 1 -->
+        {% if shipping_list.count > 0 %}
+        <div class="box_shipping flex-col">
             {% for item in shipping_list %}
-            <div class="address-container" data-id="{{ item.id }}">
-                <h3>{{ item.nick_name }}</h3>
-                <p>电话: {{ item.mobile }}</p>
-                <p>地址: {{ item.full_address }}</p>
-                <a style="color: #1E9FFF" onclick="editAddress({{ item.id }})">编辑</a>
-                <a style="color: #993333;text-decoration: none;" href="/delete_shipping?shipping_id={{ item.id }}">删除</a>
-                {% if item.is_default %}
-                <div class="default-marker"></div>
-                <div class="default-text">默认地址</div>
-                {% else %}
-                <a style="color: #e8962e;text-decoration: none;" href="/set_default_shipping?shipping_id={{ item.id }}">设为默认地址</a>
-                {% endif %}
+            <div class="box_shipping_list flex-col">
+                <div class="box_shipping_item">
+                    <div class="shipping_infos">
+                        <span class="shipping_name">收件姓名:</span>
+                        <span class="shipping_title">{{ item.nick_name }}</span>
+                    </div>
+                    <div class="shipping_infos">
+                        <span class="shipping_name">联系方式:</span>
+                        <span class="shipping_title">{{ item.mobile }}</span>
+                    </div>
+                    <div class="shipping_infos">
+                        <span class="shipping_name">详细地址:</span>
+                        <span class="shipping_address">{{ item.full_address }}</span>
+                    </div>
+                    {% if item.is_default %}
+                        <div class="default-marker"></div>
+                        <div class="default-text">默认地址</div>
+                    {% endif %}
+                </div>
+                <div class="shipping_actions">
+                    {% if not item.is_default %}
+                    <a style="color: #e8962e;text-decoration: none;"
+                           href="/set_default_shipping?shipping_id={{ item.id }}">设为默认地址</a>
+                    {% endif %}
+                    <a style="color: #993333;text-decoration: none;"
+                       href="/delete_shipping?shipping_id={{ item.id }}">删除</a>
+                </div>
             </div>
             {% endfor %}
         </div>
-        <div id="modal-overlay" class="modal-overlay">
-            <div class="modal-content">
-                <h2 id="modal-title">地址管理</h2>
-                <form id="address-form">
-                    <input type="hidden" id="address-id">
-                    <div class="form-group">
-                        <input type="text" id="name" placeholder="收件人" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="phone" placeholder="联系电话" maxlength="11" required>
-                    </div>
-                    <div class="form-group">
-                        <select id="province" required>
-                            <option value="">请选择省份</option>
-                            {% for item in provinces_list %}
-                                <option value="{{ item.id }}">{{ item.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="city" required><option value="">请选择城市</option></select>
-                    </div>
-                    <div class="form-group">
-                        <select id="district"><option value="">请选择区县</option></select>
-                    </div>
-                    <div class="form-group">
-                        <select id="street"><option value="">请选择街道</option></select>
-                    </div>
-                    <div class="form-group">
-                        <textarea style="width: 97%;" rows="5" id="address" placeholder="详细地址" required></textarea>
-                    </div>
-                    <button class="add-btn" type="submit">保存</button>
-                    <button class="cancel-btn" type="button" onclick="hideModal()">取消</button>
-                </form>
-            </div>
+        {% else %}
+        <div class="no_redemption flex-col justify-between">
+            <img
+                    class="no_img"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/blank_redemptions.png' %}"
+            />
+            <span class="no_title">暂无收货地址</span>
+        </div>
+        </div>
+        {% endif %}
+        <div class="hidden-div"></div>
+        <div class="box_add_shipping">
+          <div class="text-wrapper_7">
+            <a class="text_16" href="/shipping/new">填写收货地址</a>
+          </div>
         </div>
     </div>
-{% endblock %}
-
-{% block script %}
-    <script src="{%  static 'javascript/jquery-3.6.0.js' %}"></script>
-    <script src="{%  static 'javascript/select2.js' %}"></script>
-    <script src="{%  static 'javascript/shipping.js' %}"></script>
-{% endblock %}
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

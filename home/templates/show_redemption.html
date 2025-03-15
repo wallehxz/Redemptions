@@ -1,0 +1,91 @@
+{% load static %}
+{% load none_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>中奖详情</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/redemption_show.css' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_1 flex-col">
+        <div class="group_1 flex-col"></div>
+    </div>
+    <div class="box_2 flex-row">
+        <div class="block_1 flex-col">
+            <span class="text_1">抽奖成功</span>
+            <div class="group_4 flex-row">
+                <span class="text_2">兑换奖项:</span>
+                <img class="group_3 flex-col" src="{{ redemption.prize.logo.url }}">
+                <span class="text_3">{{ redemption.prize.name }}</span>
+            </div>
+            <div class="text-wrapper_8 flex-row justify-between">
+                <span class="text_4">兑换码:</span>
+                <span class="text_5">{{ redemption.redeem.number }}</span>
+            </div>
+            <div class="text-wrapper_9 flex-row justify-between">
+                <span class="text_6">兑换时间:</span>
+                <span class="text_7">{{ redemption.created_at }}</span>
+            </div>
+            <img
+                    class="image_2"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/header_underline.png' %}"
+            />
+            <div class="text-wrapper_10 flex-row justify-between">
+                <span class="text_8">收货人:</span> <span class="text_9">{{ redemption.shipping.nick_name | default:'--' }}</span>
+            </div>
+            <div class="text-wrapper_11 flex-row justify-between">
+                <span class="text_10">联系方式：</span>
+                <span class="text_11">{{ redemption.shipping.mobile | default:'--'}}</span>
+            </div>
+            <div class="text-wrapper_12 flex-row justify-between">
+                <span class="text_12">收货地址:</span>
+                <span class="text_13">{{ redemption.shipping.full_address | default:'--'}}</span>
+            </div>
+            <div class="text-wrapper_13 flex-row justify-between">
+                <span class="text_14">物流信息:</span>
+                {% if redemption.shipping is None %}
+                    <span class="text_15">--</span>
+                {% else %}
+                    {% if redemption.express_order is None %}
+                        <span class="text_15">{{ redemption.get_status_display }}</span>
+                    {% else %}
+                        <span class="text_15">圆通速递 {{ redemption.express_order }}</span>
+                        <span class="text_17" onclick="copyToClipboard('{{ redemption.express_order }}')">复制</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <img
+                    class="label_1"
+                    referrerpolicy="no-referrer"
+                    src="{% static 'images/ok_checked.png' %}"
+            />
+        </div>
+        {% if redemption.shipping_id is None %}
+            <div class="box_4 flex-col">
+                <div class="text-wrapper_7 flex-col">
+                    <a class="text_16" href="/shipping/new?redemption_id={{ redemption.id }}">填写收货地址</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+<script>
+    function copyToClipboard(text) {
+        // 使用 Clipboard API 复制内容
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert('物流单号: ' + text);
+            })
+            .catch((err) => {
+                console.error('复制失败: ', err);
+            });
+    }
+</script>
+</body>
+</html>

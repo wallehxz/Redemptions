@@ -1,4 +1,5 @@
 .venv
 *.py[cod]
+*.DS_Store
 media/*
 __pycache__/

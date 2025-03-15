@@ -42,9 +42,9 @@ class Shipping(models.Model):
     is_default = models.BooleanField(default=False, verbose_name='是否默认')
     nick_name = models.CharField(max_length=100, verbose_name='真实姓名')
     mobile = models.CharField(max_length=11, verbose_name='联系手机')
-    province = models.CharField(max_length=30, verbose_name='省份')
-    city = models.CharField(max_length=30, verbose_name='城市')
-    district = models.CharField(max_length=30, verbose_name='地区')
+    province = models.CharField(max_length=30, null=True, blank=True,verbose_name='省份')
+    city = models.CharField(max_length=30, null=True, blank=True,verbose_name='城市')
+    district = models.CharField(max_length=30, null=True, blank=True,verbose_name='地区')
     street = models.CharField(max_length=30,null=True, blank=True,verbose_name='街道')
     address = models.CharField(max_length=200, verbose_name='详细地址')
 

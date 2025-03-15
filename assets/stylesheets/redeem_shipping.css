@@ -1,0 +1,335 @@
+.page {
+    background-color: rgba(255, 255, 255, 1);
+    position: relative;
+    width: 375px;
+    overflow: hidden;
+}
+
+.box_container {
+    background-color: rgba(247, 247, 247, 1);
+    width: 375px;
+    /*min-height: 100vh;*/
+}
+
+.box_navigation {
+    background-color: rgba(255, 255, 255, 1);
+    height: 44px;
+    width: 375px;
+}
+
+.menu-wrapper {
+    width: 263px;
+    height: 21px;
+    margin: 12px 0 0 49px;
+}
+
+.text_menu {
+    width: 90px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFang-SC-Regular, serif;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 21px;
+    text-decoration: none;
+}
+
+.active {
+    position: relative;
+    font-weight: 600;
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    left: 30%;
+    bottom: -5px;
+    width: 30px;
+    height: 4px;
+    background-color: black;
+}
+
+.box_redemptions {
+    width: 375px;
+    /*height: 404px;*/
+    margin-top: 4px;
+}
+
+.box_redemption_list {
+    background-color: rgba(255, 255, 255, 1);
+    width: 375px;
+    height: 132px;
+    margin-bottom: 4px;
+}
+
+.box_redeem {
+    width: 351px;
+    height: 60px;
+    margin: 12px 0 0 12px;
+}
+
+.box_redeem_prize {
+    width: 226px;
+    height: 60px;
+}
+
+.prize_img {
+    border-radius: 4px;
+    width: 60px;
+    height: 60px;
+}
+
+.prize_info {
+    width: 154px;
+    height: 59px;
+    margin-top: 1px;
+}
+
+.prize_name {
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.redemption_info {
+    height: 17px;
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin-top: 2px;
+}
+
+.right_arrow {
+    width: 6px;
+    height: 10px;
+    margin-top: 6px;
+}
+
+.logistics_info {
+    background-color: rgba(247, 247, 247, 1);
+    border-radius: 4px;
+    width: 351px;
+    height: 36px;
+    margin: 12px 0 12px 12px;
+}
+
+.logistics_img {
+    width: 86px;
+    height: 20px;
+    margin: 8px 0 0 12px;
+}
+
+.logistics_truck {
+    width: 20px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.logistics_title {
+    width: 56px;
+    height: 20px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.logistics_status {
+    width: 188px;
+    height: 20px;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    line-height: 20px;
+    margin: 8px 0 0 10px;
+    display: inline-block; /* 将 span 设置为块级元素 */
+    white-space: nowrap; /* 禁止换行 */
+    overflow: hidden; /* 隐藏超出部分 */
+    text-overflow: ellipsis; /* 显示省略号 */
+}
+
+.logistics_action {
+    width: 84px;
+    height: 20px;
+    overflow-wrap: break-word;
+    color: rgba(213, 48, 47, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+    margin: 8px 12px 0 15px;
+}
+
+.add_shipping {
+    margin-left: -40px;
+    text-decoration: none;
+}
+
+.dynamic-select {
+    line-height: 22px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.no_redemption {
+    width: 114px;
+    height: 146px;
+    margin: 160px 0 230px 131px;
+}
+
+.no_img {
+    width: 114px;
+    height: 110px;
+}
+
+.no_title {
+    width: 84px;
+    height: 20px;
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+    margin: 16px 0 0 15px;
+}
+
+.box_shipping {
+    width: 375px;
+    margin-top: 4px;
+}
+
+.box_shipping_list {
+    position: relative;
+    background-color: rgba(255, 255, 255, 1);
+    width: 375px;
+    margin-bottom: 4px;
+}
+
+.box_shipping_item {
+    width: 351px;
+    height: 130px;
+    margin: 12px 0 0 12px;
+}
+
+.shipping_infos   {
+    height: 20px;
+    margin: 15px 0 0 10px;
+}
+
+.shipping_name {
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+}
+
+.shipping_title {
+    color: rgba(51, 51, 51, 1);
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: 600;
+}
+
+.shipping_address {
+    width: 230px;
+    height: 20px;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.shipping_actions {
+    height: 30px;
+    margin: 10px 10px 10px 20px;
+    right: 10px;
+}
+
+.default-marker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 80px 80px 0;
+    border-color: transparent #c84d47 transparent transparent;
+}
+
+.default-text {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    color: white;
+    font-size: 14px;
+    transform: rotate(45deg);
+}
+
+
+.box_add_shipping {
+    background-color: rgba(255, 255, 255, 1);
+    height: 80px;
+    width: 375px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.hidden-div {
+  visibility: hidden; /* 隐藏 div，但仍占用空间 */
+  height: 80px; /* 设置高度 */
+  border: 1px solid #ccc; /* 边框 */
+}
+
+.text-wrapper_7 {
+    background-color: rgba(213, 48, 47, 1);
+    border-radius: 21px;
+    height: 40px;
+    width: 351px;
+    margin: 20px 20px;
+}
+
+.text_16 {
+    width: 90px;
+    overflow-wrap: break-word;
+    color: rgba(255, 255, 255, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 40px;
+    margin: 10px 0 0 131px;
+    text-decoration: none;
+}

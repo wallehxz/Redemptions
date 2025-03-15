@@ -12,8 +12,11 @@ $(document).ready(function () {
 
 const $province = $('#province');
 const $city = $('#city');
+const $city_group = $('#city_group');
 const $district = $('#district');
+const $district_group = $('#district_group');
 const $street = $('#street');
+const $street_group = $('#street_group');
 $province.on('change', function () {
     const selectedProvince = $(this).val();
     $city.empty().append('<option value="">请选择城市</option>');
@@ -21,16 +24,17 @@ $province.on('change', function () {
     $street.empty().append('<option value="">请选择街道</option>');
 
     if (selectedProvince) {
-      $.ajax({
-          url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-          method: 'GET', // 请求方法
-          dataType: 'json', // 预期服务器返回的数据类型
-          success: function (response) {
-            // 请求成功时的回调函数
-            for (const city of response) {
-                $city.append(`<option value="${city.id}">${city.name}</option>`);
-            }
-          },
+        $.ajax({
+            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
+            method: 'GET', // 请求方法
+            dataType: 'json', // 预期服务器返回的数据类型
+            success: function (response) {
+                // 请求成功时的回调函数
+                $city_group.css('display', '');
+                for (const city of response) {
+                    $city.append(`<option value="${city.id}">${city.name}</option>`);
+                }
+            },
         });
     }
 });
@@ -41,19 +45,20 @@ $city.on('change', function () {
     $street.empty().append('<option value="">请选择街道</option>');
 
     if (selectedProvince) {
-      $.ajax({
-          url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-          method: 'GET', // 请求方法
-          dataType: 'json', // 预期服务器返回的数据类型
-          success: function (response) {
-            // 请求成功时的回调函数
-            for (const city of response) {
-                $district.append(`<option value="${city.id}">${city.name}</option>`);
-            }
-            if (response.length > 0){
-                $district.prop('required', true);
-            }
-          },
+        $.ajax({
+            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
+            method: 'GET', // 请求方法
+            dataType: 'json', // 预期服务器返回的数据类型
+            success: function (response) {
+                if (response.length > 0) {
+                    $district_group.css('display', '');
+                    $district.prop('required', true);
+                }
+                // 请求成功时的回调函数
+                for (const city of response) {
+                    $district.append(`<option value="${city.id}">${city.name}</option>`);
+                }
+            },
         });
     }
 });
@@ -63,68 +68,31 @@ $district.on('change', function () {
     $street.empty().append('<option value="">请选择街道</option>');
 
     if (selectedProvince) {
-      $.ajax({
-          url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-          method: 'GET', // 请求方法
-          dataType: 'json', // 预期服务器返回的数据类型
-          success: function (response) {
-            for (const city of response) {
-                $street.append(`<option value="${city.id}">${city.name}</option>`);
-            }
-            if (response.length > 0){
-                $street.prop('required', true);
-            }
-          },
+        $.ajax({
+            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
+            method: 'GET', // 请求方法
+            dataType: 'json', // 预期服务器返回的数据类型
+            success: function (response) {
+                if (response.length > 0) {
+                    $street_group.css('display', '');
+                    $street.prop('required', true);
+                }
+                for (const city of response) {
+                    $street.append(`<option value="${city.id}">${city.name}</option>`);
+                }
+            },
         });
     }
 });
-
-let isAdding = false; // 标记当前是新增还是编辑
-
-// 显示遮罩层
-function showModal() {
-    isAdding = true;
-    document.getElementById('modal-title').textContent = '新增地址';
-    document.getElementById('address-id').value = ''; // 清空 ID
-    document.getElementById('name').value = ''; // 清空姓名
-    document.getElementById('phone').value = ''; // 清空电话
-    document.getElementById('address').value = ''; // 清空地址
-    document.getElementById('modal-overlay').style.display = 'flex';
-}
-
-// 隐藏遮罩层
-function hideModal() {
-    document.getElementById('modal-overlay').style.display = 'none';
-}
-
-// 编辑地址
-function editAddress(id) {
-    isAdding = false;
-    document.getElementById('modal-title').textContent = '编辑地址';
-
-    // 获取当前地址信息
-    const addressContainer = document.querySelector(`.address-container[data-id="${id}"]`);
-    const name = addressContainer.querySelector('h3').textContent;
-    const phone = addressContainer.querySelector('p:nth-of-type(1)').textContent.replace('电话: ', '');
-    const address = addressContainer.querySelector('p:nth-of-type(2)').textContent.replace('地址: ', '');
-
-    // 填充表单
-    document.getElementById('address-id').value = id;
-    document.getElementById('name').value = name;
-    document.getElementById('phone').value = phone;
-    document.getElementById('address').value = address;
-
-    // 显示遮罩层
-    document.getElementById('modal-overlay').style.display = 'flex';
-}
 
 // 保存地址
 document.getElementById('address-form').addEventListener('submit', function (e) {
     e.preventDefault(); // 阻止表单默认提交行为
 
     // 获取表单数据
-    const id = document.getElementById('address-id').value;
+    const redemption_id = document.getElementById('redemption_id').value;
     const nick_name = document.getElementById('name').value;
+    const is_default = $('#set_default').prop('checked')
     const mobile = document.getElementById('phone').value;
     const province = $('#province option:selected').text();
     const city = $('#city option:selected').text();
@@ -135,23 +103,24 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
         url: '/create_shipping', // 动态 URL
         method: 'POST',
         data: {
-            id: id,
+            redemption_id: redemption_id,
             nick_name: nick_name,
             mobile: mobile,
             province: province,
             city: city,
+            is_default: is_default,
             district: district,
             street: street,
             address: address,
         },
         success: function (response) {
-            console.log('提交成功:', response);
+            if (redemption_id !== '') {
+                window.location.href = '/redemptions';
+            } else {
+                window.location.href = '/shipping';
+            }
         },
     });
-
-    // 隐藏遮罩层
-    hideModal();
-    window.location.reload();
 });
 
 document.getElementById('phone').addEventListener('input', function (e) {
