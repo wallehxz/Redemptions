@@ -46,7 +46,11 @@ def redemption(request):
                 prize.save()
                 redeem.status = 1
                 redeem.save()
-                Redemption.objects.create(redeem_id=redeem.id, consumer_id=request.user.id, prize_id=prize.id)
+                new_redemption = Redemption.objects.create(redeem_id=redeem.id, consumer_id=request.user.id, prize_id=prize.id)
+                default_shipping = Shipping.objects.filter(Q(is_default=True) & Q(consumer_id=request.user.id)).first()
+                if default_shipping:
+                    new_redemption.shipping_id = default_shipping.id
+                    new_redemption.save()
                 return JsonResponse({'status': 'success', 'msg': f'获得奖品【{prize.name}】一件'})
             else:
                 return JsonResponse({'status': 'warning', 'msg': f'奖品库存不足，我们会尽快完成补货！'})
