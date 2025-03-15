@@ -56,7 +56,7 @@
                     <img class="prize_image" src="{{ item.logo.url }}">
                     <span class="prize_title">{{ item.name }}</span>
                     <div class="prize_view flex-col">
-                        <button class="text_review" onclick="showPrizes({{ item.id }})">查看奖品</button>
+                        <button class="text_review" onclick="showPrizes({{ item.id }}, '{{ item.name }}')">查看奖品</button>
                     </div>
                 </div>
                 {% endfor %}
