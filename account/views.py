@@ -8,8 +8,8 @@ import re
 def get_captcha(request):
     mobile = request.GET.get('mobile')
     user = Consumer.objects.filter(mobile=mobile).first()
-    if not user:
-        user = Consumer.objects.create(mobile=mobile)
+    if user is None:
+        user = Consumer.objects.create(mobile=mobile, username=mobile)
     user.generate_captcha()
     return JsonResponse({'msg': 'successfully'})
 

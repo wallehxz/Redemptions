@@ -17,7 +17,6 @@ def post_data(body):
 
 def index(request):
     series = Series.objects.all()
-    print(request.user)
     return render(request, 'index.html', locals())
 
 def sign_in(request):

@@ -44,8 +44,11 @@ class PrizeAdmin(admin.ModelAdmin):
     logo_img.short_description = '头图'
 
     def redeems_count(self, obj):
-        if obj.redeems:
-            return obj.redeems.count()
+        if obj.redeems.count() > 0:
+            html = f"<a href='/admin/redeem/redeem/?prize__id__exact={obj.id}'>查看 [{obj.redeems.count()}]</a>"
+            return format_html(html)
+        else:
+            return '--'
 
     redeems_count.short_description = '兑换码数量'
 
