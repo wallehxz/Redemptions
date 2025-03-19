@@ -72,7 +72,10 @@ def shipping(request):
 
 def region_children(request):
     parent_id = request.GET.get('parent_id')
-    children_list = Region.objects.filter(parent_id=parent_id).all()
+    if parent_id == '0':
+        children_list = Region.objects.filter(Q(city='0') & Q(area='0') & Q(town='0'))
+    else:
+        children_list = Region.objects.filter(parent_id=parent_id).all()
     children_json = []
     for child in children_list:
         children_json.append({'id': child.id, 'name': child.name})
@@ -166,6 +169,5 @@ def new_shipping(request):
     redemption_id = request.GET.get('redemption_id')
     if redemption_id is None:
         redemption_id = ''
-    provinces_list = Region.objects.filter(Q(city='0') & Q(area='0') & Q(town='0'))
     return render(request, 'new_shipping.html', locals())
 # Create your views here.

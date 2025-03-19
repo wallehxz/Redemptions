@@ -16,93 +16,90 @@
         <input type="hidden" id="redemption_id" value="{{ redemption_id }}">
         <div class="block_1 flex-col justify-end">
         <textarea id="fullAddress" class="text-wrapper_1 flex-col"
-                  placeholder="粘贴或输入完整地址                   例如：张三 13533339999 江苏省扬州市广陵区XX小区X楼xxx室"></textarea>
-        <div class="group_1 flex-col">
-            <div class="text-wrapper_6 flex-row justify-between">
-                <span class="text_2">收货人</span>
-                <input id="name" class="text_3" placeholder="姓名" required>
-            </div>
-            <img
-                    class="image_2"
-                    referrerpolicy="no-referrer"
-                    src="{% static 'images/form_underline.png' %}"
-            />
-            <div class="text-wrapper_6 flex-row justify-between">
-                <span class="text_2">联系方式</span>
-                <input id="phone" class="text_3" maxlength="11" placeholder="手机号" required>
-            </div>
-            <img
-                    class="image_2"
-                    referrerpolicy="no-referrer"
-                    src="{% static 'images/form_underline.png' %}"
-            />
-            <div class="section_2 flex-row justify-between">
-                <span class="text_6">选择地区</span>
-                <div class="province_select">
-                    <select id="province">
-                        <option value="">请选择省份</option>
-                        {% for item in provinces_list %}
-                            <option value="{{ item.id }}">{{ item.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="form_group" id="city_group" style="display: none">
-                        <select id="city">
-                            <option value="">请选择城市</option>
-                        </select>
-                    </div>
-                    <div class="form_group" id="district_group" style="display: none">
-                        <select id="district">
-                            <option value="">请选择区县</option>
-                        </select>
-                    </div>
-                    <div class="form_group" id="street_group" style="display: none">
-                        <select id="street">
-                            <option value="">请选择街道</option>
-                        </select>
-                    </div>
+                  placeholder="粘贴或输入完整地址 例如：&#10;张三 13533339999 江苏省扬州市广陵区XX小区X楼xxx室"></textarea>
+            <div class="group_1 flex-col">
+                <div class="text-wrapper_6 flex-row justify-between">
+                    <span class="text_2">收货人</span>
+                    <input id="name" class="text_3" placeholder="姓名" required>
+                </div>
+                <img
+                        class="image_2"
+                        referrerpolicy="no-referrer"
+                        src="{% static 'images/form_underline.png' %}"
+                />
+                <div class="text-wrapper_6 flex-row justify-between">
+                    <span class="text_2">联系方式</span>
+                    <input id="phone" class="text_3" maxlength="11" placeholder="手机号" required>
+                </div>
+                <img
+                        class="image_2"
+                        referrerpolicy="no-referrer"
+                        src="{% static 'images/form_underline.png' %}"
+                />
+                <div class="section_2 flex-row">
+                    <span class="text_6">选择地区</span>
+                    <div class="province_select" onclick="showDesc()" id="regions"></div>
+                    <img class="thumbnail_1" onclick="showDesc()" src="{% static 'images/right_arrow.png' %}"/>
+                </div>
+                <img class="image_2" src="{% static 'images/form_underline.png' %}"/>
+                <div class="text-wrapper_8 flex-row">
+                    <span class="text_7">详细地址</span>
+                    <textarea class="text_8" placeholder="小区楼栋" id="address" required></textarea>
                 </div>
             </div>
-            <img
-                    class="image_2"
-                    referrerpolicy="no-referrer"
-                    src="{% static 'images/form_underline.png' %}"
-            />
-            <div class="text-wrapper_8 flex-row">
-                <span class="text_7">详细地址</span>
-                <textarea class="text_8" placeholder="小区楼栋" id="address" required></textarea>
+            <div class="group_2 flex-row justify-between">
+                <div class="text-group_3 flex-col justify-between">
+                    <span class="text_9">设为默认</span>
+                    <span class="text_10">系统自动发货时默认使用该地址</span>
+                </div>
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="is_default" id="set_default">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="group_3 flex-row">
+                <div class="image-text_2 flex-row justify-between">
+                    <img
+                            class="thumbnail_2"
+                            referrerpolicy="no-referrer"
+                            src="{% static 'images/wechat.png' %}"
+                    />
+                    <span class="text-group_2">一键获取收货地址</span>
+                </div>
+            </div>
+            <div class="group_4 flex-col">
+                <div class="text-wrapper_5 flex-col">
+                    <button type="submit" class="text_11">保存</button>
+                </div>
             </div>
         </div>
-        <div class="group_2 flex-row justify-between">
-            <div class="text-group_3 flex-col justify-between">
-                <span class="text_9">设为默认</span>
-                <span class="text_10">系统自动发货时默认使用该地址</span>
+    </form>
+    <div class="overlay_description" id="desc_overlay">
+        <div class="box_description">
+            <div class="selector-container">
+                <div class="level" id="level1">
+                    <div class="option">省直辖</div>
+                </div>
+                <div class="level" id="level2">
+                    <div class="option">城市</div>
+                </div>
+                <div class="level" id="level3">
+                    <div class="option">城区</div>
+                </div>
+                <div class="level" id="level4" style="display: none">
+                </div>
             </div>
-            <label class="custom-checkbox">
-              <input type="checkbox" name="is_default" id="set_default">
-              <span class="checkmark"></span>
-            </label>
-        </div>
-        <div class="group_3 flex-row">
-            <div class="image-text_2 flex-row justify-between">
-                <img
-                        class="thumbnail_2"
-                        referrerpolicy="no-referrer"
-                        src="{% static 'images/wechat.png' %}"
-                />
-                <span class="text-group_2">一键获取收货地址</span>
-            </div>
-        </div>
-        <div class="group_4 flex-col">
-            <div class="text-wrapper_5 flex-col">
-                <button type="submit" class="text_11">保存</button>
+            <div class="container">
+                <button class="btn cancel-btn" id="desc_close">取消</button>
+                <button class="btn confirm-btn" id="select_confirm">确定</button>
             </div>
         </div>
     </div>
-    </form>
 </div>
 <script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
 <script src="{% static 'javascript/select2.js' %}"></script>
 <script src="{% static 'javascript/shipping.js' %}"></script>
+<script src="{% static 'javascript/select_region.js' %}"></script>
 <script>
     document.getElementById('fullAddress').addEventListener('input', function () {
         const fullAddress = this.value.trim(); // 获取完整地址
@@ -130,6 +127,22 @@
             addressInput.value = '';
         }
     });
+
+    const desc_overlay = document.getElementById('desc_overlay');
+    const desc_close = document.getElementById('desc_close');
+    desc_overlay.addEventListener('click', (e) => {
+        if (e.target === desc_overlay) {
+            desc_overlay.style.display = 'none';
+        }
+    });
+
+    desc_close.addEventListener('click', (e) => {
+        desc_overlay.style.display = 'none';
+    });
+
+    function showDesc() {
+        desc_overlay.style.display = 'flex';
+    }
 </script>
 </body>
 </html>

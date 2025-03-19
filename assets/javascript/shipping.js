@@ -1,90 +1,3 @@
-$(document).ready(function () {
-    // 获取所有 <select> 元素
-    // const selectElements = $('select');
-    //
-    // // 遍历每个 <select> 元素并初始化 Select2
-    // selectElements.each(function () {
-    //     $(this).select2({
-    //         width: '100%',
-    //     });
-    // });
-});
-
-const $province = $('#province');
-const $city = $('#city');
-const $city_group = $('#city_group');
-const $district = $('#district');
-const $district_group = $('#district_group');
-const $street = $('#street');
-const $street_group = $('#street_group');
-$province.on('change', function () {
-    const selectedProvince = $(this).val();
-    $city.empty().append('<option value="">请选择城市</option>');
-    $district.empty().append('<option value="">请选择区县</option>');
-    $street.empty().append('<option value="">请选择街道</option>');
-
-    if (selectedProvince) {
-        $.ajax({
-            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-            method: 'GET', // 请求方法
-            dataType: 'json', // 预期服务器返回的数据类型
-            success: function (response) {
-                // 请求成功时的回调函数
-                $city_group.css('display', '');
-                for (const city of response) {
-                    $city.append(`<option value="${city.id}">${city.name}</option>`);
-                }
-            },
-        });
-    }
-});
-
-$city.on('change', function () {
-    const selectedProvince = $(this).val();
-    $district.empty().append('<option value="">请选择区县</option>');
-    $street.empty().append('<option value="">请选择街道</option>');
-
-    if (selectedProvince) {
-        $.ajax({
-            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-            method: 'GET', // 请求方法
-            dataType: 'json', // 预期服务器返回的数据类型
-            success: function (response) {
-                if (response.length > 0) {
-                    $district_group.css('display', '');
-                    $district.prop('required', true);
-                }
-                // 请求成功时的回调函数
-                for (const city of response) {
-                    $district.append(`<option value="${city.id}">${city.name}</option>`);
-                }
-            },
-        });
-    }
-});
-
-$district.on('change', function () {
-    const selectedProvince = $(this).val();
-    $street.empty().append('<option value="">请选择街道</option>');
-
-    if (selectedProvince) {
-        $.ajax({
-            url: '/region_children?parent_id=' + selectedProvince, // 请求地址
-            method: 'GET', // 请求方法
-            dataType: 'json', // 预期服务器返回的数据类型
-            success: function (response) {
-                if (response.length > 0) {
-                    $street_group.css('display', '');
-                    $street.prop('required', true);
-                }
-                for (const city of response) {
-                    $street.append(`<option value="${city.id}">${city.name}</option>`);
-                }
-            },
-        });
-    }
-});
-
 // 保存地址
 document.getElementById('address-form').addEventListener('submit', function (e) {
     e.preventDefault(); // 阻止表单默认提交行为
@@ -94,10 +7,38 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
     const nick_name = document.getElementById('name').value;
     const is_default = $('#set_default').prop('checked')
     const mobile = document.getElementById('phone').value;
-    const province = $('#province option:selected').text();
-    const city = $('#city option:selected').text();
-    const district = $('#district option:selected').text();
-    const street = $('#street option:selected').text();
+    let province = document.querySelector('#level1 .active');
+    if (province) {
+        province = province.innerHTML;
+    } else {
+        alert('请选择省份');
+        return false;
+    }
+    let city = document.querySelector('#level2 .active');
+    if (city) {
+        city = city.innerHTML;
+    } else {
+        alert('请选择城市');
+        return false;
+    }
+    let district = document.querySelector('#level3 .active');
+    if (district) {
+        district = district.innerHTML;
+    } else {
+        alert('请选择区县');
+        return false;
+    }
+    let street = document.querySelector('#level4 .active');
+    if (street) {
+        street = street.innerHTML;
+    } else {
+        street = '';
+    }
+    let have_street = document.querySelector('#level4 .option');
+    if (have_street && street === '') {
+        alert('请选择街道');
+        return false;
+    }
     const address = document.getElementById('address').value;
     $.ajax({
         url: '/create_shipping', // 动态 URL
@@ -124,11 +65,6 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
 });
 
 document.getElementById('phone').addEventListener('input', function (e) {
-    // const phone = e.target.value;
-    // if (phone.length > 11) {
-    //     e.target.value = phone.slice(0, 11); // 截取前11位
-    // }
-
     const input = e.target;
     let phone = input.value.replace(/\D/g, ''); // 去除非数字字符
 
