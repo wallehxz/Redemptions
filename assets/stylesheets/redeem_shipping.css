@@ -1,26 +1,16 @@
-.page {
-    background-color: rgba(255, 255, 255, 1);
-    position: relative;
-    width: 375px;
-    overflow: hidden;
-}
-
 .box_container {
     background-color: rgba(247, 247, 247, 1);
-    width: 375px;
-    /*min-height: 100vh;*/
 }
 
 .box_navigation {
     background-color: rgba(255, 255, 255, 1);
     height: 44px;
-    width: 375px;
+    width: 100%;
 }
 
 .menu-wrapper {
-    width: 263px;
     height: 21px;
-    margin: 12px 0 0 49px;
+    margin: 12px 40px;
 }
 
 .text_menu {
@@ -53,20 +43,17 @@
 }
 
 .box_redemptions {
-    width: 375px;
-    /*height: 404px;*/
-    margin-top: 4px;
+    width: 100%;
+    margin-top: 6px;
 }
 
 .box_redemption_list {
     background-color: rgba(255, 255, 255, 1);
-    width: 375px;
-    height: 132px;
-    margin-bottom: 4px;
+    height: 140px;
+    margin-bottom: 6px;
 }
 
 .box_redeem {
-    width: 351px;
     height: 60px;
     margin: 12px 0 0 12px;
 }
@@ -117,14 +104,14 @@
     width: 6px;
     height: 10px;
     margin-top: 6px;
+    margin-right: 12px;
 }
 
 .logistics_info {
     background-color: rgba(247, 247, 247, 1);
     border-radius: 4px;
-    width: 351px;
     height: 36px;
-    margin: 12px 0 12px 12px;
+    margin: 12px 12px 12px 12px;
 }
 
 .logistics_img {
@@ -153,7 +140,7 @@
 }
 
 .logistics_status {
-    width: 188px;
+    width: calc(100% - 170px);
     height: 20px;
     color: rgba(153, 153, 153, 1);
     font-size: 14px;
@@ -169,7 +156,6 @@
 }
 
 .logistics_action {
-    width: 84px;
     height: 20px;
     overflow-wrap: break-word;
     color: rgba(213, 48, 47, 1);
@@ -179,12 +165,16 @@
     text-align: justify;
     white-space: nowrap;
     line-height: 20px;
-    margin: 8px 12px 0 15px;
+    margin-top: 8px;
 }
 
 .add_shipping {
     margin-left: -40px;
     text-decoration: none;
+}
+
+.cope_express {
+    margin-left: 14px;
 }
 
 .dynamic-select {
@@ -194,9 +184,10 @@
 }
 
 .no_redemption {
-    width: 114px;
-    height: 146px;
-    margin: 160px 0 230px 131px;
+    height: 90vh;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 .no_img {
@@ -205,29 +196,22 @@
 }
 
 .no_title {
-    width: 84px;
     height: 20px;
-    overflow-wrap: break-word;
     color: rgba(153, 153, 153, 1);
     font-size: 14px;
     font-family: PingFangSC-Regular, serif;
     font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
     line-height: 20px;
-    margin: 16px 0 0 15px;
 }
 
 .box_shipping {
-    width: 375px;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 .box_shipping_list {
     position: relative;
     background-color: rgba(255, 255, 255, 1);
-    width: 375px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .box_shipping_item {
@@ -296,7 +280,8 @@
 .box_add_shipping {
     background-color: rgba(255, 255, 255, 1);
     height: 80px;
-    width: 375px;
+    max-width: 450px;
+    width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -307,17 +292,18 @@
 }
 
 .hidden-div {
-  visibility: hidden; /* 隐藏 div，但仍占用空间 */
   height: 80px; /* 设置高度 */
-  border: 1px solid #ccc; /* 边框 */
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .text-wrapper_7 {
     background-color: rgba(213, 48, 47, 1);
     border-radius: 21px;
     height: 40px;
-    width: 351px;
     margin: 20px 20px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 .text_16 {
@@ -330,6 +316,5 @@
     text-align: justify;
     white-space: nowrap;
     line-height: 40px;
-    margin: 10px 0 0 131px;
     text-decoration: none;
 }

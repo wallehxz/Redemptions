@@ -53,13 +53,9 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="no_redemption flex-col justify-between">
-            <img
-                    class="no_img"
-                    referrerpolicy="no-referrer"
-                    src="{% static 'images/blank_redemptions.png' %}"
-            />
-            <span class="no_title">暂无收货地址</span>
+        <div class="no_redemption flex-col">
+            <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
+            <span>暂无收货地址</span>
         </div>
         </div>
         {% endif %}

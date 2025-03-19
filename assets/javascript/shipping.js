@@ -1,13 +1,13 @@
 $(document).ready(function () {
     // 获取所有 <select> 元素
-    const selectElements = $('select');
-
-    // 遍历每个 <select> 元素并初始化 Select2
-    selectElements.each(function () {
-        $(this).select2({
-            width: '100%',
-        });
-    });
+    // const selectElements = $('select');
+    //
+    // // 遍历每个 <select> 元素并初始化 Select2
+    // selectElements.each(function () {
+    //     $(this).select2({
+    //         width: '100%',
+    //     });
+    // });
 });
 
 const $province = $('#province');

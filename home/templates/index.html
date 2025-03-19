@@ -23,7 +23,7 @@
                     <img
                             class="thumbnail_1"
                             referrerpolicy="no-referrer"
-                            src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPng97e48e584e9b623a3c173f4ecd707aeaca91777ac1ea1c4b6b3de2c8520324f3"
+                            src="{% static 'images/right_arrow.png' %}"
                     />
                 </div>
             </div>
@@ -73,14 +73,14 @@
                             class="box_description_close"
                             referrerpolicy="no-referrer"
                             id="desc_close"
-                            src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPngeb54e0647e57bcc72e51b74cc2141675f36c7ae424d9b514731bd4235d0309af"
+                            src="{% static 'images/close.png' %}"
                     />
                     <span class="box_description_title">使用说明</span>
                 </div>
                 <img
                         class="box_description_line"
                         referrerpolicy="no-referrer"
-                        src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPng77f649e11abeb9085804312df39daab2ff7a238946d5f7ded9c6b584ce9a8dbc"
+                        src="{% static 'images/line.png' %}"
                 />
                 <div class="box_description_content">
                     1.&nbsp;线下购买福赏系列产品可参与「超级福中福」专属活动，在线下商铺每购买一抽福赏可获得一个「超级福中福」兑换码。
@@ -97,24 +97,12 @@
             </div>
         </div>
         <div class="box_user flex-col">
-            <div class="image-wrapper_2 flex-row justify-between">
-                <img
-                        class="image_2"
-                        referrerpolicy="no-referrer"
-                        src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPng4bda5ddb4871911aab558e42a558bb37ecaa207469f3abdc091c78b00e2492ef"
-                />
-                <img
-                        class="label_1"
-                        referrerpolicy="no-referrer"
-                        src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPng31245c6889681ba7d12b4c9698ea8e8865bc80e01e080f515715a0a0781a9179"
-                />
-            </div>
             <div class="section_2 flex-row justify-between">
                 <div class="image-text_6 flex-row justify-between">
                     <img
                             class="label_2"
                             referrerpolicy="no-referrer"
-                            src="https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/618c5bc8b16a4efca38d170079196c56_mergeImage.png"
+                            src="{% static 'images/avatar.png' %}"
                     />
                     {% if user.is_authenticated %}
                     <span class="text-group_3">你好，{{ user.mobile }}</span>
@@ -132,7 +120,6 @@
                 </div>
                 {% endif %}
             </div>
-            <span class="text_21">超级福中福</span>
         </div>
     </div>
     <div id="overlay" class="overlay">

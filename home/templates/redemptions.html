@@ -50,7 +50,7 @@
                     {% if item.shipping_id %}
                         {% if item.express_order  %}
                             <span class="logistics_status">{{ item.express_name }}&nbsp;{{ item.express_order }}</span>
-                            <span class="logistics_action" onclick="copyToClipboard('{{ item.express_order }}')">复制</span>
+                            <span class="logistics_action cope_express" onclick="copyToClipboard('{{ item.express_order }}')">复制</span>
                         {% else %}
                             <span class="logistics_status">{{ item.get_status_display }}</span>
                         {% endif %}
@@ -77,13 +77,9 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="no_redemption flex-col justify-between">
-            <img
-                    class="no_img"
-                    referrerpolicy="no-referrer"
-                    src="{% static 'images/blank_redemptions.png' %}"
-            />
-            <span class="no_title">暂无中奖记录</span>
+        <div class="no_redemption flex-col">
+            <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
+            <span>暂无中奖记录</span>
         </div>
         </div>
         {% endif %}

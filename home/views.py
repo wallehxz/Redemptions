@@ -88,18 +88,18 @@ def create_shipping(request):
         data = post_data(request.body)
         consumer_id = request.user.id
         district = data.get('district')
-        id_default = data.get('id_default')
+        is_default = data.get('id_default')
         redemption_id = data.get('redemption_id')
         if '请选择' in district:
             district = ''
         street = data.get('street')
         if '请选择' in street:
             street = ''
-        if id_default == 'true':
+        if is_default == 'true':
             Shipping.objects.filter(Q(consumer_id=consumer_id) & Q(is_default=True)).update(is_default=False)
-            id_default = True
+            is_default = True
         else:
-            id_default = False
+            is_default = False
         if data.get('id'):
             old_shipping = Shipping.objects.get(id=data.get('id'))
             old_shipping.nick_name = data.get('nick_name')
@@ -108,7 +108,7 @@ def create_shipping(request):
             old_shipping.city = data.get('city')
             old_shipping.district = district
             old_shipping.street = street
-            old_shipping.is_default = id_default
+            old_shipping.is_default = is_default
             old_shipping.address = data.get('address')
             old_shipping.save()
         else:
@@ -119,7 +119,7 @@ def create_shipping(request):
                 city=data.get('city'),
                 district=district,
                 street=street,
-                id_default=id_default,
+                is_default=is_default,
                 address=data.get('address')
             )
             if redemption_id != '':
