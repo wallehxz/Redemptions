@@ -18,6 +18,10 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
     if (city) {
         city = city.innerHTML;
     } else {
+        city = '';
+    }
+    let have_city = document.querySelector('#level2 .option');
+    if (have_city && city === '') {
         alert('请选择城市');
         return false;
     }
@@ -25,7 +29,11 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
     if (district) {
         district = district.innerHTML;
     } else {
-        alert('请选择区县');
+        district = '';
+    }
+    let have_district = document.querySelector('#level3 .option');
+    if (have_district && district === '') {
+        alert('请选择县区');
         return false;
     }
     let street = document.querySelector('#level4 .active');
