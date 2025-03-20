@@ -410,9 +410,9 @@
 
 .selector-container {
     display: flex;
-    height: 150px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    height: 180px;
+    margin-top: 60px;
+    margin-bottom: 40px;
 }
 
 .level {
@@ -420,7 +420,7 @@
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    height: 150px;
+    height: 130px;
     width: 33%;
     background-color: #fff;
     scrollbar-width: none; /* 隐藏滚动条（Firefox） */
@@ -439,7 +439,6 @@
     margin-left: 5px;
     border-radius: 4px;
     font-size: 16px;
-    /*display: flex; !* 横向排列 *!*/
     cursor: pointer;
     color: #bebebe;
     text-align: center;
@@ -447,10 +446,18 @@
 
 .option:hover {
     color: #000;
+    line-height: 50px;
+    font-size: 18px;
 }
 
 .option.active {
+    line-height: 48px;
     color: #000;
+    margin: 20px 0;
+    border-width: 1px 0;           /* 上下边框宽度为 2px，左右边框宽度为 0 */
+    border-style: dotted;           /* 边框样式为实线 */
+    border-color: #909399;           /* 边框颜色为黑色 */
+    border-radius: 0;
 }
 
 .container {

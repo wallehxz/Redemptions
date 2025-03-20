@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.http import JsonResponse, HttpResponse
 from simpleui.admin import AjaxAdmin
 from openpyxl import Workbook
-from openpyxl.styles import Alignment,Font,PatternFill
+from openpyxl.styles import Alignment, Font, PatternFill
+from django.utils.functional import lazy
 from datetime import datetime
+from series.models import Prize
 from .models import Redeem, Redemption
 
 
 def all_prizes():
-    from series.models import Prize
     obj_list = Prize.objects.all()
     prize_list = []
     for obj in obj_list:
@@ -18,7 +19,7 @@ def all_prizes():
 
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
-    list_display = ('number', 'prize', 'series_name','status', 'created_at')
+    list_display = ('number', 'prize', 'series_name', 'status', 'created_at')
     fields = ('prize', 'status', 'number')
     list_filter = ['prize', 'status']
     search_fields = ['number']
@@ -27,6 +28,7 @@ class RedeemAdmin(AjaxAdmin):
 
     def series_name(self, obj):
         return obj.prize.series.name if obj.prize else ''
+
     series_name.short_description = '所属系列'
 
     def export_data(self, request, queryset):
@@ -38,10 +40,10 @@ class RedeemAdmin(AjaxAdmin):
         header_fill = PatternFill(start_color='4F81BD', end_color='4F81BD', fill_type='solid')
         headers = ['兑换码', '奖品名称', '所属系列', '状态', '创建时间']
         for i, header in enumerate(headers):
-            ws.cell(row=1, column=i+1, value=header)
-            ws.cell(row=1, column=i+1).font = header_font
-            ws.cell(row=1, column=i+1).fill = header_fill
-            ws.cell(row=1, column=i+1).alignment = Alignment(horizontal='center')
+            ws.cell(row=1, column=i + 1, value=header)
+            ws.cell(row=1, column=i + 1).font = header_font
+            ws.cell(row=1, column=i + 1).fill = header_fill
+            ws.cell(row=1, column=i + 1).alignment = Alignment(horizontal='center')
 
         for obj in queryset:
             row = [obj.number, obj.prize.name, obj.prize.series.name, obj.get_status_display(),
@@ -78,10 +80,10 @@ class RedeemAdmin(AjaxAdmin):
                     'msg': '前缀系列ODE长度不足4个字符'
                 })
             for i in range(0, int(total)):
-                redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix), prize_id= request.POST.get('prize')))
+                redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix), prize_id=request.POST.get('prize')))
         else:
             for i in range(0, int(total)):
-                redeem_list.append(Redeem(number=Redeem.generate_number(), prize_id= request.POST.get('prize')))
+                redeem_list.append(Redeem(number=Redeem.generate_number(), prize_id=request.POST.get('prize')))
         Redeem.objects.bulk_create(redeem_list)
         return JsonResponse(data={
             'status': 'success',
@@ -123,7 +125,7 @@ class RedeemAdmin(AjaxAdmin):
             'width': '300px',
             'label': '数量',
             'require': True
-        },  {
+        }, {
             'type': 'select',
             'key': 'prize',
             'label': '奖品',
@@ -131,16 +133,18 @@ class RedeemAdmin(AjaxAdmin):
             'size': 'small',
             'value': '',
             'require': True,
-            'options': all_prizes(),
+            'options': lazy(all_prizes),
         }]
     }
 
+
 @admin.register(Redemption)
 class RedemptionAdmin(admin.ModelAdmin):
-    list_display = ('prize','redeem','consumer', 'shipping','status','express_info', 'created_at')
-    fields = ('prize','redeem', 'consumer', 'shipping','express_name', 'express_order','status')
+    list_display = ('prize', 'redeem', 'consumer', 'shipping', 'status', 'express_info', 'created_at')
+    fields = ('prize', 'redeem', 'consumer', 'shipping', 'express_name', 'express_order', 'status')
 
-    def express_info(self,obj):
+    def express_info(self, obj):
         return f'{obj.express_name}-{obj.express_order}'
+
     express_info.short_description = '快递信息'
 # Register your models here.

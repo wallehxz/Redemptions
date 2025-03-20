@@ -32,6 +32,7 @@ captchaButton.addEventListener('click', () => {
         // errorMessage.textContent = '验证码已发送，请注意查收';
         errorMessage.textContent = '【泡泡玛特】您的验证码是：123456，有效期5分钟，请勿泄露给他人。';
         // 5秒后隐藏提示信息
+        document.getElementById('captcha').removeAttribute('disabled');
         setTimeout(() => {
             errorMessage.style.display = 'none';
         }, 3000);
