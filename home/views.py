@@ -33,7 +33,7 @@ def get_prizes(request):
     obj_list = Prize.objects.filter(series_id=series_id).all()
     prize_list = []
     for prize in obj_list:
-        prize_list.append({'name': prize.name, 'image': prize.logo.url, 'description': f'库存数量({prize.inventory})'})
+        prize_list.append({'name': prize.name, 'image': prize.logo.url, 'description': f'库存数量:  {prize.inventory}'})
     return JsonResponse(prize_list, safe=False)
 
 

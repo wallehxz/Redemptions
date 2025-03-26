@@ -654,25 +654,33 @@
 
 /* 遮罩层 */
 .overlay {
-    display: none; /* 初始隐藏 */
-    position: fixed;
-    top: 0;
-    left: 0;
+    /*display: none; !* 初始隐藏 *!*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*max-width: 450px;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*background-color: rgba(0, 0, 0, 0.8); !* 半透明背景 *!*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*z-index: 1000;*/
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
     max-width: 450px;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* 半透明背景 */
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     z-index: 1000;
 }
 
 .overlay-content {
     background-color: #fff;
-    padding: 5px;
     border-radius: 10px;
     text-align: center;
-    width: 355px;
+    max-width: 450px;
+    width: 100%;
     max-height: 80vh; /* 最大高度为视口的80% */
     overflow: hidden; /* 隐藏溢出内容 */
 }
@@ -681,6 +689,7 @@
     font-size: 24px;
     cursor: pointer;
     float: right;
+    padding-right: 20px;
 }
 
 .close-btn:hover {
@@ -693,9 +702,12 @@
 
 /* 奖品容器 */
 .prize-container {
+    display: flex;
     width: 100%;
+    cursor: pointer;
     overflow-x: auto; /* 横向滚动 */
     white-space: nowrap; /* 防止换行 */
+    min-height: 500px;
     margin-top: 20px;
 }
 
@@ -709,28 +721,40 @@
 /* 奖品卡片 */
 .prize-item {
     display: inline-block;
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
+    width: calc(100vw - 45px);
     border-radius: 10px;
     text-align: center;
-    background-color: #f9f9f9;
+    cursor: pointer;
 }
 
-.prize-item img {
+.prize-item .logo {
+    background-color: #f6f5f8;
+    padding: 10px;
+}
+
+.prize-item .logo img {
     max-width: 100%; /* 图片最大宽度为父容器的宽度 */
     height: auto; /* 高度自动调整，保持图片比例 */
 }
 
-.prize-item h3 {
-    margin: 10px 0 5px;
+.prize-item .pirze_name {
+    overflow-wrap: break-word;
+    color: rgba(51, 56, 64, 1);
     font-size: 16px;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 60px;
 }
 
-.prize-item p {
-    margin: 0;
+.prize-item .prize_info {
+    overflow-wrap: break-word;
+    color: rgba(102, 102, 102, 1);
     font-size: 14px;
-    color: #666;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 40px;
 }
 
 
@@ -803,17 +827,17 @@
 }
 
 .box_description_title {
-    width: 64px;
-    height: 22px;
+    width: calc(100% - 14px);
+    height: 30px;
     overflow-wrap: break-word;
     color: rgba(51, 56, 64, 1);
-    font-size: 16px;
+    font-size: 20px;
     font-family: PingFangSC-Semibold, serif;
     font-weight: 600;
-    text-align: justify;
+    text-align: center;
     white-space: nowrap;
     line-height: 22px;
-    margin: 11px 156px 0 129px;
+    padding-top: 10px;
 }
 
 .box_description_line {
@@ -908,10 +932,11 @@
 
 .captcha {
     width: 150px;
+    margin-left: 40px;
 }
 
 .get_captcha {
-    width: calc(100% - 190px);
+    width: calc(100% - 235px);
     height: 21px;
     overflow-wrap: break-word;
     font-size: 16px;
@@ -927,6 +952,7 @@
     border-radius: 21px;
     max-width: 450px;
     height: 40px;
+    font-size: 20px;
     margin: 16px 20px;
     display: flex;
     color: #FFFFFF;

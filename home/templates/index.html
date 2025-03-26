@@ -79,11 +79,7 @@
                     />
                     <span class="box_description_title">使用说明</span>
                 </div>
-                <img
-                        class="box_description_line"
-                        referrerpolicy="no-referrer"
-                        src="{% static 'images/line.png' %}"
-                />
+                <img class="box_description_line" src="{% static 'images/line.png' %}"/>
                 <div class="box_description_content">
                     1.&nbsp;线下购买福赏系列产品可参与「超级福中福」专属活动，在线下商铺每购买一抽福赏可获得一个「超级福中福」兑换码。
                 </div>
@@ -121,14 +117,9 @@
                         <a class="text_17" onclick="showLogin()">登录</a>
                         <div class="overlay_login" id="login_overlay">
                             <div class="box_description">
-                                <div id="error-message" class="error-message" style="display: none;">无效手机号</div>
+                                <div id="error-message" class="error-message" style="display: none;"></div>
                                 <div class="box_description_header flex-row">
-                                    <img
-                                            class="box_description_close"
-                                            referrerpolicy="no-referrer"
-                                            id="login_close"
-                                            src="{% static 'images/close.png' %}"
-                                    />
+                                    <img class="box_description_close" id="login_close" src="{% static 'images/close.png' %}"/>
                                     <span class="box_description_title">登录/注册</span>
                                 </div>
                                 <form class="login-form" method="post" action="/account/login">
@@ -136,15 +127,11 @@
                                     <img class="box_description_line" src="{% static 'images/line.png' %}"/>
                                     <div class="login_phone_group flex-row">
                                         <span class="region_code">+86</span>
-                                        <input type="text" id="phone" class="text_input" name="mobile"
-                                               placeholder="请输入手机号码"
-                                               required>
+                                        <input type="text" id="phone" class="text_input" name="mobile" placeholder="请输入手机号码" required>
                                     </div>
                                     <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
                                     <div class="login_code_group flex-row">
-                                        <input type="text" id="captcha" class="text_input captcha" name="captcha"
-                                               placeholder="请获取验证码"
-                                               maxlength="6" required disabled>
+                                        <input type="text" id="captcha" class="text_input captcha" name="captcha" placeholder="请输入验证码" maxlength="6" required>
                                         <span class="get_captcha" id="get-captcha">获取验证码</span>
                                     </div>
                                     <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
@@ -158,9 +145,12 @@
         </div>
     </div>
     <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <span id="close-btn" class="close-btn">&times;</span>
-            <h2 id="series-title">系列奖品</h2>
+        <div class="box_description">
+            <div class="box_description_header flex-row">
+                <img class="box_description_close" id="close-btn" src="{% static 'images/close.png' %}"/>
+                <span class="box_description_title" id="series-title">系列奖品</span>
+            </div>
+            <img class="box_description_line" src="{% static 'images/line.png' %}"/>
             <div class="prize-container">
                 <div class="prize-list">
                     <!-- 奖品内容动态加载 -->

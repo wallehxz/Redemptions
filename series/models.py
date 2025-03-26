@@ -17,10 +17,11 @@ class Series(models.Model):
     def __str__(self):
         return self.name
 
+
 class Prize(models.Model):
     name = models.CharField(max_length=100, verbose_name='名称')
     logo = models.ImageField(upload_to='prizes/%Y%m%d/', null=True, verbose_name='头图')
-    series = models.ForeignKey(Series, on_delete=models.SET_NULL, null=True, related_name='prizes',verbose_name='系列')
+    series = models.ForeignKey(Series, on_delete=models.SET_NULL, null=True, related_name='prizes', verbose_name='系列')
     inventory = models.IntegerField(null=True, verbose_name='库存数量')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')

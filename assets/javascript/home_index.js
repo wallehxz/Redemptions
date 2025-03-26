@@ -31,35 +31,6 @@ const closeBtn = document.getElementById('close-btn');
 const seriesTitle = document.getElementById('series-title');
 const prizeList = document.querySelector('.prize-list');
 
-// 模拟奖品数据
-const prizesData = [
-    {
-        name: '奖品1',
-        description: '这是奖品1的详细信息。',
-        image: 'https://market.fp.ps.netease.com/file/6555ae90bf15885e01b83864GxMjSSjl05?fop=watermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9zcGVjdC9maWxlLzY3Y2I5NmIwMjk0MzA5MTA5NTA1MzJjNWtkMjVpcmZYMDY_Zm9wPWltYWdlVmlldy8wL3cvMTMzMi9oLzY3Ni9mL2pwZw==/gravity/5/dx/0/dy/0/ws/0.7657%7Cwatermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9tYXJrZXQvZmlsZS82NTU0OTdjOWM4YjJlYjBlZTRiMDQzZTBGWGpKc3JSUDA1/gravity/5/dx/0/dy/0%7CimageView/4/x/9/y/6/w/1314/h/876/f/webp/q/75'
-    },
-    {
-        name: '奖品2',
-        description: '这是奖品2的详细信息。',
-        image: 'https://market.fp.ps.netease.com/file/6555ae90bf15885e01b83864GxMjSSjl05?fop=watermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9zcGVjdC9maWxlLzY3YzFhMWU0ZjE2NDVkMTU0NTA2MDBjN0N2YWZES0YwMDY_Zm9wPWltYWdlVmlldy8wL3cvMTMzMi9oLzY3Ni9mL2pwZw==/gravity/5/dx/0/dy/0/ws/0.7657%7Cwatermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9tYXJrZXQvZmlsZS82NTU0OTdjOWM4YjJlYjBlZTRiMDQzZTBGWGpKc3JSUDA1/gravity/5/dx/0/dy/0%7CimageView/4/x/9/y/6/w/1314/h/876/f/webp/q/75'
-    },
-    {
-        name: '奖品3',
-        description: '这是奖品3的详细信息。',
-        image: 'https://spect.fp.ps.netease.com/file/67a8e712802443cb1374e91bKgFQLjb606?fop=imageView/4/x/314/y/100/w/1928/h/1300%7CimageView/2/w/392/h/260/f/webp/q/75'
-    },
-    {
-        name: '奖品4',
-        description: '这是奖品4的详细信息。',
-        image: 'https://market.fp.ps.netease.com/file/65f59c78009583b32c367b34yfPsdQJ105?fop=imageView/6/f/webp/q/75'
-    },
-    {
-        name: '奖品5',
-        description: '这是奖品5的详细信息。',
-        image: 'https://market.fp.ps.netease.com/file/6555ae90bf15885e01b83864GxMjSSjl05?fop=watermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9zcGVjdC9maWxlLzY3Yzg1OWRmYjUyODIzYmE5ZDdlNzVhMUQ2MWg0bU1QMDY=/gravity/5/dx/0/dy/0/ws/0.7657%7Cwatermark/1/image/aHR0cDovL2ZwLWludC5wcy5uZXRlYXNlLmNvbS9tYXJrZXQvZmlsZS82NTU0OTdjOWM4YjJlYjBlZTRiMDQzZTBGWGpKc3JSUDA1/gravity/5/dx/0/dy/0%7CimageView/4/x/9/y/6/w/1314/h/876/f/webp/q/75'
-    },
-];
-
 // 点击按钮，显示遮罩层并加载奖品列表
 function showPrizes(seriesId, seriesName) {
     // 更新遮罩层标题
@@ -75,9 +46,9 @@ function showPrizes(seriesId, seriesName) {
                 const prizeItem = document.createElement('div');
                 prizeItem.classList.add('prize-item');
                 prizeItem.innerHTML = `
-              <div><img src="${prize.image}" alt="${prize.name}"></div>
-              <h2>${prize.name}</h2>
-              <p>${prize.description}</p>
+              <div class="logo"><img src="${prize.image}" alt="${prize.name}"></div>
+              <div class="pirze_name">${prize.name}</div>
+              <div class="prize_info">${prize.description}</div>
             `;
                 prizeList.appendChild(prizeItem);
             });

@@ -484,6 +484,6 @@
 
 /* 确定按钮样式 */
 .confirm-btn {
-    background-color: #4CAF50; /* 绿色 */
+    background-color: rgba(213, 48, 47, 1); /* 绿色 */
     color: #fff;
 }
