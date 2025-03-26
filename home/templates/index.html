@@ -19,7 +19,7 @@
             <div class="group_6 flex-row justify-between">
                 <span class="text_1">抽奖码</span>
                 <div class="image-text_4 flex-row justify-between" onclick="showDesc()">
-                    <span class="text-group_1" >使用说明</span>
+                    <span class="text-group_1">使用说明</span>
                     <img
                             class="thumbnail_1"
                             referrerpolicy="no-referrer"
@@ -37,13 +37,13 @@
                 <input type="text" class="redeem_input flex-col" maxlength="4"></input>
             </div>
             {% if user.is_authenticated %}
-            <div class="button_redeem flex-col">
-                <button class="text_6" onclick="redemption()">立即抽奖</button>
-            </div>
+                <div class="button_redeem flex-col">
+                    <button class="text_6" onclick="redemption()">立即抽奖</button>
+                </div>
             {% else %}
-            <div class="button_redeem button_disabled flex-col">
-                <button  style="color: #d5d6dd;" class="text_6" disabled>登录抽奖</button>
-            </div>
+                <div class="button_redeem button_disabled flex-col">
+                    <button style="color: #d5d6dd;" class="text_6" disabled>登录抽奖</button>
+                </div>
             {% endif %}
 
         </div>
@@ -53,13 +53,15 @@
             </div>
             <div class="box_prize_list flex-row">
                 {% for item in series %}
-                <div class="box_prize flex-col justify-between">
-                    <img class="prize_image" src="{{ item.logo.url }}">
-                    <span class="prize_title">{{ item.name }}</span>
-                    <div class="prize_view flex-col">
-                        <button class="text_review" onclick="showPrizes({{ item.id }}, '{{ item.name }}')">查看奖品</button>
+                    <div class="box_prize flex-col justify-between">
+                        <img class="prize_image" src="{{ item.logo.url }}">
+                        <span class="prize_title">{{ item.name }}</span>
+                        <div class="prize_view flex-col">
+                            <button class="text_review" onclick="showPrizes({{ item.id }}, '{{ item.name }}')">
+                                查看奖品
+                            </button>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
             <div class="text-wrapper_18 flex-row">
@@ -105,19 +107,52 @@
                             src="{% static 'images/avatar.png' %}"
                     />
                     {% if user.is_authenticated %}
-                    <span class="text-group_3">你好，{{ user.mobile }}</span>
+                        <span class="text-group_3">你好，{{ user.mobile }}</span>
                     {% else %}
-                    <span class="text-group_3">登录同步兑换记录</span>
+                        <span class="text-group_3">登录同步兑换记录</span>
                     {% endif %}
                 </div>
                 {% if user.is_authenticated %}
-                <div class="text-wrapper_15 flex-col">
-                    <a class="text_20" href="{% url 'redemptions' %}">兑换记录</a>
-                </div>
+                    <div class="text-wrapper_15 flex-col">
+                        <a class="text_20" href="{% url 'redemptions' %}">兑换记录</a>
+                    </div>
                 {% else %}
-                <div class="text-wrapper_12 flex-col">
-                  <a class="text_17" href="{% url 'sign_in' %}">登录</a>
-                </div>
+                    <div class="text-wrapper_12 flex-col">
+                        <a class="text_17" onclick="showLogin()">登录</a>
+                        <div class="overlay_login" id="login_overlay">
+                            <div class="box_description">
+                                <div id="error-message" class="error-message" style="display: none;">无效手机号</div>
+                                <div class="box_description_header flex-row">
+                                    <img
+                                            class="box_description_close"
+                                            referrerpolicy="no-referrer"
+                                            id="login_close"
+                                            src="{% static 'images/close.png' %}"
+                                    />
+                                    <span class="box_description_title">登录/注册</span>
+                                </div>
+                                <form class="login-form" method="post" action="/account/login">
+                                    {% csrf_token %}
+                                    <img class="box_description_line" src="{% static 'images/line.png' %}"/>
+                                    <div class="login_phone_group flex-row">
+                                        <span class="region_code">+86</span>
+                                        <input type="text" id="phone" class="text_input" name="mobile"
+                                               placeholder="请输入手机号码"
+                                               required>
+                                    </div>
+                                    <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
+                                    <div class="login_code_group flex-row">
+                                        <input type="text" id="captcha" class="text_input captcha" name="captcha"
+                                               placeholder="请获取验证码"
+                                               maxlength="6" required disabled>
+                                        <span class="get_captcha" id="get-captcha">获取验证码</span>
+                                    </div>
+                                    <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
+                                    <button class="login_submit" type="submit" id="sign_in">登录/注册</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -133,8 +168,8 @@
             </div>
         </div>
     </div>
-
 </div>
 <script src="{% static 'javascript/home_index.js' %}"></script>
+<script src="{% static 'javascript/sign_in.js' %}"></script>
 </body>
 </html>

@@ -18,9 +18,23 @@ function startCountdown(seconds) {
     }, 1000);
 }
 
+
+function showMessage(content) {
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.style.display = 'block';
+    errorMessage.textContent = content;
+    setTimeout(() => {
+        errorMessage.style.display = 'none';
+    }, 3000);
+}
+
 // 模拟获取验证码
 captchaButton.addEventListener('click', () => {
     // 这里可以添加发送验证码的逻辑
+    if (captchaButton.textContent !== '获取验证码') {
+        showMessage('请稍后再试');
+        return false;
+    }
     const phone = document.getElementById('phone').value.replace(/\D/g, '');
     if (phone.length === 11) {
         const xhr = new XMLHttpRequest();
@@ -38,13 +52,7 @@ captchaButton.addEventListener('click', () => {
         }, 3000);
         startCountdown(60); // 60秒倒计时
     } else {
-        const errorMessage = document.getElementById('error-message');
-        errorMessage.style.display = 'block';
-        errorMessage.textContent = '请填写手机号';
-        // 5秒后隐藏提示信息
-        setTimeout(() => {
-            errorMessage.style.display = 'none';
-        }, 6000);
+        showMessage('手机号不能为空')
     }
 
 });

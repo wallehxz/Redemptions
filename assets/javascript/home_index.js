@@ -162,3 +162,19 @@ desc_close.addEventListener('click', (e) => {
 function showDesc() {
     desc_overlay.style.display = 'flex';
 }
+
+const login_overlay = document.getElementById('login_overlay');
+const login_close = document.getElementById('login_close');
+function showLogin() {
+    login_overlay.style.display = 'flex';
+}
+
+login_close.addEventListener('click', (e) => {
+    login_overlay.style.display = 'none';
+});
+
+login_overlay.addEventListener('click', (e) => {
+    if (e.target === login_overlay) {
+        login_overlay.style.display = 'none';
+    }
+});

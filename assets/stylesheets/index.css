@@ -833,3 +833,121 @@
     padding-right: 12px;
     margin: 12px 0 12px 0;
 }
+
+/*兑换说明*/
+.overlay_login {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.login-form {
+    height: 256px;
+}
+
+.login_phone_group {
+    width: 100%;
+    height: 21px;
+    margin: 26px 0 0 19px;
+}
+
+.region_code {
+    width: 40px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_input {
+    border: none;
+    outline: none;
+    width: 230px;
+    height: 25px;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.text_11 {
+    width: 105px;
+    height: 21px;
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 15px;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.login_form_line {
+    height: 1px;
+    margin: 9px 0 0 20px;
+    width: calc(100% - 40px);
+}
+
+.login_code_group {
+    width: 100%;
+    height: 21px;
+    margin: 20px 0 0 20px;
+}
+
+.captcha {
+    width: 150px;
+}
+
+.get_captcha {
+    width: calc(100% - 190px);
+    height: 21px;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    color: rgba(213, 48, 47, 1);
+    font-weight: normal;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.login_submit {
+    background-color: rgba(213, 48, 47, 1);
+    border-radius: 21px;
+    max-width: 450px;
+    height: 40px;
+    margin: 16px 20px;
+    display: flex;
+    color: #FFFFFF;
+    width: calc(100% - 40px);
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.error-message {
+    position: fixed;
+    bottom: 315px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #E65100;
+    color: white;
+    text-align: center;
+    max-width: 450px;
+    width: 85%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-in-out;
+}

@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import re
 
+
 def get_captcha(request):
     mobile = request.GET.get('mobile')
     user = Consumer.objects.filter(mobile=mobile).first()
@@ -13,18 +14,20 @@ def get_captcha(request):
     user.generate_captcha()
     return JsonResponse({'msg': 'successfully'})
 
+
 def login_user(request):
     if request.method == 'POST':
         mobile = request.POST.get('mobile')
         captcha = request.POST.get('captcha')
-        mobile = re.sub(r'\D', '',mobile)
+        mobile = re.sub(r'\D', '', mobile)
         user = Consumer.objects.filter(mobile=mobile).first()
         if user and user.check_captcha(captcha):
             login(request, user)
             user.login_at = datetime.now()
             user.save()
             return redirect('home')
-    return render(request,'sign_in.html')
+    return redirect('home')
+
 
 def logout_user(request):
     logout(request)
