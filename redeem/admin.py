@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import admin
 from django.http import JsonResponse, HttpResponse
 from simpleui.admin import AjaxAdmin
@@ -5,17 +7,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from django.utils.functional import lazy
 from datetime import datetime
-from series.models import Prize
 from .models import Redeem, Redemption
-
-
-def all_prizes():
-    obj_list = Prize.objects.all()
-    prize_list = []
-    for obj in obj_list:
-        prize_list.append({'key': obj.id, 'label': f"{obj.series.name}-{obj.name}"})
-    return prize_list
-
 
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
@@ -24,7 +16,8 @@ class RedeemAdmin(AjaxAdmin):
     list_filter = ['prize', 'status']
     search_fields = ['number']
 
-    actions = ['bulk_generate', 'export_data']
+    # actions = ['bulk_generate', 'export_data']
+    actions = ['export_data', 'bulk_generate']
 
     def series_name(self, obj):
         return obj.prize.series.name if obj.prize else ''
@@ -133,7 +126,7 @@ class RedeemAdmin(AjaxAdmin):
             'size': 'small',
             'value': '',
             'require': True,
-            'options': lazy(all_prizes),
+            'options': Redeem.prize_list(),
         }]
     }
 

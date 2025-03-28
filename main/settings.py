@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'testc',
+        'NAME': 'redeems',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -161,14 +161,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SIMPLEUI_CONFIG = {
     'system_keep': False,
-    'menu_display': ['问答助手', '兑换条码', '收货地址', '区域管理', '兑换记录', '奖品系列', '管理权限'],      # 开启排序和过滤功能, 不填此字段为默认排序和全部显示, 空列表[] 为全部不显示.
+    'menu_display': ['兑换条码', '收货地址', '区域管理', '兑换记录', '奖品系列', '管理权限'],      # 开启排序和过滤功能, 不填此字段为默认排序和全部显示, 空列表[] 为全部不显示.
     'dynamic': True,    # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时动态展示菜单内容
     'menus': [{
-        'name': '问答助手',
-        'icon': 'fas fa-solid fa-robot',
-        'url': 'https://yuanbao.tencent.com/',
-        'newTab': True,
-    }, {
         'app': 'auth',
         'name': '管理权限',
         'icon': 'fa-solid fa-user-shield',
