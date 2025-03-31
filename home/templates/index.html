@@ -160,6 +160,8 @@
     </div>
 </div>
 <script src="{% static 'javascript/home_index.js' %}"></script>
-<script src="{% static 'javascript/sign_in.js' %}"></script>
+{% if user.is_authenticated == False %}
+    <script src="{% static 'javascript/sign_in.js' %}"></script>
+{% endif %}
 </body>
 </html>

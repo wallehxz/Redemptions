@@ -1,5 +1,5 @@
-.venv
 *.py[cod]
 *.DS_Store
+.idea/
 media/*
 __pycache__/
