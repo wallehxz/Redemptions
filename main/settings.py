@@ -82,15 +82,15 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'redeems',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'redemptions',
+        'USER': 'root',
+        'PASSWORD': '@hxZ7355608',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '3306',
         'OPTIONS': {
-            'client_encoding': 'UTF8',  # 确保客户端使用 UTF-8
-        },
+            'charset': 'utf8mb4',
+        }
     }
 }
 
@@ -210,3 +210,8 @@ SIMPLEUI_CONFIG = {
         'url': 'redeem/redemption/',
     }]
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100MB（默认 2.5MB）
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600   # 100MB（默认 2.5MB）
+ALIYUN_API_KEY = 'AAAAAAAAAAAAAAAAAAAA'
+ALIYUN_API_SECRET = 'BBBBBBBBBBBBBBBBBBBB'
