@@ -2,6 +2,8 @@ import random
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
+from utils.aliyun_sms import send_sms
+from django.conf import settings
 
 
 class Consumer(AbstractUser):
@@ -20,14 +22,12 @@ class Consumer(AbstractUser):
 
     def generate_captcha(self):
         chars = '0123456789'
-        # numbers = ''.join(random.choices(chars, k=6))
-        numbers = '123456'
+        numbers = ''.join(random.choices(chars, k=6))
         cache.set(f'captcha_{self.mobile}', numbers, timeout=300)  # 5分钟有效
         self.send_message(numbers)
 
     def send_message(self, message):
-        content = f'【泡泡玛特】您的验证码是：{message}，有效期5分钟，请勿泄露给他人。'
-        print(content)
+        send_sms(self.mobile, message)
 
     def check_captcha(self, captcha):
         print(cache.get(f'captcha_{self.mobile}'))

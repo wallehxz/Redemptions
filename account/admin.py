@@ -68,7 +68,7 @@ class RegionAdmin(AjaxAdmin):
         if Region.objects.all().count() > 100:
             return JsonResponse(data={
                 'status': 'error',
-                'msg': '已有区域数据，请勿重复导入'
+                'msg': '已存在省市区域数据!'
             })
         else:
             json_file = request.FILES['upload']
