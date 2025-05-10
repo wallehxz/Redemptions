@@ -119,7 +119,7 @@
 }
 
 .text_6 {
-    width: 70px;
+    width: 73px;
     height: 21px;
     overflow-wrap: break-word;
     color: rgba(51, 51, 51, 1);
@@ -132,7 +132,7 @@
 }
 
 .province_select {
-    width: calc(100% - 80px);
+    width: calc(100% - 85px);
 }
 
 .form_group {
@@ -158,7 +158,7 @@
 }
 
 .text_7 {
-    width: 65px;
+    width: 70px;
     height: 21px;
     overflow-wrap: break-word;
     color: rgba(51, 51, 51, 1);

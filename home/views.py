@@ -44,28 +44,35 @@ def redemption(request):
         redeem = Redeem.objects.filter(Q(number=redeem_code) & Q(status=0)).first()
         if redeem:
             prize = redeem.prize
-            if prize.inventory > 0:
-                prize.inventory -= 1
-                prize.save()
+            if prize:
+                if prize.inventory > 0:
+                    prize.inventory -= 1
+                    prize.save()
+                    redeem.status = 1
+                    redeem.save()
+                    new_redemption = Redemption.objects.create(redeem_id=redeem.id, consumer_id=request.user.id,
+                                                               prize_id=prize.id)
+                    default_shipping = Shipping.objects.filter(Q(is_default=True) & Q(consumer_id=request.user.id)).first()
+                    if default_shipping:
+                        new_redemption.shipping_id = default_shipping.id
+                        new_redemption.save()
+                    return JsonResponse({'status': 'success', 'msg': f'获得奖品【{prize.name}】一件', 'id': new_redemption.id})
+                else:
+                    return JsonResponse({'status': 'warning', 'msg': f'奖品库存不足，我们会尽快补货！'})
+            else:
                 redeem.status = 1
                 redeem.save()
-                new_redemption = Redemption.objects.create(redeem_id=redeem.id, consumer_id=request.user.id,
-                                                           prize_id=prize.id)
-                default_shipping = Shipping.objects.filter(Q(is_default=True) & Q(consumer_id=request.user.id)).first()
-                if default_shipping:
-                    new_redemption.shipping_id = default_shipping.id
-                    new_redemption.save()
-                return JsonResponse({'status': 'success', 'msg': f'获得奖品【{prize.name}】一件'})
-            else:
-                return JsonResponse({'status': 'warning', 'msg': f'奖品库存不足，我们会尽快完成补货！'})
+                redemption = Redemption.objects.create(redeem_id=redeem.id, consumer_id=request.user.id)
+                redemption.save()
+                return JsonResponse({'status': 'warning', 'msg': '很遗憾，未能抽中奖品，感谢参与'})
         else:
-            return JsonResponse({'status': 'error', 'msg': '无效的抽奖码'})
+            return JsonResponse({'status': 'error', 'msg': '无效抽奖码'})
 
 
 def redemptions(request):
     if request.user is None:
         return redirect('sign_in')
-    redemption_list = Redemption.objects.filter(consumer_id=request.user.id).order_by('-created_at')
+    redemption_list = Redemption.objects.filter(consumer_id=request.user.id,prize__isnull=False).order_by('-created_at')
     shipping_list = Shipping.objects.filter(consumer_id=request.user.id).all()
     return render(request, 'redemptions.html', locals())
 
@@ -106,7 +113,7 @@ def create_shipping(request):
     if request.method == 'POST':
         data = post_data(request.body)
         consumer_id = request.user.id
-        is_default = data.get('id_default')
+        is_default = data.get('is_default')
         redemption_id = data.get('redemption_id')
         if is_default == 'true':
             Shipping.objects.filter(Q(consumer_id=consumer_id) & Q(is_default=True)).update(is_default=False)

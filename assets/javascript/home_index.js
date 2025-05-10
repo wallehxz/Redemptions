@@ -33,6 +33,9 @@ const prizeList = document.querySelector('.prize-list');
 
 // 点击按钮，显示遮罩层并加载奖品列表
 function showPrizes(seriesId, seriesName) {
+    document.body.style.overflowY = 'hidden';
+    document.body.style.position = 'fixed'; // 防止页面跳动
+
     // 更新遮罩层标题
     seriesTitle.textContent = `${seriesName}奖品`;
     // 清空奖品列表
@@ -52,6 +55,9 @@ function showPrizes(seriesId, seriesName) {
             `;
                 prizeList.appendChild(prizeItem);
             });
+            if (data.length === 1) {
+                document.body.style.overflowX = 'hidden';
+            }
 
             // 显示遮罩层
             overlay.style.display = 'flex';
@@ -68,12 +74,18 @@ function showPrizes(seriesId, seriesName) {
 // 点击关闭按钮，隐藏遮罩层
 closeBtn.addEventListener('click', () => {
     overlay.style.display = 'none';
+    document.body.style.overflowY = '';
+    document.body.style.overflowX = '';
+    document.body.style.position = '';
 });
 
 // 点击遮罩层外部，隐藏遮罩层
 overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
         overlay.style.display = 'none';
+        document.body.style.overflowY = '';
+        document.body.style.overflowX = '';
+        document.body.style.position = '';
     }
 });
 
@@ -97,6 +109,9 @@ function redemption() {
         .then(response => response.json()) // 解析响应为 JSON
         .then(result => {
             showNotification(result.msg, result.status)
+            if (result.status === 'success') {
+                location.href = `/redemptions/show/${result.id}`;
+            }
         })
         .catch(error => {
             showNotification(result.msg)
@@ -115,7 +130,8 @@ function showNotification(message, type = 'success') {
     // 5 秒后隐藏通知
     setTimeout(() => {
         notification.classList.remove('show');
-    }, 3000); // 5000 毫秒 = 5 秒
+        notification.classList.remove(type);
+    }, 5000); // 5000 毫秒 = 5 秒
 }
 
 const desc_overlay = document.getElementById('desc_overlay');

@@ -15,7 +15,7 @@
     <div class="box_container flex-col">
         <div class="box_navigation flex-col">
             <div class="menu-wrapper flex-row justify-between">
-                <a class="text_menu active" >全部抽奖记录</a>
+                <a class="text_menu active">全部抽奖记录</a>
                 <a class="text_menu" href="{% url 'redemptions' %}">中奖记录</a>
                 <a class="text_menu" href="{% url 'shipping' %}">收货地址</a>
             </div>
@@ -23,32 +23,128 @@
         {% if redemption_list.count > 0 %}
         <div class="box_redemptions flex-col">
             {% for item in redemption_list %}
+            {% if item.prize %}
             <div class="box_redemption_list flex-col">
+                <a href="/redemptions/show/{{ item.id }}" style="text-decoration: none;">
+                    <div class="box_redeem flex-row justify-between">
+                        <div class="box_redeem_prize flex-row justify-between">
+                            <img class="prize_img flex-col"
+                                 src="{{ item.prize.logo.url }}"></img>
+                            <div class="prize_info flex-col justify-between">
+                                <span class="prize_name">{{ item.prize.name }}</span>
+                                <span class="redemption_info">{{ item.redeem.number }}</span>
+                                <span class="redemption_info">{{ item.created_at }}</span>
+                            </div>
+                        </div>
+                        <img class="right_arrow" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                    </div>
+                </a>
+                <div class="logistics_info flex-row">
+                    <div class="logistics_img flex-row justify-between">
+                        <img
+                                class="logistics_truck"
+                                referrerpolicy="no-referrer"
+                                src="{% static 'images/logistics_truck.png' %}"
+                        />
+                        <span class="logistics_title">物流信息</span>
+                    </div>
+                    {% if item.shipping_id %}
+                        {% if item.express_order  %}
+                            <span class="logistics_status">{{ item.express_name }}&nbsp;{{ item.express_order }}</span>
+                            <span class="logistics_action cope_express" onclick="copyToClipboard('{{ item.express_order }}')">复制</span>
+                        {% else %}
+                            <span class="logistics_status">{{ item.get_status_display }}</span>
+                        {% endif %}
+                    {% else %}
+                        {% if shipping_list.count > 0 %}
+                            <div class="dynamic-select">
+                                <select data-record-id="{{ item.id }}" class="select_shipping">
+                                    <option value="">请选择收货地址</option>
+                                    {% for address in shipping_list %}
+                                        <option value="{{ address.id }}" {% if item.shipping_id == address.id %}
+                                                selected {% endif %} >
+                                            {{ address.full_address }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <span class="logistics_status">未填写收货地址</span>
+                            <a class="logistics_action add_shipping" href="/shipping/new?redemption_id={{ item.id }}">添加收货地址</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="box_redemption_list box_no_prize flex-col">
                 <div class="box_redeem flex-row justify-between">
                     <div class="box_redeem_prize flex-row justify-between">
                         <img class="prize_img flex-col"
-                             src="{{ item.prize.logo.url }}"></img>
+                             src="{% static 'images/no_prize.jpg' %}"></img>
                         <div class="prize_info flex-col justify-between">
-                            <span class="prize_name">{{ item.prize.name }}</span>
+                            <span class="prize_name">未抽中奖品</span>
                             <span class="redemption_info">{{ item.redeem.number }}</span>
                             <span class="redemption_info">{{ item.created_at }}</span>
                         </div>
                     </div>
-                    <a href="/redemptions/show/{{ item.id }}">
-                        <img class="right_arrow" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
-                    </a>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         {% else %}
         <div class="no_redemption flex-col">
             <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
-            <span>暂无抽奖记录</span>
+            <span>暂无中奖记录</span>
         </div>
         </div>
         {% endif %}
     </div>
 <script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'javascript/select2.js' %}"></script>
+<script>
+    function copyToClipboard(text) {
+        // 使用 Clipboard API 复制内容
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert('物流单号: ' + text);
+            })
+            .catch((err) => {
+                console.error('复制失败: ', err);
+            });
+    }
+
+    $(document).ready(function () {
+        // 获取所有 <select> 元素
+        const selectElements = $('select');
+
+        // 遍历每个 <select> 元素并初始化 Select2
+        selectElements.each(function () {
+            $(this).select2({
+                placeholder: '请选择收货地址',
+                width: '230px',
+            });
+        });
+
+        $('.select_shipping').on('change', function () {
+            const selectedValue = $(this).val();
+            const recordId = $(this).data('record-id');
+            if (selectedValue) {
+                $.ajax({
+                    url: '/set_redemption_shipping',
+                    method: 'POST',
+                    data: {
+                        redemption_id: recordId,
+                        shipping_id: selectedValue,
+                    },
+                    success: function (response) {
+
+                    },
+                });
+                window.location.reload();
+            }
+        });
+    });
+</script>
 </body>
 </html>
