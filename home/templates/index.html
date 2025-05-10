@@ -42,7 +42,7 @@
                 </div>
             {% else %}
                 <div class="button_redeem button_disabled flex-col">
-                    <button style="color: #d5d6dd;" class="text_6" disabled>登录抽奖</button>
+                    <button class="text_6">登录抽奖</button>
                 </div>
             {% endif %}
 
@@ -110,7 +110,7 @@
                 </div>
                 {% if user.is_authenticated %}
                     <div class="text-wrapper_15 flex-col">
-                        <a class="text_20" href="{% url 'redemptions' %}">兑换记录</a>
+                        <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
                     </div>
                 {% else %}
                     <div class="text-wrapper_12 flex-col">

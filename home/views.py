@@ -59,7 +59,7 @@ def redemption(request):
             else:
                 return JsonResponse({'status': 'warning', 'msg': f'奖品库存不足，我们会尽快完成补货！'})
         else:
-            return JsonResponse({'status': 'error', 'msg': '无效的抽将码!'})
+            return JsonResponse({'status': 'error', 'msg': '无效的抽奖码'})
 
 
 def redemptions(request):
@@ -68,6 +68,15 @@ def redemptions(request):
     redemption_list = Redemption.objects.filter(consumer_id=request.user.id).order_by('-created_at')
     shipping_list = Shipping.objects.filter(consumer_id=request.user.id).all()
     return render(request, 'redemptions.html', locals())
+
+
+def all_history(request):
+    if request.user is None:
+        return redirect('sign_in')
+    redemption_list = Redemption.objects.filter(consumer_id=request.user.id).order_by('-created_at')
+    shipping_list = Shipping.objects.filter(consumer_id=request.user.id).all()
+    return render(request, 'all_history.html', locals())
+
 
 
 def shipping(request):

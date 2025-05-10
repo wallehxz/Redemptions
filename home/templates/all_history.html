@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>中奖记录</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/redeem_shipping.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link href="{% static 'stylesheets/select2.css' %}" rel="stylesheet" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu active" >全部抽奖记录</a>
+                <a class="text_menu" href="{% url 'redemptions' %}">中奖记录</a>
+                <a class="text_menu" href="{% url 'shipping' %}">收货地址</a>
+            </div>
+        </div>
+        {% if redemption_list.count > 0 %}
+        <div class="box_redemptions flex-col">
+            {% for item in redemption_list %}
+            <div class="box_redemption_list flex-col">
+                <div class="box_redeem flex-row justify-between">
+                    <div class="box_redeem_prize flex-row justify-between">
+                        <img class="prize_img flex-col"
+                             src="{{ item.prize.logo.url }}"></img>
+                        <div class="prize_info flex-col justify-between">
+                            <span class="prize_name">{{ item.prize.name }}</span>
+                            <span class="redemption_info">{{ item.redeem.number }}</span>
+                            <span class="redemption_info">{{ item.created_at }}</span>
+                        </div>
+                    </div>
+                    <a href="/redemptions/show/{{ item.id }}">
+                        <img class="right_arrow" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no_redemption flex-col">
+            <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
+            <span>暂无抽奖记录</span>
+        </div>
+        </div>
+        {% endif %}
+    </div>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

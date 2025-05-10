@@ -204,7 +204,7 @@
 }
 
 .button_disabled {
-    background-color: #f7f7fb;
+    background-color: rgba(213, 48, 47, 0.4);
 }
 
 .box_series {
@@ -549,9 +549,8 @@
 }
 
 .text-wrapper_18 {
-    width: 77px;
-    height: 20px;
-    margin: 20px 0 12px 139px;
+    justify-content: center;
+    align-items: center;
 }
 
 .text_19 {
@@ -838,6 +837,7 @@
     white-space: nowrap;
     line-height: 22px;
     padding-top: 10px;
+    padding-right: 40px;
 }
 
 .box_description_line {
@@ -897,7 +897,7 @@
     border: none;
     outline: none;
     width: 230px;
-    height: 25px;
+    height: 20px;
     overflow-wrap: break-word;
     font-size: 16px;
     font-weight: normal;

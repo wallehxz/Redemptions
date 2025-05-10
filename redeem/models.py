@@ -42,13 +42,11 @@ class Redeem(models.Model):
 
     @classmethod
     def prize_list(cls):
-        if connection.introspection.table_names():
-            obj_list = Prize.objects.all()
-            prize_list = []
-            for obj in obj_list:
-                prize_list.append({'key': obj.id, 'label': f"{obj.series.name}-{obj.name}"})
-            return prize_list
-        return []
+        obj_list = Prize.objects.all()
+        prize_list = []
+        for obj in obj_list:
+            prize_list.append({'key': obj.id, 'label': f"{obj.series.name}-{obj.name}"})
+        return prize_list
 
 
 class Redemption(models.Model):

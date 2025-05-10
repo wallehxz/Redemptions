@@ -7,6 +7,7 @@ urlpatterns = [
     path('redemption', views.redemption, name='redemption'),
     path('redemptions', views.redemptions, name='redemptions'),
     path('shipping', views.shipping, name='shipping'),
+    path('all_history', views.all_history, name='all_history'),
     path('region_children', views.region_children, name='region_children'),
     path('create_shipping', views.create_shipping, name='create_shipping'),
     path('set_default_shipping', views.set_default_shipping, name='set_default_shipping'),

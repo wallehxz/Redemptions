@@ -163,7 +163,7 @@ def percent_code(encoded_str):
 def send_sms(phone_number, code):
     request = SignatureRequest()
     request.query_param['PhoneNumbers'] = phone_number
-    request.query_param['SignName'] = '福赏'
+    request.query_param['SignName'] = '北京福赏福赏科技'
     request.query_param['TemplateCode'] = 'SMS_317840165'
     request.query_param['TemplateParam'] = {"code": code}
     request.sorted_query_params()

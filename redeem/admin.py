@@ -73,7 +73,8 @@ class RedeemAdmin(AjaxAdmin):
                     'msg': '前缀系列ODE长度不足4个字符'
                 })
             for i in range(0, int(total)):
-                redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix), prize_id=request.POST.get('prize')))
+                # redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix), prize_id=request.POST.get('prize')))
+                redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix)))
         else:
             for i in range(0, int(total)):
                 redeem_list.append(Redeem(number=Redeem.generate_number(), prize_id=request.POST.get('prize')))
@@ -118,16 +119,18 @@ class RedeemAdmin(AjaxAdmin):
             'width': '300px',
             'label': '数量',
             'require': True
-        }, {
-            'type': 'select',
-            'key': 'prize',
-            'label': '奖品',
-            'width': '300px',
-            'size': 'small',
-            'value': '',
-            'require': True,
-            'options': Redeem.prize_list(),
         }]
+        #{
+        #     'type': 'select',
+        #     'key': 'prize',
+        #     'label': '奖品',
+        #     'width': '300px',
+        #     'size': 'small',
+        #     'value': '',
+        #     'require': True,
+        #     'options': Redeem.prize_list(),
+        # }]
+
     }
 
 
