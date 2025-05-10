@@ -97,11 +97,13 @@
         <div class="box_user flex-col">
             <div class="section_2 flex-row justify-between">
                 <div class="image-text_6 flex-row justify-between">
-                    <img
-                            class="label_2"
-                            referrerpolicy="no-referrer"
-                            src="{% static 'images/avatar.png' %}"
-                    />
+                    <a href="/account/logout" title="登出">
+                        <img
+                                class="label_2"
+                                referrerpolicy="no-referrer"
+                                src="{% static 'images/avatar.png' %}"
+                        />
+                    </a>
                     {% if user.is_authenticated %}
                         <span class="text-group_3">你好，{{ user.mobile }}</span>
                     {% else %}
