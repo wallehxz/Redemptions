@@ -15,7 +15,7 @@
     <div class="box_container flex-col">
         <div class="box_navigation flex-col">
             <div class="menu-wrapper flex-row justify-between">
-                <a class="text_menu active">全部抽奖记录</a>
+                <a class="text_menu active">抽奖记录</a>
                 <a class="text_menu" href="{% url 'redemptions' %}">中奖记录</a>
                 <a class="text_menu" href="{% url 'shipping' %}">收货地址</a>
             </div>
@@ -95,7 +95,7 @@
         {% else %}
         <div class="no_redemption flex-col">
             <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
-            <span>暂无中奖记录</span>
+            <span>暂无抽奖记录</span>
         </div>
         </div>
         {% endif %}

@@ -3,9 +3,9 @@ from django.utils.html import format_html
 
 from .models import Series, Prize
 
-admin.site.site_header = '福尚管理后台'
-admin.site.site_title = '福尚管理后台'
-admin.site.index_title = '福尚管理后台'
+admin.site.site_header = '福赏管理'
+admin.site.site_title = '福赏'
+admin.site.index_title = '福赏管理系统'
 
 @admin.register(Series)
 class SeriesAdmin(admin.ModelAdmin):

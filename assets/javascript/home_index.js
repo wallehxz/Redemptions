@@ -34,7 +34,7 @@ const prizeList = document.querySelector('.prize-list');
 // 点击按钮，显示遮罩层并加载奖品列表
 function showPrizes(seriesId, seriesName) {
     document.body.style.overflowY = 'hidden';
-    document.body.style.position = 'fixed'; // 防止页面跳动
+    // document.body.style.position = 'fixed'; // 防止页面跳动
 
     // 更新遮罩层标题
     seriesTitle.textContent = `${seriesName}奖品`;
@@ -56,7 +56,7 @@ function showPrizes(seriesId, seriesName) {
                 prizeList.appendChild(prizeItem);
             });
             if (data.length === 1) {
-                document.body.style.overflowX = 'hidden';
+                document.querySelector('.prize-container').style.overflowX = 'hidden';
             }
 
             // 显示遮罩层
@@ -75,8 +75,8 @@ function showPrizes(seriesId, seriesName) {
 closeBtn.addEventListener('click', () => {
     overlay.style.display = 'none';
     document.body.style.overflowY = '';
-    document.body.style.overflowX = '';
-    document.body.style.position = '';
+    document.querySelector('.prize-container').style.overflowX = 'auto';
+    // document.body.style.position = '';
 });
 
 // 点击遮罩层外部，隐藏遮罩层
@@ -84,8 +84,8 @@ overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
         overlay.style.display = 'none';
         document.body.style.overflowY = '';
-        document.body.style.overflowX = '';
-        document.body.style.position = '';
+        document.querySelector('.prize-container').style.overflowX = 'auto';
+        // document.body.style.position = '';
     }
 });
 
