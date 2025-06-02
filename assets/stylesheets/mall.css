@@ -3,12 +3,12 @@
     left: 0;
     width: 100%;
     height: 180px;
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng79a8b510b7d3fa4cb8a52162a88308cff1d96f41287d6f07859595fd6f0412a5) 100% no-repeat;
+    background: url('/assets/images/mall_head.png') 100% no-repeat;
     background-size: 100% 100%;
 }
 
 .box_tip {
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdb9504f7ff6f23b57eacf6c970adb232752ff601198f3b21f45cebb854b03df6) 100% no-repeat;
+    background: url('/assets/images/mall_tip_backgroud.png') 100% no-repeat;
     background-size: 100% 100%;
     padding: 7px 97px 6px 98px;
 }
@@ -27,7 +27,7 @@
 .group_menu {
     position: relative;
     height: 98px;
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngffbb4b3332b0173f954b3a88d2d463dca51697f46f3717a844117fe5c28815de) 100% no-repeat;
+    background: url('/assets/images/mall_menu_backgroud.png') 100% no-repeat;
     background-size: 100% 100%;
     margin-top: 52px;
 }
