@@ -60,7 +60,7 @@ class Shipping(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f"{self.nick_name}-{self.address}"
+        return self.full_address()
 
     def full_address(self):
         return f"{self.province}{self.city}{self.district}{self.street}{self.address}"

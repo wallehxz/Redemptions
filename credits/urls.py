@@ -7,5 +7,6 @@ urlpatterns = [
     path('transactions', views.transactions, name='transactions'),
     path('harvest', views.harvest, name='harvest'),
     path('product_detail/<int:product_id>', views.product_detail, name='product_detail'),
+    path('redemption/<int:order_id>', views.redemption, name='redemption'),
     path('exchange_product', views.exchange_product, name='exchange_product'),
 ]

@@ -117,9 +117,7 @@ function redeemProduct() {
         },
         success: function (response) {
             if (response.status === 'success') {
-                // 兑换成功处理
-                alert('兑换成功！订单号：' + response.order_number);
-                window.location.href = '/credits/redeem_history';
+                window.location.href = '/credits/redemption/' + response.order_id;
             } else {
                 showNotice(response.msg, response.status);
             }

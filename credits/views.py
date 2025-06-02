@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from home.views import post_data
 from account.models import Shipping, Region
 from credits.models import Product, RedemptionCode, PointsTransaction, ProductSpec, ExchangeOrder
+from redeem.models import Redemption
 
 
 def mall(request):
@@ -103,4 +104,10 @@ def exchange_product(request):
             transaction_type='exchange',
             description=note_string
         )
-        return JsonResponse({'status': 'success', 'msg': '恭喜！商品兑换成功', 'order_number': order.order_number})
+        return JsonResponse({'status': 'success', 'order_id': order.id})
+
+
+def redemption(request, order_id):
+    redemption = ExchangeOrder.objects.filter(Q(id=order_id) & Q(user=request.user)).first()
+    redemption
+    return render(request, "redemption.html", locals())

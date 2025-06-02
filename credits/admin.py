@@ -119,5 +119,12 @@ class PointsTransactionAdmin(AjaxAdmin):
 class ExchangeOrderAdmin(AjaxAdmin):
     list_filter = ('status',)
     search_fields = ['user__mobile', 'tracking_number']
-    list_display = ('user', 'tracking_number', 'status', 'note', 'harvest','created_at')
+    list_display = ('user', 'express', 'status', 'note', 'harvest','created_at')
+
+    def express(self, obj):
+        if obj.tracking_number:
+            return f"{obj.express_name} - {obj.tracking_number}"
+        else:
+            return "--"
+    express.short_description = '快递信息'
 

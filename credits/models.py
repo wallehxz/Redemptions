@@ -110,6 +110,18 @@ class ExchangeOrder(models.Model):
         ('completed', '已完成'),
         ('cancelled', '已取消'),
     )
+    EXPRESS = (
+        ('顺丰速运', '顺丰速运'),
+        ('京东物流', '京东物流'),
+        ('中通快递', '中通快递'),
+        ('圆通速递', '圆通速递'),
+        ('申通快递', '申通快递'),
+        ('韵达快递', '韵达快递'),
+        ('百世快递', '百世快递'),
+        ('邮政快递', '邮政快递'),
+        ('德邦快递', '德邦快递'),
+        ('极兔速递', '极兔速递'),
+    )
 
     order_number = models.CharField(max_length=50, unique=True, blank=True, null=True, verbose_name='订单编号')
     user = models.ForeignKey(Consumer, on_delete=models.CASCADE, related_name='exchange_orders', verbose_name='用户订单')
@@ -119,6 +131,7 @@ class ExchangeOrder(models.Model):
     total_points = models.DecimalField(verbose_name='总福力', max_digits=10, decimal_places=2)
     harvest = models.ForeignKey(Shipping, on_delete=models.PROTECT, verbose_name='收货地址')
     status = models.CharField(verbose_name='订单状态', max_length=20, choices=ORDER_STATUS, default='pending')
+    express_name = models.CharField(max_length=50, choices=EXPRESS, null=True, blank=True, verbose_name='快递公司')
     tracking_number = models.CharField('物流单号', max_length=50, blank=True, null=True)
     note = models.TextField('备注', blank=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
@@ -143,8 +156,14 @@ class ExchangeOrder(models.Model):
                 self.order_number = f"{timestamp}{next_id:05d}"
                 super().save(*args, **kwargs)
         else:
+            if self.pk:
+                old = ExchangeOrder.objects.get(pk=self.pk)
+                if old.tracking_number != self.tracking_number:
+                    self.status = 'shipped'
+                if self.tracking_number is None and self.status != 'pending':
+                    self.status = 'pending'
+                    self.express_name = None
             super().save(*args, **kwargs)
 
     def total(self):
         return int(self.total_points)
-
