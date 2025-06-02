@@ -87,22 +87,24 @@
 }
 
 .product_image {
-    width: 51px;
-    height: 54px;
+    width: 55px;
 }
 
 .product_info_content {
     margin-top: 1px;
+        margin-left: 6px;
 }
 
 .redemption_name {
-    overflow-wrap: break-word;
+    display: flex;
+    width: 60vw;
+    overflow-wrap: break-word; /* 更现代的替代属性 */
+    /* 可选：控制对齐 */
+    text-align: justify; /* 两端对齐 */
     color: rgba(51, 51, 51, 1);
     font-size: 15px;
     font-family: PingFangSC-Semibold, serif;
     font-weight: 600;
-    text-align: justify;
-    white-space: nowrap;
     line-height: 21px;
 }
 
@@ -271,13 +273,15 @@
 }
 
 .trans_desc {
-    overflow-wrap: break-word;
+    display: flex;
+    width: 75vw;
+    overflow-wrap: break-word; /* 更现代的替代属性 */
+    /* 可选：控制对齐 */
+    text-align: justify; /* 两端对齐 */
     color: rgba(51, 51, 51, 1);
     font-size: 15px;
     font-family: PingFangSC-Semibold, serif;
     font-weight: 600;
-    text-align: justify;
-    white-space: nowrap;
     line-height: 21px;
     margin-right: 36px;
 }
