@@ -22,6 +22,7 @@
                 <div class="text-wrapper_6 flex-row justify-between">
                     <span class="text_2">收货人</span>
                     <input id="name" class="text_3" placeholder="姓名" value="{{ address.nick_name }}" required>
+                    <input type="hidden" id="shipping_id" value="{{ shipping_id }}">
                 </div>
                 <img
                         class="image_2"
@@ -134,14 +135,17 @@
     desc_overlay.addEventListener('click', (e) => {
         if (e.target === desc_overlay) {
             desc_overlay.style.display = 'none';
+            document.body.style.position = '';
         }
     });
 
     desc_close.addEventListener('click', (e) => {
         desc_overlay.style.display = 'none';
+        document.body.style.position = '';
     });
 
     function showDesc() {
+        document.body.style.position = 'fixed'; // 防止页面跳动
         desc_overlay.style.display = 'flex';
     }
 </script>

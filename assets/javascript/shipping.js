@@ -3,6 +3,7 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
     e.preventDefault(); // 阻止表单默认提交行为
 
     // 获取表单数据
+    const shipping_id = document.getElementById('shipping_id').value;
     const redemption_id = document.getElementById('redemption_id').value;
     const redirect_path = document.getElementById('redirect_path').value;
     const nick_name = document.getElementById('name').value;
@@ -53,6 +54,7 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
         url: '/create_shipping', // 动态 URL
         method: 'POST',
         data: {
+            shipping_id: shipping_id,
             redemption_id: redemption_id,
             nick_name: nick_name,
             mobile: mobile,

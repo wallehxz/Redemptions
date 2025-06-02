@@ -114,13 +114,14 @@ def create_shipping(request):
         consumer_id = request.user.id
         is_default = data.get('is_default')
         redemption_id = data.get('redemption_id')
+        shipping_id = int(data.get('shipping_id'))
         if is_default == 'true':
             Shipping.objects.filter(Q(consumer_id=consumer_id) & Q(is_default=True)).update(is_default=False)
             is_default = True
         else:
             is_default = False
-        if data.get('id'):
-            old_shipping = Shipping.objects.get(id=data.get('id'))
+        if shipping_id > 0:
+            old_shipping = Shipping.objects.get(id=shipping_id)
             old_shipping.nick_name = data.get('nick_name')
             old_shipping.mobile = data.get('mobile')
             old_shipping.province = data.get('province')
@@ -194,8 +195,8 @@ def new_shipping(request):
         return redirect('sign_in')
     redemption_id = request.GET.get('redemption_id', '')
     redirect_path = request.GET.get('redirect_path', '')
-    shipping_id = request.GET.get('id')
-    if shipping_id:
+    shipping_id = request.GET.get('id', 0)
+    if int(shipping_id) > 0:
         address = Shipping.objects.filter(id=shipping_id).first()
     return render(request, 'new_shipping.html', locals())
 # Create your views here.
