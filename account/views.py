@@ -19,12 +19,15 @@ def login_user(request):
     if request.method == 'POST':
         mobile = request.POST.get('mobile')
         captcha = request.POST.get('captcha')
+        redirect_path = request.POST.get('redirect_path')
         mobile = re.sub(r'\D', '', mobile)
         user = Consumer.objects.filter(mobile=mobile).first()
         if user and user.check_captcha(captcha):
             login(request, user)
             user.login_at = datetime.now()
             user.save()
+            if redirect_path:
+                return redirect(redirect_path)
             return redirect('home')
     return redirect('home')
 

@@ -66,6 +66,7 @@
                         </div>
                         <form class="login-form" method="post" action="/account/login">
                             {% csrf_token %}
+                            <input type="hidden" name="redirect_path" value="mall">
                             <img class="box_description_line" src="{% static 'images/line.png' %}"/>
                             <div class="login_phone_group flex-row">
                                 <span class="region_code">+86</span>
