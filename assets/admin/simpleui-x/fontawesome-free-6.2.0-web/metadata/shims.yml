@@ -588,7 +588,7 @@ usd:
   name: dollar-sign
 user-circle-o:
   prefix: far
-  name: circle-account
+  name: circle-user
 vcard:
   name: address-card
 vcard-o:

@@ -5025,7 +5025,7 @@ chalkboard-user:
     - 5.0.13
     - 6.0.0-beta1
     - 6.2.0
-  label: Chalkboard account
+  label: Chalkboard user
   search:
     terms: []
   styles:
@@ -6199,7 +6199,7 @@ circle-up:
 circle-user:
   aliases:
     names:
-      - account-circle
+      - user-circle
     unicodes:
       composite:
         - f2be
@@ -6214,7 +6214,7 @@ circle-user:
     - 5.11.1
     - 6.0.0-beta1
     - 6.2.0
-  label: Circle account
+  label: Circle user
   search:
     terms: []
   styles:
@@ -14796,7 +14796,7 @@ house-tsunami:
 house-user:
   aliases:
     names:
-      - home-account
+      - home-user
   changes:
     - 6.0.0-beta1
     - 6.0.0-beta2
@@ -27655,7 +27655,7 @@ user-clock:
 user-doctor:
   aliases:
     names:
-      - account-md
+      - user-md
     unicodes:
       secondary:
         - 10f0f0
@@ -27679,7 +27679,7 @@ user-doctor:
 user-gear:
   aliases:
     names:
-      - account-cog
+      - user-cog
     unicodes:
       secondary:
         - 10f4fe
@@ -27713,7 +27713,7 @@ user-graduate:
 user-group:
   aliases:
     names:
-      - account-friends
+      - user-friends
     unicodes:
       composite:
         - 1f465
@@ -27749,7 +27749,7 @@ user-injured:
 user-large:
   aliases:
     names:
-      - account-alt
+      - user-alt
     unicodes:
       secondary:
         - 10f406
@@ -27769,7 +27769,7 @@ user-large:
 user-large-slash:
   aliases:
     names:
-      - account-alt-slash
+      - user-alt-slash
     unicodes:
       secondary:
         - 10f4fa
@@ -27855,7 +27855,7 @@ user-nurse:
 user-pen:
   aliases:
     names:
-      - account-edit
+      - user-edit
     unicodes:
       secondary:
         - 10f4ff
@@ -27978,7 +27978,7 @@ user-tie:
 user-xmark:
   aliases:
     names:
-      - account-times
+      - user-times
     unicodes:
       secondary:
         - 10f235

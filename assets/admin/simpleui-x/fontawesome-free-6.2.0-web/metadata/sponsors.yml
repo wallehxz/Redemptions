@@ -60,7 +60,7 @@ apper-systems-ab:
   url: 'http://asymmetrik.com'
 ausmed-education:
   icons:
-    - account-nurse
+    - user-nurse
   label: Ausmed Education
   url: 'https://www.ausmed.com.au'
 avianex:
@@ -327,7 +327,7 @@ harvard-medical-school:
     - dna
     - bed-pulse
     - prescription-bottle-medical
-    - account-doctor
+    - user-doctor
     - smoking
     - tablets
   label: Harvard Medical School
@@ -475,17 +475,17 @@ medapps:
     - message-medical
     - book-medical
     - stretcher
-    - book-account
+    - book-user
     - crutch
     - hospitals
     - disease
     - crutches
     - head-side-brain
     - walker
-    - clipboard-account
+    - clipboard-user
     - books-medical
-    - hospital-account
-    - account-doctor-message
+    - hospital-user
+    - user-doctor-message
     - head-side-medical
     - users-medical
   label: MedApps
@@ -512,7 +512,7 @@ mrt:
   url: 'https://medrt.co.jp'
 mylogin-info:
   icons:
-    - account-shield
+    - user-shield
   label: mylogin.info
   url: 'https://www.mylogin.info'
 napster:
@@ -546,7 +546,7 @@ nimblr:
   url: 'https://nimblr.ai'
 nompse:
   icons:
-    - chalkboard-account
+    - chalkboard-user
     - chalkboard
   label: Nomp.se
   url: 'https://nomp.se'
@@ -631,7 +631,7 @@ pindigo:
   url: 'https://pindigo.app'
 play-shakespeare:
   icons:
-    - account-shakespeare
+    - user-shakespeare
   label: PlayShakespeare.com
   url: 'https://www.playshakespeare.com'
 plum-run-solutions:
@@ -650,10 +650,10 @@ preflight-technologies-inc:
     - person-seat
     - ticket-airline
     - plane-prop
-    - account-pilot-tie
+    - user-pilot-tie
     - tower-control
     - person-seat-reclined
-    - account-pilot
+    - user-pilot
     - seat-airline
     - plane-tail
   label: Preflight Technologies Incorporated
@@ -903,7 +903,7 @@ supple:
     - lightbulb-on
     - envelope-open-dollar
     - magnifying-glass-dollar
-    - account-group-crown
+    - user-group-crown
     - comment-dollar
     - square-poll-vertical
     - rectangle-ad
@@ -912,7 +912,7 @@ supple:
     - envelope-open-text
     - bullseye
     - chart-mixed
-    - account-crown
+    - user-crown
     - megaphone
     - bullseye-arrow
     - message-dollar
@@ -1012,7 +1012,7 @@ un-ocha:
     - bridge-circle-exclamation
     - school-circle-check
     - staff-snake
-    - building-account
+    - building-user
     - person-half-dress
     - road-bridge
     - building-lock
@@ -1253,7 +1253,7 @@ vaadin:
   url: 'http://vaadin.com'
 via:
   icons:
-    - account-injured
+    - user-injured
     - draw-square
     - draw-circle
     - layer-group
