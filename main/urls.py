@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from credits import views as credits_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
+    path('credits/', include('credits.urls')),
+
+    path('mall', credits_views.mall, name='mall'),
     path('account/', include('account.urls')),
 ]
 

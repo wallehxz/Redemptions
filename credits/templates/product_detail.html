@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ product.name }}</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/product_detail.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+</head>
+<body>
+<div class="page flex-col">
+    <div class="box_product flex-col">
+        <img class="image_product" src="{{ product.main_image.url }}"/>
+        <div class="section_info flex-row justify-between">
+            <div class="flex-col">
+                <div class="points_wrapper">
+                    <span class="points_value">{{ product.points_required }}</span> <span class="points_name">福力</span>
+                </div>
+                <span class="product_name">{{ product.name }}</span>
+            </div>
+            <span class="product_stock">库存:&nbsp;{{ product.all_stock }}</span>
+        </div>
+        <div class="section_detail flex-col">
+            <span class="detail_title">商品详情</span>
+            {{ product.description|safe }}
+            <div class="block_redeem flex-col">
+                <div class="redeem_wrapper flex-col">
+                    <span class="redeem_text" onclick="showRedemption()">立即兑换</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay_redemption" id="redemption_overlay">
+    <div class="box_redemption">
+        <div id="redemption_message" class="redemption_message" style="display: none;"></div>
+        <div class="box_description_header flex-row">
+            <img class="box_description_close" id="redemption_close" src="{% static 'images/close.png' %}"/>
+            <span class="box_description_title" id="box_title">商品兑换</span>
+        </div>
+        <div class="redemption_content" id="redemption_content">
+            <div class="section_harvest flex-row justify-between">
+                <div class="flex-col">
+                    <span class="harvest_full" id="harvest_full">
+                        {% if harvest %}
+                            {{ harvest.full_address }}
+                        {% else %}
+                            <a href="/shipping/new?redirect_path={% url 'product_detail' product.id %}" style="text-decoration: none;color: rgba(239, 75, 48, 1)">新增收货地址</a>
+                        {% endif %}
+                    </span>
+                    <span class="harvest_name_mobile"><span id="harvest_name">{{ harvest.nick_name }}</span>&nbsp;<span id="harvest_mobile">{{ harvest.mobile }}</span></span>
+                </div>
+                {% if address_list.count > 1 %}
+                    <img class="harvest_thumbnail" onclick="changeHarvest()" src="{% static 'images/right_arrow.png' %}"/>
+                {% endif %}
+            </div>
+
+            <div class="section_product flex-col">
+                <div class="flex-row">
+                    <div class="product_thumb_wrapper flex-col">
+                        <img class="product_thumb_img" src="{{ product.main_image.url }}"/>
+                    </div>
+                    <div class="box_points flex-col">
+                        <div class="box_points_content">
+                            <span class="points_spec">实付</span>
+                            <span style="display: none" id="spec_points">
+                                {% if default %}
+                                    {{ default.points_required }}
+                                {% else %}
+                                    {{ product.points_required }}
+                                {% endif %}
+                            </span>
+                            <span style="display: none" id="product_id">{{ product.id }}</span>
+                            <span style="display: none" id="spec_id">{{ default.id }}</span>
+                            <span style="display: none" id="harvest_id">{{ harvest.id }}</span>
+                            <span style="display: none" id="user_points">{{ user.points }}</span>
+                            <span class="points_spec_value" id="total_points">
+                                {% if default %}
+                                    {{ default.points_required }}
+                                {% else %}
+                                    {{ product.points_required }}
+                                {% endif %}
+                            </span>
+                            <span class="points_spec">福力</span>
+                        </div>
+                        <div class="box_amount flex-row justify-end">
+                            <button class="button_wrapper flex-col" id="spec_amount_minus">
+                                <span class="button_text">-</span>
+                            </button>
+                            <img class="thumbnail_left" src="{% static 'images/vertical_tiny.png' %}"/>
+                            <span class="spec_amount" id="order_amount">1</span>
+                            <img class="thumbnail_right" src="{% static 'images/vertical_tiny.png' %}"/>
+                            <button class="button_wrapper flex-col" id="spec_amount_plus">
+                                <span class="button_text">+</span>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="spec_stock">库存:&nbsp;
+                        <span id="spec_stock">
+                            {% if default %}
+                                {{ default.stock }}
+                            {% else %}
+                                {{ product.all_stock }}
+                            {% endif %}
+                        </span>
+                    </span>
+                </div>
+                <div class="spec_title flex-row">
+                    <span class="spec_title_text">规格</span>
+                </div>
+                <div class="box_specs flex-row">
+                    <div class="section_specs flex-wrap">
+                        {% for item in product.specs.all %}
+                        <div class="spec_item flex-col {% if default.id == item.id%}active{% endif %}" onclick="selectSpec(this,{{ item.points_required }},{{ item.stock }},{{ item.id }})">
+                            <span class="spec_name" >{{ item.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="section_submit">
+                <button class="redemption_submit" id="redemption_submit" onclick="redeemProduct()">立即支付 {% if default %}
+                                    {{ default.points_required }}
+                                {% else %}
+                                    {{ product.points_required }}
+                                {% endif %}福力</button>
+            </div>
+        </div>
+        <div class="box_harvests" style="display: none" id="box_harvests">
+            {% for item in address_list %}
+                <div class="address_item flex-col" onclick="selectHarvest({{ item.id }},'{{ item.nick_name }}','{{ item.mobile }}','{{ item.full_address }}')">
+                    <div class="address_group flex-row justify-between">
+                        <div class="flex-col">
+                            <span class="address_full">{{ item.full_address }}</span>
+                            <span class="address_user">{{ item.nick_name }}&nbsp;{{ item.mobile }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'javascript/product_redemption.js' %}"></script>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

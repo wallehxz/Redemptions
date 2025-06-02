@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>兑换商城</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/credit_redeem.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu" href="{% url 'redeem_history' %}">兑换记录</a>
+                <a class="text_menu active">收支明细</a>
+                <a class="text_menu" href="{% url 'harvest' %}">收货地址</a>
+            </div>
+        </div>
+        <div class="box_redemptions flex-col">
+            {% for item in trans_list %}
+            <div class="trans_content flex-col">
+                <div class="trans_body flex-row justify-between">
+                    <div class="flex-col">
+                        <span class="trans_desc">{{ item.description }}</span>
+                        <span class="trans_time">{{ item.created_at }}</span>
+                    </div>
+                    <span class="trans_points">{{ item.human_amount }}</span>
+                </div>
+                <img class="box_underline" src="{% static 'images/line.png' %}"/>
+            </div>
+            {% endfor %}
+            {% if trans_list.count == 0 %}
+            <div class="no_redemption flex-col">
+                <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
+                <span>暂无收支明细</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

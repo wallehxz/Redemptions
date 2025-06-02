@@ -1,0 +1,294 @@
+.box_header {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng79a8b510b7d3fa4cb8a52162a88308cff1d96f41287d6f07859595fd6f0412a5) 100% no-repeat;
+    background-size: 100% 100%;
+}
+
+.box_tip {
+    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdb9504f7ff6f23b57eacf6c970adb232752ff601198f3b21f45cebb854b03df6) 100% no-repeat;
+    background-size: 100% 100%;
+    padding: 7px 97px 6px 98px;
+}
+
+.text_tip {
+    overflow-wrap: break-word;
+    color: rgba(251, 236, 210, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 17px;
+}
+
+.group_menu {
+    position: relative;
+    height: 98px;
+    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngffbb4b3332b0173f954b3a88d2d463dca51697f46f3717a844117fe5c28815de) 100% no-repeat;
+    background-size: 100% 100%;
+    margin-top: 52px;
+}
+
+.block_menu {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    position: absolute;
+    left: 10px;
+    top: 56px;
+    width: calc(100% - 20px);
+    min-width: 355px;
+    height: 50px;
+    justify-content: center;
+    padding: 14px 19px 14px 19px;
+}
+
+.menu_item {
+    width: 80px;
+    text-align: center;
+    margin: 1px 0 1px 0;
+}
+
+.menu_text {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.menu_img {
+    width: 20px;
+    height: 22px;
+}
+
+.menu_separator {
+    width: 1px;
+    height: 21px;
+    margin: 1px 20px 0 20px;
+}
+
+.box_product {
+    background-color: rgba(240, 243, 248, 1);
+    min-width: 355px;
+    margin-top: 180px;
+    padding: 20px 10px 50px 10px;
+    gap: 10px;
+    column-count: 2; /* 两列 */
+    column-gap: 16px; /* 间距 */
+}
+
+.product_item {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: inline-block; /* 关键！防止内容断裂 */
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.product_content {
+    width: 100%;
+    margin: -1px 0 6px 0;
+}
+
+.product_image {
+    background-color: rgba(247, 247, 247, 1);
+    border-radius: 8px 8px 0 0;
+    padding: 8px 14px 8px 13px;
+}
+
+.product_img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.product_info {
+    margin: 6px 7px 0 8px;
+}
+
+.product_name {
+    width: 157px;
+    height: 40px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: left;
+    line-height: 20px;
+}
+
+.product_points {
+    overflow-wrap: break-word;
+    color: rgba(239, 65, 36, 1);
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 17px;
+    margin: 1px 113px 0 0;
+}
+
+.un_login_box {
+    background-color: rgba(251, 236, 210, 1);
+    border-radius: 21px;
+    height: 40px;
+    width: 200px;
+    position: absolute;
+    left: calc(50% - 100px);
+    top: -18px;
+    padding: 10px 32px 9px 33px;
+
+    .text_tip {
+        overflow-wrap: break-word;
+        color: rgba(239, 65, 36, 1);
+        font-size: 15px;
+        font-family: PingFangSC-Semibold, serif;
+        font-weight: 600;
+        text-align: justify;
+        white-space: nowrap;
+        line-height: 21px;
+    }
+}
+
+
+.box_login_points {
+    position: absolute;
+    left: calc(50% - 30px);
+    top: -50px;
+    height: 72px;
+    overflow-wrap: break-word;
+    font-size: 0;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: center;
+    line-height: 36px;
+
+    .paragraph {
+        width: 65px;
+        height: 72px;
+        overflow-wrap: break-word;
+        color: rgba(251, 236, 210, 1);
+        font-size: 14px;
+        font-family: PingFangSC-Regular, serif;
+        font-weight: normal;
+        text-align: left;
+        line-height: 36px;
+    }
+
+    .points_key {
+        width: 65px;
+        height: 72px;
+        overflow-wrap: break-word;
+        color: rgba(251, 236, 210, 1);
+        font-size: 16px;
+        font-family: PingFangSC-Semibold, serif;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 36px;
+    }
+
+    .points_value {
+        width: 65px;
+        height: 72px;
+        overflow-wrap: break-word;
+        color: rgba(251, 236, 210, 1);
+        font-size: 36px;
+        font-family: PingFangSC-Semibold, serif;
+        font-weight: 600;
+        text-align: left;
+        line-height: 36px;
+    }
+}
+
+.overlay_redeem {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.box_redeem {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    padding-bottom: 12px;
+    margin-top: 100vh;
+}
+
+.redeem_form {
+    height: 120px;
+}
+
+.redeem_code_input {
+    background-color: rgba(247, 247, 247, 1);
+    border-radius: 4px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: normal;
+    white-space: nowrap;
+    color: rgba(51, 51, 51, 1);
+    width: 100%;
+    padding: 0 10px;
+}
+
+.redeem_group {
+    height: 40px;
+    margin: 20px;
+    justify-content: space-between;
+    flex: 0 0 calc(25% - 10px);
+}
+
+/* 通知容器 */
+
+.redeem_message {
+    position: fixed;
+    top: calc(100vh - 260px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #da8342;
+    color: white;
+    text-align: center;
+    min-width: 200px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.redeem_message.success {
+    background-color: #4CAF50;
+}
+
+.redeem_message.warning {
+    background-color: #e8962e;
+}
+
+.redeem_message.error {
+    background-color: #AA3130;
+}

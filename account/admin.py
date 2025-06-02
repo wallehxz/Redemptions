@@ -1,22 +1,25 @@
 import json
-
 from django.contrib import admin
 from django.db.models import Q
 from django.http import JsonResponse
 from simpleui.admin import AjaxAdmin
 from account.models import Consumer, Shipping, Region
 
+
 @admin.register(Consumer)
 class ConsumerAdmin(admin.ModelAdmin):
     list_display = ('mobile', 'username', 'role_name', 'last_login')
+    list_per_page = 20
 
     def role_name(self, obj):
         return obj.role_display()
     role_name.short_description = '角色'
 
+
 @admin.register(Shipping)
 class ShippingAdmin(admin.ModelAdmin):
     list_display = ('nick_name', 'mobile', 'is_default', 'address')
+    list_per_page = 20
 
 
 def region_set_province():
@@ -48,11 +51,13 @@ def region_set_province():
                         print(f'设置 {p.name} {a.name} 街道 {towns.count()}')
                         towns.update(parent=a.id)
 
+
 @admin.register(Region)
 class RegionAdmin(AjaxAdmin):
     list_display = ('name', 'parent', 'children_area')
     search_fields = ['name', 'code']
     actions = ['export_data',]
+    list_per_page = 20
 
     def children_area(self, obj):
         if obj.children.count() > 0:
@@ -61,7 +66,6 @@ class RegionAdmin(AjaxAdmin):
             return '--'
 
     children_area.short_description = '下辖区域'
-
 
     def export_data(self, request, queryset):
         # 这里的upload 就是和params中配置的key一样
@@ -88,7 +92,6 @@ class RegionAdmin(AjaxAdmin):
                 'status': 'success',
                 'msg': '处理成功！'
             })
-
 
     export_data.short_description = '地区数据'
     export_data.type = 'success'

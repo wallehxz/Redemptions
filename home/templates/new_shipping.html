@@ -14,13 +14,14 @@
 <div class="page flex-col justify-between">
     <form id="address-form">
         <input type="hidden" id="redemption_id" value="{{ redemption_id }}">
+        <input type="hidden" id="redirect_path" value="{{ redirect_path }}">
         <div class="block_1 flex-col justify-end">
         <textarea id="fullAddress" class="text-wrapper_1 flex-col"
                   placeholder="粘贴或输入完整地址 例如：&#10;张三 13533339999 江苏省扬州市广陵区XX小区X楼xxx室"></textarea>
             <div class="group_1 flex-col">
                 <div class="text-wrapper_6 flex-row justify-between">
                     <span class="text_2">收货人</span>
-                    <input id="name" class="text_3" placeholder="姓名" required>
+                    <input id="name" class="text_3" placeholder="姓名" value="{{ address.nick_name }}" required>
                 </div>
                 <img
                         class="image_2"
@@ -29,7 +30,7 @@
                 />
                 <div class="text-wrapper_6 flex-row justify-between">
                     <span class="text_2">联系方式</span>
-                    <input id="phone" class="text_3" maxlength="11" placeholder="手机号" required>
+                    <input id="phone" class="text_3" maxlength="11" placeholder="手机号" value="{{ address.mobile }}" required>
                 </div>
                 <img
                         class="image_2"
@@ -44,7 +45,7 @@
                 <img class="image_2" src="{% static 'images/form_underline.png' %}"/>
                 <div class="text-wrapper_8 flex-row">
                     <span class="text_7">详细地址</span>
-                    <textarea class="text_8" placeholder="小区楼栋" id="address" required></textarea>
+                    <textarea class="text_8" placeholder="小区单元楼层" id="address" required></textarea>
                 </div>
             </div>
             <div class="group_2 flex-row justify-between">
@@ -53,7 +54,7 @@
                     <span class="text_10">系统自动发货时默认使用该地址</span>
                 </div>
                 <label class="custom-checkbox">
-                    <input type="checkbox" name="is_default" id="set_default">
+                    <input type="checkbox" name="is_default" id="set_default" {% if address.is_default %}checked{% endif %}>
                     <span class="checkmark"></span>
                 </label>
             </div>

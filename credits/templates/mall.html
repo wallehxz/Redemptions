@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>福力商城</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/mall.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/index.css' %}"/>
+</head>
+<body>
+<div class="page flex-col">
+    <div class="box_header flex-col">
+        <div class="box_tip flex-col">
+            <span class="text_tip">福力仅用于商城内兑换，不能提现</span>
+        </div>
+        <div class="group_menu flex-col">
+            <div class="block_menu flex-row">
+                <div class="menu_item flex-row justify-between">
+                    <img
+                            class="menu_img"
+                            referrerpolicy="no-referrer"
+                            src="{% static 'images/duihuanma.png' %}"
+                    />
+                    <span class="menu_text" onclick="{% if user.is_authenticated %}showRedeem(){% else %}showLogin(){% endif %}">福力兑换</span>
+                </div>
+                <img class="menu_separator" src="{% static 'images/vertical.png' %}"/>
+                <div class="menu_item flex-row justify-between">
+                    <img class="menu_img" src="{% static 'images/jifenmingxi.png' %}"/>
+                    {% if user.is_authenticated %}
+                        <a href="credits/redeem_history" style="text-decoration: none">
+                            <span class="menu_text">兑换明细</span>
+                        </a>
+                    {% else %}
+                        <span class="menu_text" onclick="showLogin()">兑换明细</span>
+                    {% endif %}
+                </div>
+                <img class="menu_separator" src="{% static 'images/vertical.png' %}"/>
+                <div class="menu_item flex-row justify-between">
+                    <img class="menu_img" src="{% static 'images/shouhuodizhi.png' %}"/>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'harvest' %}" style="text-decoration: none" class="menu_text">收货地址</a>
+                    {% else %}
+                        <span class="menu_text" onclick="showLogin()">收货地址</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="box_login_points">
+                    <span class="points_key">福力</span>
+                    <span class="paragraph"><br/></span>
+                    <span class="points_value" id="user_points">{{ user.human_points }}</span>
+                </div>
+            {% else %}
+                <div class="un_login_box flex-col">
+                    <span class="text_tip" onclick="showLogin()">登录后进行福力兑换</span>
+                </div>
+                <div class="overlay_login" id="login_overlay">
+                    <div class="box_description">
+                        <div id="error-message" class="error-message" style="display: none;"></div>
+                        <div class="box_description_header flex-row">
+                            <img class="box_description_close" id="login_close" src="{% static 'images/close.png' %}"/>
+                            <span class="box_description_title">登录/注册</span>
+                        </div>
+                        <form class="login-form" method="post" action="/account/login">
+                            {% csrf_token %}
+                            <img class="box_description_line" src="{% static 'images/line.png' %}"/>
+                            <div class="login_phone_group flex-row">
+                                <span class="region_code">+86</span>
+                                <input type="text" id="phone" class="text_input" name="mobile"
+                                       placeholder="请输入手机号码" required>
+                            </div>
+                            <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
+                            <div class="login_code_group flex-row">
+                                <input type="text" id="captcha" class="text_input captcha" name="captcha"
+                                       placeholder="请输入验证码"
+                                       maxlength="6" required>
+                                <span class="get_captcha" id="get-captcha">获取验证码</span>
+                            </div>
+                            <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
+                            <button class="login_submit" type="submit" id="sign_in">登录/注册</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="box_product">
+        {% for item in products %}
+        <div class="product_item">
+            <a href="{% url 'product_detail' item.id %}" target="_blank" style="text-decoration: none">
+                <div class="product_content">
+                    <div class="product_image">
+                        <img class="product_img" referrerpolicy="no-referrer" src="{{ item.main_image.url }}"/>
+                    </div>
+                    <div class="product_info">
+                        <span class="product_name">{{ item.name }}</span>
+                        <span class="product_points">{{ item.points_required }}福力</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if user.is_authenticated == False %}
+    <script src="{% static 'javascript/sign_in.js' %}"></script>
+{% else %}
+    <div class="overlay_redeem" id="redeem_overlay">
+        <div class="box_redeem">
+            <div id="redeem_message" class="redeem_message" style="display: none;"></div>
+            <div class="box_description_header flex-row">
+                <img class="box_description_close" id="redeem_close" src="{% static 'images/close.png' %}"/>
+                <span class="box_description_title">福力兑换</span>
+            </div>
+            <img class="box_description_line" src="{% static 'images/line.png' %}"/>
+            <div class="redeem_form">
+                <div class="redeem_group flex-row">
+                    <input type="text" class="redeem_code_input flex-col" id="credit_redeem_code"></input>
+                </div>
+                <button class="login_submit" onclick="redeemCode()">确认兑换</button>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'javascript/redeem_code.js' %}"></script>
+{% endif %}
+
+</body>
+</html>

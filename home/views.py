@@ -85,7 +85,6 @@ def all_history(request):
     return render(request, 'all_history.html', locals())
 
 
-
 def shipping(request):
     if request.user is None:
         return redirect('sign_in')
@@ -154,7 +153,11 @@ def set_default_shipping(request):
     shipping_id = request.GET.get('shipping_id')
     Shipping.objects.filter(consumer_id=request.user.id).update(is_default=False)
     Shipping.objects.filter(Q(id=shipping_id) & Q(consumer_id=request.user.id)).update(is_default=True)
-    return redirect('shipping')
+    redirect_path = request.GET.get('redirect_path')
+    if redirect_path:
+        return redirect(redirect_path)
+    else:
+        return redirect('shipping')
 
 
 def delete_shipping(request):
@@ -189,8 +192,10 @@ def show_redemption(request, id):
 def new_shipping(request):
     if request.user is None:
         return redirect('sign_in')
-    redemption_id = request.GET.get('redemption_id')
-    if redemption_id is None:
-        redemption_id = ''
+    redemption_id = request.GET.get('redemption_id', '')
+    redirect_path = request.GET.get('redirect_path', '')
+    shipping_id = request.GET.get('id')
+    if shipping_id:
+        address = Shipping.objects.filter(id=shipping_id).first()
     return render(request, 'new_shipping.html', locals())
 # Create your views here.

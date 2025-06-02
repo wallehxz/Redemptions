@@ -1,0 +1,415 @@
+.box_container {
+    background-color: rgba(247, 247, 247, 1);
+}
+
+.box_navigation {
+    background-color: rgba(255, 255, 255, 1);
+    height: 44px;
+    width: 100%;
+}
+
+.menu-wrapper {
+    height: 21px;
+    margin: 12px 60px;
+    min-width: 240px;
+}
+
+.text_menu {
+    position: relative;
+    min-width: 50px;
+    height: 21px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFang-SC-Regular, serif;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 21px;
+    text-decoration: none;
+}
+
+.text_menu::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 3px;
+    background-color: rgba(229, 70, 36, 1);
+    transition: width 0.3s ease;
+}
+
+.text_menu:hover::after {
+    width: 100%;
+}
+
+.active {
+    font-weight: 600;
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(229, 70, 36, 1);
+    transition: width 0.3s ease;
+}
+
+.box_redemptions {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.box_redemption_list {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 10px 0 0 11px;
+}
+
+.redemption_content {
+    width: calc(100% - 40px);
+    min-width: 300px;
+    margin-right: 10px;
+}
+
+.redemption_body {
+    width: 255px;
+}
+
+.product_image_wrapper {
+    background-color: rgba(247, 247, 247, 1);
+    border-radius: 8px;
+    padding: 3px 4px 3px 5px;
+}
+
+.product_image {
+    width: 51px;
+    height: 54px;
+}
+
+.product_info_content {
+    margin-top: 1px;
+}
+
+.redemption_name {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.redemption_points {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin: 2px 138px 0 0;
+}
+
+.redemption_time {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin: 2px 56px 0 0;
+}
+
+.product_amount {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.box_underline {
+    width: 100%;
+    height: 1px;
+    margin-top: 10px;
+}
+
+.no_redemption {
+    height: 90vh;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.no_img {
+    width: 114px;
+    height: 110px;
+}
+
+.no_title {
+    height: 20px;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+.redemption_tip {
+    position: fixed;
+    right: 0;
+    top: 90vh;
+    background-color: rgba(246, 246, 246, 1);
+    border-radius: 15px 0 0 15px;
+    border: 1px solid rgba(239, 239, 239, 1);
+    padding: 3px 14px 4px 15px;
+    width: 90px;
+}
+
+.redemption_tip_text {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+/*兑换说明*/
+.overlay_description {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.box_description {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    padding-bottom: 12px;
+    margin-top: 100vh;
+}
+
+.box_description_header {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    height: 44px;
+}
+
+.box_description_close {
+    width: 14px;
+    height: 14px;
+    margin: 15px 0 0 12px;
+}
+
+.box_description_title {
+    width: calc(100% - 14px);
+    height: 30px;
+    overflow-wrap: break-word;
+    color: rgba(51, 56, 64, 1);
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 22px;
+    padding-top: 10px;
+    padding-right: 40px;
+}
+
+.box_description_line {
+    width: 100%;
+    height: 1px;
+}
+
+.box_description_content {
+    width: 100%;
+    overflow-wrap: break-word;
+    font-size: 13px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    line-height: 18px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 12px 0 12px 0;
+}
+
+.trans_content {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 10px 0 0 11px;
+}
+
+.trans_body {
+    width: calc(100% - 40px);
+    min-width: 300px;
+    margin-right: 10px;
+}
+
+.text-group_34 {
+}
+
+.trans_desc {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+    margin-right: 36px;
+}
+
+.trans_time {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin-top: 2px;
+}
+
+.trans_points {
+    height: 15px;
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    font-family: Helvetica, serif;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 18px;
+    margin-top: 3px;
+}
+
+.box_add_shipping {
+    background-color: rgba(255, 255, 255, 1);
+    height: 80px;
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add_shipping_wrapper {
+    background-color: rgba(213, 48, 47, 1);
+    border-radius: 21px;
+    height: 40px;
+    margin: 20px 20px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.add_shipping_text {
+    overflow-wrap: break-word;
+    color: rgba(255, 255, 255, 1);
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 40px;
+    text-decoration: none;
+}
+
+.hidden-div {
+    height: 80px; /* 设置高度 */
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.address_item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 1);
+    margin-bottom: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.address_item:hover {
+    background-color: rgba(239, 75, 48, 0.15);
+
+    .address_full, .address_user {
+        color: rgba(239, 75, 48, 1);
+    }
+}
+
+.address_group {
+    width: 100%;
+    padding: 10px 14px 10px 10px;
+}
+
+.address_full {
+    overflow-wrap: break-word;
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 22px;
+}
+
+.address_user {
+    overflow-wrap: break-word;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 20px;
+    margin: 2px 156px 0 0;
+}
+
+.address_edit {
+    width: 13px;
+    height: 13px;
+    margin: 4px 0 27px 0;
+}
+
+.default-marker {
+    position: absolute;
+    top: 28px;
+    right: 1px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 40px 40px 0 0;
+    border-color: transparent #c84d47 transparent transparent;
+}
+
+.default-text {
+    position: absolute;
+    top: 40px;
+    right: 15px;
+    color: #c84d47;
+    font-size: 16px;
+}

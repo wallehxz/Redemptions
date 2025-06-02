@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>收货地址</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/credit_redeem.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu" href="{% url 'redeem_history' %}">兑换记录</a>
+                <a class="text_menu" href="{% url 'transactions' %}">收支明细</a>
+                <a class="text_menu active">收货地址</a>
+            </div>
+        </div>
+
+        <div class="box_redemptions flex-col">
+            {% for item in address_list %}
+                <div class="address_item flex-col">
+                    <div class="address_group flex-row justify-between">
+                        {% if item.is_default %}
+                            <div class="default-text">默认地址</div>
+                        {% else %}
+                            <div class="default-text">
+                                <a style="color: #e8962e;text-decoration: none;" href="/set_default_shipping?shipping_id={{ item.id }}&redirect_path=/credits/harvest"">
+                                设为默认
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="flex-col">
+                            <span class="address_full">{{ item.full_address }}</span>
+                            <span class="address_user">{{ item.nick_name }}&nbsp;{{ item.mobile }}</span>
+                        </div>
+                        <a href="/shipping/new?redirect_path=/credits/harvest&id={{ item.id }}" style="text-decoration: none">
+                            <img class="address_edit" src="{% static 'images/edit.png' %}"/>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+{#            <div class="no_redemption flex-col">#}
+{#                <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>#}
+{#                <span>暂无收货地址</span>#}
+{#            </div>#}
+        </div>
+
+        <div class="hidden-div"></div>
+        <div class="box_add_shipping">
+          <div class="add_shipping_wrapper">
+            <a class="add_shipping_text" href="/shipping/new?redirect_path=/credits/harvest">新增地址</a>
+          </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

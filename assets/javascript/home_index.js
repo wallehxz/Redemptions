@@ -94,7 +94,7 @@ function redemption() {
     const values = Array.from(inputs).map(input => input.value); // 提取值
     const redeem_code = values.join('-');
     if (redeem_code.length !== 19) {
-        showNotification('请输入有效的兑换码！', 'warning');
+        showNotification('请输入有效的抽奖码', 'warning');
         return;
     }
     const url = '/redemption';

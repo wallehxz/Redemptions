@@ -8,9 +8,13 @@ from django.conf import settings
 
 class Consumer(AbstractUser):
     mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
+    points = models.PositiveIntegerField(default=0, verbose_name="积分余额")
 
     def __str__(self):
-        return self.mobile
+        if self.mobile:
+            return self.mobile
+        else:
+            return self.username
 
     def role_display(self):
         if self.is_superuser:
@@ -35,6 +39,8 @@ class Consumer(AbstractUser):
             return True
         return False
 
+    def human_points(self):
+        return f"{self.points:03d}"
 
 
 class Shipping(models.Model):
@@ -58,6 +64,10 @@ class Shipping(models.Model):
 
     def full_address(self):
         return f"{self.province}{self.city}{self.district}{self.street}{self.address}"
+
+    def region_address(self):
+        return f"{self.province}{self.city}{self.district}{self.street}"
+
 
 class Region(models.Model):
     code = models.CharField(max_length=10, verbose_name='区域编码')

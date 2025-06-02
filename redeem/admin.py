@@ -1,13 +1,11 @@
-import json
-
 from django.contrib import admin
 from django.http import JsonResponse, HttpResponse
 from simpleui.admin import AjaxAdmin
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
-from django.utils.functional import lazy
 from datetime import datetime
 from .models import Redeem, Redemption
+
 
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
@@ -15,7 +13,7 @@ class RedeemAdmin(AjaxAdmin):
     fields = ('prize', 'status', 'number')
     list_filter = ['prize', 'status']
     search_fields = ['number']
-
+    list_per_page = 20
     # actions = ['bulk_generate', 'export_data']
     actions = ['export_data', 'bulk_generate']
 
@@ -130,7 +128,6 @@ class RedeemAdmin(AjaxAdmin):
         #     'require': True,
         #     'options': Redeem.prize_list(),
         # }]
-
     }
 
 
@@ -138,9 +135,13 @@ class RedeemAdmin(AjaxAdmin):
 class RedemptionAdmin(admin.ModelAdmin):
     list_display = ('prize', 'redeem', 'consumer', 'shipping', 'status', 'express_info', 'created_at')
     fields = ('prize', 'redeem', 'consumer', 'shipping', 'express_name', 'express_order', 'status')
+    search_fields = ['redeem__number']
+    list_filter = ['status']
 
     def express_info(self, obj):
         return f'{obj.express_name}-{obj.express_order}'
 
     express_info.short_description = '快递信息'
+
+
 # Register your models here.

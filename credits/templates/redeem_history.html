@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>兑换商城</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/credit_redeem.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col justify-between">
+    <div class="box_container flex-col">
+        <div class="box_navigation flex-col">
+            <div class="menu-wrapper flex-row justify-between">
+                <a class="text_menu active">兑换记录</a>
+                <a class="text_menu" href="{% url 'transactions' %}">收支明细</a>
+                <a class="text_menu" href="{% url 'harvest' %}">收货地址</a>
+            </div>
+        </div>
+
+        <div class="box_redemptions flex-col">
+            {% for item in redeem_list %}
+            <div class="box_redemption_list flex-col">
+                <div class="redemption_content flex-row justify-between">
+                    <div class="redemption_body flex-row justify-between">
+                        <div class="product_image_wrapper flex-col">
+                            <img class="product_image" src="{{ item.product.main_image.url }}"/>
+                        </div>
+                        <div class="product_info_content flex-col">
+                            <span class="redemption_name">{{ item.product.name }} - {{ item.spec.name }}</span>
+                            <span class="redemption_points">{{ item.total }}福力</span>
+                            <span class="redemption_time">{{ item.created_at }}</span>
+                        </div>
+                    </div>
+                    <span class="product_amount">x&nbsp;{{ item.quantity }}</span>
+                </div>
+                <img class="box_underline" src="{% static 'images/line.png' %}"/>
+            </div>
+            {% endfor %}
+            <div class="redemption_tip flex-col">
+                <span class="redemption_tip_text" onclick="showDesc()">兑换说明</span>
+            </div>
+            {% if redeem_list.count == 0 %}
+            <div class="no_redemption flex-col">
+                <img class="no_img" src="{% static 'images/blank_redemptions.png' %}"/>
+                <span>暂无兑换记录</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="overlay_description" id="desc_overlay">
+        <div class="box_description">
+            <div class="box_description_header flex-row">
+                <img class="box_description_close" id="desc_close" src="{% static 'images/close.png' %}"/>
+                <span class="box_description_title">使用说明</span>
+            </div>
+            <img class="box_description_line" src="{% static 'images/line.png' %}"/>
+            <div class="box_description_content">
+                1.&nbsp;线下购买福赏系列产品可参与「超级福中福」专属活动，在线下商铺每购买一抽福赏可获得一个「超级福中福」兑换码。
+            </div>
+            <div class="box_description_content">
+                2.&nbsp;请输入「超级福中福」兑换码，每个兑换码仅可兑换一次，使用后将失效。兑换码有时效性，获得后请及时输入兑换。
+            </div>
+            <div class="box_description_content">
+                3.&nbsp;兑换成功的商品请前往「个人中心」查看。
+            </div>
+            <div class="box_description_content">
+                4.&nbsp;「超级福中福」的奖品为活动商品，不享受平台包邮规则，需自行支付邮费。
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const desc_overlay = document.getElementById('desc_overlay');
+    const desc_close = document.getElementById('desc_close');
+    desc_overlay.addEventListener('click', (e) => {
+        if (e.target === desc_overlay) {
+            desc_overlay.style.display = 'none';
+        }
+    });
+    
+    desc_close.addEventListener('click', (e) => {
+        desc_overlay.style.display = 'none';
+    });
+    
+    function showDesc() {
+        desc_overlay.style.display = 'flex';
+    }
+</script>
+<script src="{% static 'javascript/jquery-3.6.0.js' %}"></script>
+</body>
+</html>

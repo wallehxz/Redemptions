@@ -4,6 +4,7 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
 
     // 获取表单数据
     const redemption_id = document.getElementById('redemption_id').value;
+    const redirect_path = document.getElementById('redirect_path').value;
     const nick_name = document.getElementById('name').value;
     const is_default = $('#set_default').prop('checked')
     const mobile = document.getElementById('phone').value;
@@ -63,7 +64,9 @@ document.getElementById('address-form').addEventListener('submit', function (e) 
             address: address,
         },
         success: function (response) {
-            if (redemption_id !== '') {
+            if (redirect_path !== '') {
+                window.location.href = redirect_path;
+            } else if (redemption_id !== '') {
                 window.location.href = '/redemptions';
             } else {
                 window.location.href = '/shipping';

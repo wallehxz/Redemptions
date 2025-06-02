@@ -11,7 +11,7 @@ STATUS = (
 
 
 class Redeem(models.Model):
-    number = models.CharField(max_length=19, unique=True, verbose_name='兑换码')
+    number = models.CharField(max_length=19, unique=True, verbose_name='抽奖码')
     status = models.SmallIntegerField(choices=STATUS, default=0, verbose_name='状态')
     prize = models.ForeignKey(Prize, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='奖品',
                               related_name='redeems')
@@ -20,7 +20,7 @@ class Redeem(models.Model):
 
     class Meta:
         db_table = 'redeems'
-        verbose_name = '兑换码'
+        verbose_name = '抽奖码'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -68,12 +68,9 @@ class Redemption(models.Model):
         ('极兔速递', '极兔速递'),
     )
     redeem = models.OneToOneField(Redeem, on_delete=models.CASCADE, related_name='redemption', verbose_name='兑换码')
-    consumer = models.ForeignKey(Consumer, on_delete=models.SET_NULL, null=True, related_name='redemptions',
-                                 verbose_name='用户')
-    shipping = models.ForeignKey(Shipping, on_delete=models.SET_NULL, null=True, blank=True, related_name='shipping',
-                                 verbose_name='收货地址')
-    prize = models.ForeignKey(Prize, on_delete=models.SET_NULL, null=True, related_name='redemptions',
-                              verbose_name='奖品')
+    consumer = models.ForeignKey(Consumer, on_delete=models.SET_NULL, null=True, related_name='redemptions', verbose_name='用户')
+    shipping = models.ForeignKey(Shipping, on_delete=models.SET_NULL, null=True, blank=True, related_name='shipping', verbose_name='收货地址')
+    prize = models.ForeignKey(Prize, on_delete=models.SET_NULL, null=True, related_name='redemptions', verbose_name='奖品')
     express_order = models.CharField(max_length=100, null=True, blank=True, verbose_name='快递单号')
     express_name = models.CharField(max_length=50, choices=EXPRESS, null=True, blank=True, verbose_name='快递公司')
     status = models.SmallIntegerField(choices=STATUS, default=0, verbose_name='状态')
@@ -86,7 +83,10 @@ class Redemption(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f"{self.redeem.prize.name}-{self.redeem.number}"
+        try:
+            return f"{self.redeem.prize.name}-{self.redeem.number}"
+        except:
+            return f"{self.redeem.number}"
 
     def save(self, *args, **kwargs):
         if self.pk:

@@ -1,16 +1,17 @@
 from django.contrib import admin
 from django.utils.html import format_html
-
 from .models import Series, Prize
 
 admin.site.site_header = '福赏管理'
 admin.site.site_title = '福赏'
 admin.site.index_title = '福赏管理系统'
 
+
 @admin.register(Series)
 class SeriesAdmin(admin.ModelAdmin):
     list_display = ('logo_img', 'name',  'prizes_count', 'created_at')
     search_fields = ['name']
+    list_per_page = 10
 
     def logo_img(self, obj):
         if obj.logo:
@@ -29,12 +30,14 @@ class SeriesAdmin(admin.ModelAdmin):
         )
     edit_link.short_description = '操作'
 
+
 @admin.register(Prize)
 class PrizeAdmin(admin.ModelAdmin):
     list_display = ('logo_img', 'name', 'series','inventory','redeems_count', 'created_at')
     fields = ('series', 'logo','inventory', 'name')
     search_fields = ['name']
     list_filter = ['series']
+    list_per_page = 10
 
     def logo_img(self, obj):
         if obj.logo:

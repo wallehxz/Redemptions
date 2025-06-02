@@ -36,6 +36,11 @@ button:active {
     flex-direction: row;
 }
 
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .justify-start {
     display: flex;
     justify-content: flex-start;
