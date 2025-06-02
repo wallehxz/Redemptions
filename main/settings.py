@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'ckeditor',
     'series.apps.SeriesConfig',
     'redeem.apps.RedeemConfig',
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
+    'credits.apps.CreditsConfig'
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'redemptions',
         'USER': 'root',
-        'PASSWORD': '@hxZ7355608',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -161,7 +162,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SIMPLEUI_CONFIG = {
     'system_keep': False,
-    'menu_display': ['兑换条码', '收货地址', '区域管理', '兑换记录', '奖品系列', '管理权限'],      # 开启排序和过滤功能, 不填此字段为默认排序和全部显示, 空列表[] 为全部不显示.
+    'menu_display': [ '收货地址', '区域管理', '管理权限', '合佳福', '福力商城'],      # 开启排序和过滤功能, 不填此字段为默认排序和全部显示, 空列表[] 为全部不显示.
     'dynamic': True,    # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时动态展示菜单内容
     'menus': [{
         'app': 'auth',
@@ -176,10 +177,18 @@ SIMPLEUI_CONFIG = {
             'icon': 'fa-solid fa-building-shield',
             'url': 'auth/group/'
         }]
-    },  {
-        'name': '奖品系列' ,
+    }, {
+        'name': '合佳福',
         'icon': 'fa fa-gifts',
         'models': [{
+            'name': '抽奖码',
+            'icon': 'fa-solid fa-oil-well',
+            'url': 'redeem/redeem/',
+        },{
+            'name': '中奖记录',
+            'icon': 'fa fa-book-open-reader ',
+            'url': 'redeem/redemption/',
+        },{
             'name': '系列管理',
             'url': 'series/series/',
             'icon': 'fa fa-solid fa-swatchbook'
@@ -189,29 +198,35 @@ SIMPLEUI_CONFIG = {
             'icon': 'fa fa-gift'
         }]
     }, {
-        'name': '兑换条码',
-        'icon': 'fa-solid fa-hand-holding-heart',
-        'url': 'redeem/redeem/',
-    }, {
-        'name': '用户列表',
-        'icon': 'fa fa-users-viewfinder',
-        'url': 'account/account/',
+        'name': '福力商城',
+        'icon': 'fa-solid fa-shop-lock',
+        'models': [{
+            'name': '兑换码',
+            'icon': 'fa-solid fa-hand-holding-heart',
+            'url': 'credits/redemptioncode/',
+        }, {
+            'name': '兑换明细',
+            'icon': 'fa-solid fa-book-journal-whills',
+            'url': 'credits/pointstransaction/',
+        }, {
+            'name': '商品管理',
+            'icon': 'fa-solid fa-dumpster-fire',
+            'url': 'credits/product/',
+        }, {
+            'name': '商品订单',
+            'icon': 'fa-solid fa-book-open',
+            'url': 'credits/exchangeorder/',
+        }]
     }, {
         'name': '收货地址',
         'icon': 'fa fa-house-medical-circle-check',
-        'url': 'account/shipping/',
+        'url': 'account/shipping/'
     }, {
         'name': '区域管理',
-        'icon': 'fa fa-map-location-dot ',
-        'url': 'account/region/',
-    }, {
-        'name': '兑换记录',
-        'icon': 'fa fa-book-open-reader ',
-        'url': 'redeem/redemption/',
+        'icon': 'fa fa-map-location-dot',
+        'url': 'account/region/'
     }]
 }
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100MB（默认 2.5MB）
 FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600   # 100MB（默认 2.5MB）
-ALIYUN_API_KEY = 'AAAAAAAAAAAAAAAAAAAA'
-ALIYUN_API_SECRET = 'BBBBBBBBBBBBBBBBBBBB'
