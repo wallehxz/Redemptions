@@ -93,6 +93,10 @@ function selectHarvest(id, name, mobile, full_address) {
 }
 
 function redeemProduct() {
+    if (isNaN(parseInt(userPoints.textContent))) {
+        showNotice('请登录账户以兑换商品', 'error');
+        return false;
+    }
     if (isNaN(parseInt(specId.textContent))) {
         showNotice('请选择商品规格', 'warning');
         return false;

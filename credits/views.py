@@ -56,10 +56,11 @@ def harvest(request):
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
     default = product.default_spec()
-    harvest = Shipping.objects.filter(Q(consumer=request.user) & Q(is_default=True)).first()
-    address_list = Shipping.objects.filter(consumer_id=request.user.id).all()
-    if not harvest:
-        harvest = Shipping.objects.filter(consumer=request.user).first()
+    if request.user.is_authenticated:
+        harvest = Shipping.objects.filter(Q(consumer=request.user) & Q(is_default=True)).first()
+        address_list = Shipping.objects.filter(consumer_id=request.user.id).all()
+        if not harvest:
+            harvest = Shipping.objects.filter(consumer=request.user).first()
     return render(request, "product_detail.html", locals())
 
 
@@ -109,5 +110,4 @@ def exchange_product(request):
 
 def redemption(request, order_id):
     redemption = ExchangeOrder.objects.filter(Q(id=order_id) & Q(user=request.user)).first()
-    redemption
     return render(request, "redemption.html", locals())
