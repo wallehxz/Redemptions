@@ -1,5 +1,5 @@
 from django.db import models
-from series.models import Prize
+from series.models import Prize, Series
 from account.models import Consumer, Shipping
 from django.db import connection
 import random
@@ -11,10 +11,11 @@ STATUS = (
 
 
 class Redeem(models.Model):
-    number = models.CharField(max_length=19, unique=True, verbose_name='抽奖码')
+    number = models.CharField(max_length=30, unique=True, verbose_name='抽奖码')
     status = models.SmallIntegerField(choices=STATUS, default=0, verbose_name='状态')
     prize = models.ForeignKey(Prize, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='奖品',
                               related_name='redeems')
+    series = models.ForeignKey(Series, on_delete=models.SET_NULL, null=True, blank=True,related_name='redeems', verbose_name='系列')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 

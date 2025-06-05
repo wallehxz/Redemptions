@@ -1,24 +1,34 @@
+import os
 from django.contrib import admin
 from django.http import JsonResponse, HttpResponse
+from openpyxl import load_workbook
 from simpleui.admin import AjaxAdmin
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from datetime import datetime
+
+from series.models import Series, Prize
 from .models import Redeem, Redemption
+from django.core.files.storage import FileSystemStorage
 
 
 @admin.register(Redeem)
 class RedeemAdmin(AjaxAdmin):
     list_display = ('number', 'prize', 'series_name', 'status', 'created_at')
-    fields = ('prize', 'status', 'number')
-    list_filter = ['prize', 'status']
+    fields = ('series', 'prize', 'status', 'number')
+    list_filter = ['prize', 'status', 'series']
     search_fields = ['number']
     list_per_page = 20
     # actions = ['bulk_generate', 'export_data']
-    actions = ['export_data', 'bulk_generate']
+    actions = ['export_data', 'bulk_generate', 'import_codes']
 
     def series_name(self, obj):
-        return obj.prize.series.name if obj.prize else ''
+        if obj.prize:
+            return obj.prize.series.name
+        if obj.series:
+            return obj.series.name
+        else:
+            return '--'
 
     series_name.short_description = '所属系列'
 
@@ -63,12 +73,15 @@ class RedeemAdmin(AjaxAdmin):
         redeem_list = []
         prefix = request.POST.get('prefix', None)
         if prefix:
-            if len(prefix) >= 4:
-                prefix = prefix[:4]
-            else:
+            if len(prefix) < 4:
                 return JsonResponse(data={
                     'status': 'error',
                     'msg': '前缀系列ODE长度不足4个字符'
+                })
+            if len(prefix) > 15:
+                return JsonResponse(data={
+                    'status': 'error',
+                    'msg': '前缀系列ODE长度最大不超过15个字符'
                 })
             for i in range(0, int(total)):
                 # redeem_list.append(Redeem(number=Redeem.generate_prefix(prefix), prize_id=request.POST.get('prize')))
@@ -79,7 +92,7 @@ class RedeemAdmin(AjaxAdmin):
         Redeem.objects.bulk_create(redeem_list)
         return JsonResponse(data={
             'status': 'success',
-            'msg': '处理成功！'
+            'msg': f'批量生成 {len(redeem_list)} 抽奖码',
         })
 
     bulk_generate.short_description = ' 批量'
@@ -128,6 +141,57 @@ class RedeemAdmin(AjaxAdmin):
         #     'require': True,
         #     'options': Redeem.prize_list(),
         # }]
+    }
+
+    def import_codes(self, request, queryset):
+        xlsx_file = request.FILES['upload']
+        fs = FileSystemStorage()
+        filename = fs.save(xlsx_file.name, xlsx_file)
+        file_path = fs.path(filename)
+        try:
+            # 加载Excel文件
+            wb = load_workbook(filename=file_path)
+            sheet = wb.active
+
+            code_list = []
+            for row in sheet.iter_rows(values_only=True):
+                if len(row[0]) > 10:
+                    series = None
+                    prize = None
+                    if row[1]:
+                        series, _ = Series.objects.get_or_create(name=row[1])
+                    if row[3]:
+                        prize, _ = Prize.objects.get_or_create(name=row[3], series=series)
+                    code = Redeem(number=row[0], series=series, prize=prize)
+                    code_list.append(code)
+
+            Redeem.objects.bulk_create(code_list)
+            # 处理完成后删除临时文件
+            os.remove(file_path)
+
+            return JsonResponse(data={
+                'status': 'success',
+                'msg': f'导入{len(code_list)}抽奖码',
+            })
+        except Exception as e:
+            return JsonResponse(data={
+                'status': 'error',
+                'msg': f"{e}"
+            })
+
+    import_codes.short_description = '导入'
+    import_codes.type = 'danger'
+    import_codes.icon = 'el-icon-upload'
+    import_codes.enable = True
+
+    import_codes.layer = {
+        'title': '抽奖码导入',
+        'tips': '请勿重复导入抽奖码',
+        'params': [{
+            'type': 'file',
+            'key': 'upload',
+            'label': '文件'
+        }]
     }
 
 

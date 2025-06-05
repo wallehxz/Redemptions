@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>合佳福</title>
+    <title>超级福中福</title>
     <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/index.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
     <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
@@ -20,21 +20,17 @@
                 <span class="text_1">抽奖码</span>
                 <div class="image-text_4 flex-row justify-between" onclick="showDesc()">
                     <span class="text-group_1">使用说明</span>
-                    <img
-                            class="thumbnail_1"
-                            referrerpolicy="no-referrer"
-                            src="{% static 'images/right_arrow.png' %}"
-                    />
+                    <img class="thumbnail_1" src="{% static 'images/right_arrow.png' %}"/>
                 </div>
             </div>
             <div class="box_redeem_input flex-row">
-                <input type="text" class="redeem_input flex-col" maxlength="4"></input>
+                <input type="text" class="redeem_input flex-col" maxlength="15" inputmode="alphanumeric">
                 <div class="redeem_dash flex-col"></div>
-                <input type="text" class="redeem_input flex-col" maxlength="4"></input>
+                <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
                 <div class="redeem_dash flex-col"></div>
-                <input type="text" class="redeem_input flex-col" maxlength="4"></input>
+                <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
                 <div class="redeem_dash flex-col"></div>
-                <input type="text" class="redeem_input flex-col" maxlength="4"></input>
+                <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
             </div>
             {% if user.is_authenticated %}
                 <div class="button_redeem flex-col">
