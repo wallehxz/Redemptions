@@ -23,7 +23,7 @@ class RedeemAdmin(AjaxAdmin):
     actions = ['export_data', 'bulk_generate', 'import_codes']
 
     def series_name(self, obj):
-        if obj.prize:
+        if obj.prize and obj.prize.series:
             return obj.prize.series.name
         if obj.series:
             return obj.series.name
