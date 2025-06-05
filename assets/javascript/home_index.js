@@ -10,11 +10,13 @@ inputs.forEach((input, index) => {
 
     input.addEventListener('compositionend', (e) => {
         isComposing = false;
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     });
 
     input.addEventListener('input', (e) => {
         // 限制输入长度为 4
         e.target.value = e.target.value.toUpperCase();
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
         if (e.target.value.length > 4 && index > 0) {
             e.target.value = e.target.value.slice(0, 4);
         }
@@ -22,10 +24,6 @@ inputs.forEach((input, index) => {
         // 如果输入满 4 个字符，自动聚焦到下一个输入框
         if (e.target.value.length === 4 && index < inputs.length - 1 && index > 0) {
             inputs[index + 1].focus();
-        }
-
-        if (!isComposing) {
-            e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
         }
     });
 

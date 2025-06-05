@@ -234,11 +234,11 @@
 .box_prize_list {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -5px;
+    margin: 0 5px;
 }
 
 .box_prize {
-    flex: 0 0 calc(33.33% - 15px);
+    flex: 0 0 calc(33.33% - 10px);
     width: 30%;
     margin: 0 5px 10px 5px;
     box-sizing: border-box;

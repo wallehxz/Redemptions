@@ -207,6 +207,10 @@ class RedemptionAdmin(admin.ModelAdmin):
     search_fields = ['redeem__number']
     list_filter = ['status']
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(prize__isnull=False)
+
     def express_info(self, obj):
         return f'{obj.express_name}-{obj.express_order}'
 
