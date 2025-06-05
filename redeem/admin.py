@@ -151,27 +151,31 @@ class RedeemAdmin(AjaxAdmin):
         try:
             # 加载Excel文件
             wb = load_workbook(filename=file_path)
-            sheet = wb.active
-
-            code_list = []
-            for row in sheet.iter_rows(values_only=True):
-                if len(row[0]) > 10:
-                    series = None
-                    prize = None
-                    if row[1]:
-                        series, _ = Series.objects.get_or_create(name=row[1])
-                    if row[3]:
-                        prize, _ = Prize.objects.get_or_create(name=row[3], series=series)
-                    code = Redeem(number=row[0], series=series, prize=prize)
-                    code_list.append(code)
-
-            Redeem.objects.bulk_create(code_list)
+            code_total = 0
+            for sheet_name in wb.sheetnames:
+                code_list = []
+                sheet = wb[sheet_name]
+                print(f"processing sheet {sheet_name} rows data")
+                for row in sheet.iter_rows(values_only=True):
+                    if len(row[0]) > 10 and row[2] == '未被扫描':
+                        if Redeem.objects.filter(number=row[0]).exists():
+                            print(f"当前 sheet {sheet_name} 已导入，跳过")
+                            break
+                        series = None
+                        prize = None
+                        if row[1]:
+                            series, _ = Series.objects.get_or_create(name=row[1])
+                        if row[3]:
+                            prize, _ = Prize.objects.get_or_create(name=row[3], series=series)
+                        code = Redeem(number=row[0], series=series, prize=prize)
+                        code_list.append(code)
+                code_total += len(code_list)
+                Redeem.objects.bulk_create(code_list)
             # 处理完成后删除临时文件
             os.remove(file_path)
-
             return JsonResponse(data={
                 'status': 'success',
-                'msg': f'导入{len(code_list)}抽奖码',
+                'msg': f'导入 {len(wb.sheetnames)} sheets {code_total} 抽奖码',
             })
         except Exception as e:
             return JsonResponse(data={
@@ -187,6 +191,7 @@ class RedeemAdmin(AjaxAdmin):
     import_codes.layer = {
         'title': '抽奖码导入',
         'tips': '请勿重复导入抽奖码',
+        'width': '500px',
         'params': [{
             'type': 'file',
             'key': 'upload',

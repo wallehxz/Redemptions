@@ -106,7 +106,7 @@ function redemption() {
     const inputs = document.querySelectorAll('input[type="text"]'); // 获取所有输入框
     const values = Array.from(inputs).map(input => input.value); // 提取值
     const redeem_code = values.join('-');
-    if (redeem_code.length !== 19) {
+    if (redeem_code.length < 19) {
         showNotification('请输入有效的抽奖码', 'warning');
         return;
     }

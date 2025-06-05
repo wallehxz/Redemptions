@@ -47,9 +47,9 @@
             <div class="box_series_header flex-row">
                 <span class="box_series_title">系列活动</span>
             </div>
-            <div class="box_prize_list flex-row">
+            <div class="box_prize_list">
                 {% for item in series %}
-                    <div class="box_prize flex-col justify-between">
+                    <div class="box_prize flex-col">
                         <img class="prize_image" src="{{ item.logo_url }}" onclick="showPrizes({{ item.id }}, '{{ item.name }}')">
                         <span class="prize_title">{{ item.name }}</span>
                         <div class="prize_view flex-col">
