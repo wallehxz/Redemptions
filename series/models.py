@@ -17,6 +17,12 @@ class Series(models.Model):
     def __str__(self):
         return self.name
 
+    def logo_url(self):
+        if self.logo:
+            return self.logo.url
+        else:
+            return '/assets/images/series.png'
+
 
 class Prize(models.Model):
     name = models.CharField(max_length=100, verbose_name='名称')
@@ -33,5 +39,11 @@ class Prize(models.Model):
 
     def __str__(self):
         return self.name
+
+    def logo_url(self):
+        if self.logo:
+            return self.logo.url
+        else:
+            return '/assets/images/prize.png'
 
 # Create your models here.

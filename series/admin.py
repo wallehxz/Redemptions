@@ -14,9 +14,8 @@ class SeriesAdmin(admin.ModelAdmin):
     list_per_page = 10
 
     def logo_img(self, obj):
-        if obj.logo:
-            return format_html('<img src="{}" width="75" height="75" />', obj.logo.url)
-        return "No Image"
+        return format_html('<img src="{}" width="75" height="75" />', obj.logo_url())
+
     logo_img.short_description = '头图'
 
     def prizes_count(self, obj):
@@ -40,9 +39,7 @@ class PrizeAdmin(admin.ModelAdmin):
     list_per_page = 10
 
     def logo_img(self, obj):
-        if obj.logo:
-            return format_html('<img src="{}" width="75" height="75" />', obj.logo.url)
-        return "No Image"
+        return format_html('<img src="{}" width="75" height="75" />', obj.logo_url())
 
     logo_img.short_description = '头图'
 
