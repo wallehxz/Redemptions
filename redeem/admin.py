@@ -157,7 +157,7 @@ class RedeemAdmin(AjaxAdmin):
                 sheet = wb[sheet_name]
                 print(f"processing sheet {sheet_name} rows data")
                 for row in sheet.iter_rows(values_only=True):
-                    if len(row[0]) > 10 and row[2] == '未被扫描':
+                    if row[2] == '未被扫描':
                         if Redeem.objects.filter(number=row[0]).exists():
                             print(f"当前 sheet {sheet_name} 已导入，跳过")
                             break
