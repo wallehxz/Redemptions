@@ -10,8 +10,8 @@ inputs.forEach((input, index) => {
 
     input.addEventListener('compositionend', (e) => {
         isComposing = false;
-        e.target.value = e.target.value.toUpperCase();
         e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+        e.target.value = e.target.value.toUpperCase();
     });
 
     input.addEventListener('input', (e) => {
@@ -20,7 +20,8 @@ inputs.forEach((input, index) => {
         //     e.target.value = e.target.value.toUpperCase();
         //     e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
         // }
-
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+        e.target.value = e.target.value.toUpperCase();
         if (e.target.value.length > 4 && index > 0) {
             e.target.value = e.target.value.slice(0, 4);
         }
