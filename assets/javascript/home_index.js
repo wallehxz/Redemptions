@@ -10,15 +10,16 @@ inputs.forEach((input, index) => {
 
     input.addEventListener('compositionend', (e) => {
         isComposing = false;
+        e.target.value = e.target.value.toUpperCase();
         e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     });
 
     input.addEventListener('input', (e) => {
         // 限制输入长度为 4
-        if (!isComposing) {
-            e.target.value = e.target.value.toUpperCase();
-            e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        }
+        // if (!isComposing) {
+        //     e.target.value = e.target.value.toUpperCase();
+        //     e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+        // }
 
         if (e.target.value.length > 4 && index > 0) {
             e.target.value = e.target.value.slice(0, 4);
