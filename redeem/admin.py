@@ -203,7 +203,7 @@ class RedeemAdmin(AjaxAdmin):
 @admin.register(Redemption)
 class RedemptionAdmin(admin.ModelAdmin):
     list_display = ('prize', 'redeem', 'consumer', 'shipping', 'status', 'express_info', 'created_at')
-    fields = ('prize', 'redeem', 'consumer', 'shipping', 'express_name', 'express_order', 'status')
+    fields = ['status', 'express_name', 'express_order']
     search_fields = ['redeem__number']
     list_filter = ['status']
 
