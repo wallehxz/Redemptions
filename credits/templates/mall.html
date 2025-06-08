@@ -19,22 +19,16 @@
         <div class="group_menu flex-col">
             <div class="block_menu flex-row">
                 <div class="menu_item flex-row justify-between">
-                    <img
-                            class="menu_img"
-                            referrerpolicy="no-referrer"
-                            src="{% static 'images/duihuanma.png' %}"
-                    />
+                    <img class="menu_img" src="{% static 'images/duihuanma.png' %}"/>
                     <span class="menu_text" onclick="{% if user.is_authenticated %}showRedeem(){% else %}showLogin(){% endif %}">福力兑换</span>
                 </div>
                 <img class="menu_separator" src="{% static 'images/vertical.png' %}"/>
                 <div class="menu_item flex-row justify-between">
                     <img class="menu_img" src="{% static 'images/jifenmingxi.png' %}"/>
                     {% if user.is_authenticated %}
-                        <a href="credits/redeem_history" style="text-decoration: none">
-                            <span class="menu_text">兑换明细</span>
-                        </a>
+                        <a class="menu_text" href="{% url 'redeem_history' %}" style="text-decoration: none">兑换记录</a>
                     {% else %}
-                        <span class="menu_text" onclick="showLogin()">兑换明细</span>
+                        <span class="menu_text" onclick="showLogin()">兑换记录</span>
                     {% endif %}
                 </div>
                 <img class="menu_separator" src="{% static 'images/vertical.png' %}"/>

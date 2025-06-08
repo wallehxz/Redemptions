@@ -204,6 +204,8 @@ class RedeemAdmin(AjaxAdmin):
 class RedemptionAdmin(admin.ModelAdmin):
     list_display = ('prize', 'redeem', 'consumer', 'shipping', 'status', 'express_info', 'created_at')
     fields = ['status', 'express_name', 'express_order']
+    # raw_id_fields = ['redeem']
+    # autocomplete_fields = ['redeem']
     search_fields = ['redeem__number']
     list_filter = ['status']
 
