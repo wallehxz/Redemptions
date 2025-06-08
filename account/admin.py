@@ -9,6 +9,7 @@ from account.models import Consumer, Shipping, Region
 @admin.register(Consumer)
 class ConsumerAdmin(admin.ModelAdmin):
     list_display = ('mobile', 'username', 'role_name', 'last_login')
+    list_filter = ['mobile']
     list_per_page = 20
 
     def role_name(self, obj):
