@@ -66,7 +66,7 @@ def redemption(request):
                 redemption.save()
                 return JsonResponse({'status': 'warning', 'msg': '很遗憾，未能抽中奖品，感谢参与'})
         else:
-            return JsonResponse({'status': 'error', 'msg': '无效抽奖码'})
+            return JsonResponse({'status': 'error', 'msg': '很遗憾，未能抽中奖品，感谢参与'})
 
 
 def redemptions(request):
