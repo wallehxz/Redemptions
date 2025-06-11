@@ -335,6 +335,7 @@
     white-space: nowrap;
     top: 2px;
     line-height: 30px;
+    padding-left: 5px;
 }
 
 .box_amount {

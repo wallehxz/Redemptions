@@ -330,7 +330,7 @@
     background-color: rgba(229, 70, 36, 1);
     border-radius: 21px;
     height: 40px;
-    margin: 20px 20px;
+    margin: 20px 10px;
     display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
