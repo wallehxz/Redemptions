@@ -12,14 +12,6 @@
 <body>
 <div class="page flex-col justify-between">
     <div class="box_container flex-col">
-        <div class="box_navigation flex-col">
-            <div class="menu-wrapper flex-row justify-between">
-                <a class="text_menu" href="{% url 'redeem_history' %}">兑换记录</a>
-                <a class="text_menu" href="{% url 'transactions' %}">收支明细</a>
-                <a class="text_menu active">收货地址</a>
-            </div>
-        </div>
-
         <div class="box_redemptions flex-col">
             {% for item in address_list %}
                 <div class="address_item flex-col">

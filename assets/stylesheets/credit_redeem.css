@@ -6,6 +6,7 @@
     background-color: rgba(255, 255, 255, 1);
     height: 44px;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .menu-wrapper {
@@ -63,7 +64,6 @@
 
 .box_redemptions {
     width: 100%;
-    margin-top: 10px;
 }
 
 .box_redemption_list {
@@ -178,7 +178,7 @@
     background-color: rgba(246, 246, 246, 1);
     border-radius: 15px 0 0 15px;
     border: 1px solid rgba(239, 239, 239, 1);
-    padding: 3px 14px 4px 15px;
+    padding: 4px 14px 4px 15px;
     width: 90px;
 }
 
@@ -227,7 +227,7 @@
 }
 
 .box_description_title {
-    width: calc(100% - 14px);
+    width: calc(100% - 7px);
     height: 30px;
     overflow-wrap: break-word;
     color: rgba(51, 56, 64, 1);
@@ -254,8 +254,8 @@
     font-weight: normal;
     text-align: justify;
     line-height: 18px;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 13px;
+    padding-right: 13px;
     margin: 12px 0 12px 0;
 }
 
@@ -327,7 +327,7 @@
 }
 
 .add_shipping_wrapper {
-    background-color: rgba(213, 48, 47, 1);
+    background-color: rgba(229, 70, 36, 1);
     border-radius: 21px;
     height: 40px;
     margin: 20px 20px;
@@ -356,13 +356,13 @@
 .address_item {
     position: relative;
     background-color: rgba(255, 255, 255, 1);
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     transition: background-color 0.3s ease;
 }
 
 .address_item:hover {
     cursor: pointer;
-    background-color: rgba(239, 75, 48, 0.15);
+    background-color: rgba(253, 228, 224, 1);
 
     .address_full, .address_user {
         color: rgba(239, 75, 48, 1);

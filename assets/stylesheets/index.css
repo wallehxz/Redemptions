@@ -822,7 +822,7 @@
 }
 
 .box_description_title {
-    width: calc(100% - 14px);
+    width: calc(100% - 7px);
     height: 30px;
     overflow-wrap: break-word;
     color: rgba(51, 56, 64, 1);
@@ -948,13 +948,17 @@
     border-radius: 21px;
     max-width: 450px;
     height: 40px;
-    font-size: 20px;
+    font-size: 16px;
     margin: 16px 20px;
     display: flex;
     color: #FFFFFF;
     width: calc(100% - 40px);
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
+}
+
+.redeem_button {
+    background-color: rgba(229, 70, 36, 1);
 }
 
 .error-message {

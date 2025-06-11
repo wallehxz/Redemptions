@@ -267,7 +267,7 @@
 }
 
 .text-wrapper_5 {
-    background-color: rgba(213, 48, 47, 1);
+    background-color: rgba(229, 70, 36, 1);
     border-radius: 21px;
     height: 40px;
     display: flex;
@@ -410,8 +410,8 @@
 
 .selector-container {
     display: flex;
-    height: 180px;
-    margin-top: 60px;
+    height: 150px;
+    margin-top: 15px;
     margin-bottom: 40px;
 }
 
@@ -420,7 +420,7 @@
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    height: 130px;
+    height: 185px;
     width: 33%;
     background-color: #fff;
     scrollbar-width: none; /* 隐藏滚动条（Firefox） */
