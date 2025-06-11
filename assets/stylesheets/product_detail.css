@@ -11,7 +11,7 @@
     background-color: rgba(255, 255, 255, 1);
     width: 100%;
     margin-top: 10px;
-    padding: 8px;
+    padding: 10px;
 }
 
 .points_wrapper {
@@ -76,7 +76,8 @@
     position: relative;
     width: 100%;
     margin-top: 10px;
-    padding: 8px 0 17px 0;
+    padding: 10px;
+    margin-bottom: 70px;
     img {
         width: 100% !important; /* 强制覆盖其他样式 */
         height: auto; /* 保持宽高比 */
@@ -282,7 +283,7 @@
 .section_product {
     background-color: rgba(255, 255, 255, 1);
     margin-top: 10px;
-    padding: 10px 41px 10px 10px;
+    padding: 10px;
 }
 
 .product_thumb_wrapper {
@@ -396,7 +397,8 @@
     text-align: center;
     white-space: nowrap;
     line-height: 17px;
-    margin: 6px 0 0 calc(100% - 195px);
+    position: absolute;
+    right: 10px;
 }
 
 .spec_title {

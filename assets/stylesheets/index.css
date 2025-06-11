@@ -816,14 +816,14 @@
 }
 
 .box_description_close {
-    width: 14px;
-    height: 14px;
-    margin: 15px 0 0 12px;
+    width: 16px;
+    height: 16px;
+    margin: 20px 0 0 12px;
 }
 
 .box_description_title {
     width: calc(100% - 7px);
-    height: 30px;
+    height: 40px;
     overflow-wrap: break-word;
     color: rgba(51, 56, 64, 1);
     font-size: 20px;
@@ -831,7 +831,7 @@
     font-weight: 600;
     text-align: center;
     white-space: nowrap;
-    line-height: 22px;
+    line-height: 35px;
     padding-top: 10px;
     padding-right: 40px;
 }
@@ -949,10 +949,10 @@
     max-width: 450px;
     height: 40px;
     font-size: 16px;
-    margin: 16px 20px;
+    margin: 20px 10px;
     display: flex;
     color: #FFFFFF;
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
 }

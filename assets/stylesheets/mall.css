@@ -105,10 +105,11 @@
 
 .product_img {
     width: 100%;
+    border-radius: 8px 8px 0 0;
 }
 
 .product_info {
-    margin: 6px 6px 6px 6px;
+    margin: 10px;
 }
 
 .product_name {
@@ -157,10 +158,10 @@
     }
 }
 
-
 .box_login_points {
     position: absolute;
     left: calc(50% - 30px);
+    width: 60px;
     top: -40px;
     height: 72px;
     overflow-wrap: break-word;
@@ -227,7 +228,7 @@
 }
 
 .redeem_form {
-    height: 120px;
+    height: 105px;
 }
 
 .redeem_code_input {

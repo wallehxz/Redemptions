@@ -42,7 +42,8 @@ class Consumer(AbstractUser):
         return False
 
     def human_points(self):
-        return f"{self.points:03d}"
+        # return f"{self.points:03d}"
+        return f"{self.points}"
 
 
 class Shipping(models.Model):
