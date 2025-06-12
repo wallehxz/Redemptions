@@ -160,7 +160,8 @@
 
 .box_login_points {
     position: absolute;
-    left: calc(50% - 30px);
+    width: 100%;
+    left: 0;
     top: -40px;
     height: 72px;
     overflow-wrap: break-word;
