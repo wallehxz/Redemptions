@@ -11,7 +11,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="商品名称")
     main_image = models.ImageField(upload_to='products/%Y%m%d/', null=True, verbose_name='主图')
     description = RichTextField(verbose_name="商品描述")
-    points_required = models.PositiveIntegerField(verbose_name="所需积分")
+    points_required = models.PositiveIntegerField(verbose_name="所需福力")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="更新时间")
 
@@ -34,7 +34,7 @@ class Product(models.Model):
 class ProductSpec(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specs', verbose_name='所属商品')
     name = models.CharField(max_length=100, verbose_name='规格名称')
-    points_required = models.PositiveIntegerField(verbose_name="所需积分")
+    points_required = models.PositiveIntegerField(verbose_name="所需福力")
     stock = models.PositiveIntegerField(default=0, verbose_name='库存')
     is_default = models.BooleanField(default=False, verbose_name='是否默认规格')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
@@ -51,7 +51,7 @@ class ProductSpec(models.Model):
 
 class RedemptionCode(models.Model):
     code = models.CharField(max_length=50, unique=True, verbose_name="兑换码")
-    points_value = models.PositiveIntegerField(default=1, null=True, blank=True, verbose_name="积分值")
+    points_value = models.PositiveIntegerField(default=1, null=True, blank=True, verbose_name="福力值")
     is_used = models.BooleanField(default=False, verbose_name="是否已使用")
     used_by = models.ForeignKey(Consumer, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="使用者")
     used_at = models.DateTimeField(null=True, blank=True, verbose_name="兑换时间")
@@ -68,9 +68,16 @@ class RedemptionCode(models.Model):
     @classmethod
     def generate_code(cls):
         chars = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ'
-        code = ''.join(random.choices(chars, k=12))
-        # code = "-".join([numbers[i:i + 4] for i in range(0, 16, 4)])
+        numbers = ''.join(random.choices(chars, k=16))
+        code = "-".join([numbers[i:i + 4] for i in range(0, 16, 4)])
         return code
+
+    @classmethod
+    def generate_prefix(cls, prefix):
+        chars = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ'
+        numbers = ''.join(random.choices(chars, k=12))
+        code = "-".join([numbers[i:i + 4] for i in range(0, 12, 4)])
+        return f"{prefix}-{code}"
 
 
 class PointsTransaction(models.Model):
@@ -80,7 +87,7 @@ class PointsTransaction(models.Model):
     )
 
     user = models.ForeignKey(Consumer, on_delete=models.CASCADE, verbose_name="用户")
-    amount = models.IntegerField(verbose_name="积分变动")
+    amount = models.IntegerField(verbose_name="福力变动")
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE, verbose_name="交易类型")
     description = models.CharField(max_length=200, verbose_name="描述")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

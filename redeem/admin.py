@@ -76,7 +76,7 @@ class RedeemAdmin(AjaxAdmin):
             if len(prefix) < 4:
                 return JsonResponse(data={
                     'status': 'error',
-                    'msg': '前缀系列ODE长度不足4个字符'
+                    'msg': '前缀系列CODE长度不足4个字符'
                 })
             if len(prefix) > 15:
                 return JsonResponse(data={
@@ -158,9 +158,10 @@ class RedeemAdmin(AjaxAdmin):
                 print(f"processing sheet {sheet_name} rows data")
                 for row in sheet.iter_rows(values_only=True):
                     if row[2] == '未被扫描':
-                        if Redeem.objects.filter(number=row[0]).exists():
-                            print(f"当前 sheet {sheet_name} 已导入，跳过")
-                            break
+                        existing_codes = set(Redeem.objects.values_list('number', flat=True))
+                        if row[0] in existing_codes:
+                            print(f"{row[0]} existing，skip")
+                            continue
                         series = None
                         prize = None
                         if row[1]:

@@ -161,7 +161,6 @@
 .box_login_points {
     position: absolute;
     left: calc(50% - 30px);
-    width: 60px;
     top: -40px;
     height: 72px;
     overflow-wrap: break-word;
@@ -196,7 +195,6 @@
     }
 
     .points_value {
-        width: 65px;
         height: 72px;
         overflow-wrap: break-word;
         color: rgba(251, 236, 210, 1);
