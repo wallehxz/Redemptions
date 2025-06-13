@@ -114,7 +114,13 @@
             <img class="box_description_line" src="{% static 'images/line.png' %}"/>
             <div class="redeem_form">
                 <div class="redeem_group flex-row">
-                    <input type="text" class="redeem_code_input flex-col" id="credit_redeem_code"></input>
+                    <input type="text" class="redeem_input flex-col" maxlength="15" inputmode="alphanumeric">
+                    <div class="redeem_dash flex-col"></div>
+                    <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
+                    <div class="redeem_dash flex-col"></div>
+                    <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
+                    <div class="redeem_dash flex-col"></div>
+                    <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
                 </div>
                 <button class="login_submit redeem_button" onclick="redeemCode()">确认兑换</button>
             </div>

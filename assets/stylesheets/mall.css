@@ -230,23 +230,23 @@
     height: 105px;
 }
 
-.redeem_code_input {
-    background-color: rgba(247, 247, 247, 1);
-    border-radius: 4px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: normal;
-    white-space: nowrap;
-    color: rgba(51, 51, 51, 1);
-    width: 100%;
-    padding: 0 10px;
-}
-
 .redeem_group {
     height: 40px;
-    margin: 20px;
+    margin: 12px 12px 0 12px;
     justify-content: space-between;
     flex: 0 0 calc(25% - 10px);
+
+    .redeem_input {
+        background-color: #F0F7FF;
+        border-radius: 4px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        color: rgba(51, 51, 51, 1);
+        width: 70px;
+    }
 }
 
 /* 通知容器 */
