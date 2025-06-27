@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('mall', credits_views.mall, name='mall'),
     path('account/', include('account.urls')),
+    path('stores/', include('stores.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

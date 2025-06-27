@@ -1,6 +1,9 @@
+from datetime import datetime
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font, PatternFill
 from django.contrib import admin
 from simpleui.admin import AjaxAdmin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils.html import format_html
 import os
 from .models import Product, ProductSpec, PointsTransaction, RedemptionCode, ExchangeOrder
@@ -193,8 +196,12 @@ class PointsTransactionAdmin(AjaxAdmin):
 @admin.register(ExchangeOrder)
 class ExchangeOrderAdmin(AjaxAdmin):
     list_filter = ('status',)
+    readonly_fields = ('order_number',)
     search_fields = ['user__mobile', 'tracking_number']
-    list_display = ('user', 'express', 'status', 'note', 'harvest','created_at')
+    fields = ('order_number', 'express_name', 'tracking_number', 'note')
+    list_display = ('user', 'express', 'status', 'note', 'harvest_info','created_at')
+    list_per_page = 20
+    actions = ['export_data']
 
     def express(self, obj):
         if obj.tracking_number:
@@ -202,4 +209,57 @@ class ExchangeOrderAdmin(AjaxAdmin):
         else:
             return "--"
     express.short_description = '快递信息'
+
+    def harvest_info(self, obj):
+        if obj.harvest:
+            return format_html(
+                """
+                <span><strong>姓名：</strong> {}<br></span>
+                <span><strong>电话：</strong> {}<br></span>
+                <span><strong>地址：</strong> {}<br></span>
+                """,
+                obj.harvest.nick_name,
+                obj.harvest.mobile,
+                obj.harvest.full_address(),
+            )
+        else:
+            return "--"
+
+    harvest_info.short_description = '收货信息'
+
+    def export_data(self, request, queryset):
+        wb = Workbook()
+        ws = wb.active
+        ws.title = '兑换码列表'
+
+        header_font = Font(bold=True, color='FFFFFF')
+        header_fill = PatternFill(start_color='4F81BD', end_color='4F81BD', fill_type='solid')
+        headers = ['收件人', '联系电话', '收获地址', '商品信息', '快递单号', '订单状态', '创建时间']
+        for i, header in enumerate(headers):
+            ws.cell(row=1, column=i + 1, value=header)
+            ws.cell(row=1, column=i + 1).font = header_font
+            ws.cell(row=1, column=i + 1).fill = header_fill
+            ws.cell(row=1, column=i + 1).alignment = Alignment(horizontal='center')
+
+        for obj in queryset:
+            row = [obj.harvest.nick_name, obj.harvest.mobile, obj.harvest.full_address(), obj.note, obj.tracking_number, obj.get_status_display(),
+                   obj.created_at.strftime('%Y-%m-%d %H:%M:%S')]
+            ws.append(row)
+
+        for col in ws.columns:
+            max_length = max(len(str(cell.value)) for cell in col)
+            ws.column_dimensions[col[0].column_letter].width = max_length + 10
+
+        response = HttpResponse(
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+        filename = f"商品兑换订单_{timestamp}_数据.xlsx"
+        response["Content-Disposition"] = f'attachment; filename*=UTF-8 ''{filename}'
+        wb.save(response)
+        return response
+
+    export_data.short_description = ' 导出'
+    export_data.type = 'success'
+    export_data.icon = 'fa fa-solid fa-file-export'
 
