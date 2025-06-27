@@ -242,9 +242,10 @@ class ExchangeOrderAdmin(AjaxAdmin):
             ws.cell(row=1, column=i + 1).alignment = Alignment(horizontal='center')
 
         for obj in queryset:
-            row = [obj.harvest.nick_name, obj.harvest.mobile, obj.harvest.full_address(), obj.note, obj.tracking_number, obj.get_status_display(),
-                   obj.created_at.strftime('%Y-%m-%d %H:%M:%S')]
-            ws.append(row)
+            if obj.harvest:
+                row = [obj.harvest.nick_name, obj.harvest.mobile, obj.harvest.full_address(), obj.note, obj.tracking_number, obj.get_status_display(),
+                       obj.created_at.strftime('%Y-%m-%d %H:%M:%S')]
+                ws.append(row)
 
         for col in ws.columns:
             max_length = max(len(str(cell.value)) for cell in col)
