@@ -204,7 +204,7 @@ class ExchangeOrderAdmin(AjaxAdmin):
     actions = ['export_data']
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('harvest')
+        return super().get_queryset(request).select_related('harvest')
 
     def express(self, obj):
         if obj.tracking_number:
