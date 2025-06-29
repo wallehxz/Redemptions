@@ -203,6 +203,9 @@ class ExchangeOrderAdmin(AjaxAdmin):
     list_per_page = 20
     actions = ['export_data']
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('harvest')
+
     def express(self, obj):
         if obj.tracking_number:
             return f"{obj.express_name} - {obj.tracking_number}"
@@ -212,15 +215,16 @@ class ExchangeOrderAdmin(AjaxAdmin):
 
     def harvest_info(self, obj):
         if obj.harvest:
+            harvest = obj.harvest
             return format_html(
                 """
                 <span><strong>姓名：</strong> {}<br></span>
                 <span><strong>电话：</strong> {}<br></span>
                 <span><strong>地址：</strong> {}<br></span>
                 """,
-                obj.harvest.nick_name,
-                obj.harvest.mobile,
-                obj.harvest.full_address(),
+                harvest.nick_name,
+                harvest.mobile,
+                harvest.full_address(),
             )
         else:
             return "--"
