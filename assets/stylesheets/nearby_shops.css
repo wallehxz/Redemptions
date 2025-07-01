@@ -24,7 +24,7 @@
     align-self: center;
     margin-top: -1px;
     width: calc(100vw - 20px);
-    padding: 10px 12px 0 12px;
+    padding: 10px 12px 10px 12px;
 }
 
 .box_content_trophy {
@@ -33,6 +33,7 @@
     align-self: center;
     margin-top: -1px;
     width: calc(100vw - 20px);
+    padding: 10px 12px 0 12px;
 }
 
 .description {
