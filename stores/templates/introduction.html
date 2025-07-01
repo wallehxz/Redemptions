@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>福尚介绍</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/nearby_shops.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col">
+    <div class="section_menu flex-col">
+        <div class="box_menu flex-row">
+            <a class="item_menu flex-col" href="{% url 'stores' %}">
+                <span class="text_menu">附近门店</span>
+            </a>
+            <a class="item_menu active flex-col">
+                <span class="text_menu">福赏介绍</span>
+            </a>
+            <a class="item_menu flex-col" href="{% url 'stores:trophy' %}">
+                <span class="text_menu">本期周边</span>
+            </a>
+            <a class="item_menu flex-col" href="{% url 'stores:tutorials' %}">
+                <span class="text_menu">购买流程</span>
+            </a>
+        </div>
+    </div>
+    <div class="box_content flex-col">
+        <div class="group_head flex-col">
+            <img src="{% static '/images/fuxion_introduction.png' %}">
+        </div>
+    </div>
+</div>
+</body>
+</html>

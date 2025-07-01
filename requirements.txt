@@ -10,3 +10,4 @@ mysqlclient==2.2.7
 requests==2.32.3
 pytz==2025.2
 django-ckeditor==6.7.0
+django-debug-toolbar==5.2.0

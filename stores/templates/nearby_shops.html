@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>附近门店</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/nearby_shops.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col">
+    <div class="section_menu flex-col">
+        <div class="box_menu flex-row">
+            <a class="item_menu active flex-col">
+                <span class="text_menu">附近门店</span>
+            </a>
+            <a class="item_menu flex-col" href="{% url 'stores:introduction' %}">
+                <span class="text_menu">福赏介绍</span>
+            </a>
+            <a class="item_menu flex-col" href="{% url 'stores:trophy' %}">
+                <span class="text_menu">本期周边</span>
+            </a>
+            <a class="item_menu flex-col" href="{% url 'stores:tutorials' %}">
+                <span class="text_menu">购买流程</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="box_content flex-col">
+        <div class="group_head flex-col">
+            <img src="{% static '/images/nearby_shops.png' %}">
+        </div>
+        <div class="group_content flex-col">
+            <img class="store_head" src="{% static '/images/stores_header.png' %}"/>
+            <div class="group_stores flex-row justify-between">
+                <div>
+                    <span class="text_store">附近门店</span>
+                    <img class="more_store" src="{% static '/images/xiala.png' %}"/>
+                </div>
+                <span class="store_total">共 {{ stores.count }} 家店铺</span>
+            </div>
+            <div class="current_location" id="location">获取位置中...</div>
+            <img class="store_split_line" src="{% static '/images/store_split_line.png' %}"/>
+            <span class="update_tip">店铺信息持续更新中，敬请期待</span>
+            <div id="shop_list">
+                {% for item in stores %}
+                    <div class="item_shop" onclick="setMarker({{ item.latitude }}, {{ item.longitude }})">
+                        <span class="text_shop_name">{{ item.name }}</span>
+                        <div class="group_address justify-between">
+                            <span class="text_address">{{ item.address }}</span>
+                            <div class="flex-row">
+                                <img class="store_location" src="{% static '/images/store_location.png' %}"/>
+                                <span class="text_distance">未授权</span>
+                            </div>
+                        </div>
+                        <img class="more_line" src="{% static '/images/shop_more_line.png' %}"/>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="overlay" class="overlay">
+    <div class="box_description">
+        <div id="map-container" style="width: 100vw; height: 400px;"></div>
+    </div>
+</div>
+</body>
+<script src="{% static '/javascript/shop_location.js' %}"></script>
+<script src="https://webapi.amap.com/maps?v=2.0&key=c5d28f4beee7675500794c80109aedc0"></script>
+<script src="{% static '/javascript/amap_location.js' %}"></script>
+</html>

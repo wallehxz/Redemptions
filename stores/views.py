@@ -6,7 +6,7 @@ from django.core.serializers import serialize
 from django.conf import settings
 import json
 import requests
-from .models import Store
+from .models import Store, Plush
 
 
 def store_list(request):
@@ -31,6 +31,11 @@ def get_nearest_stores(request):
         # 构建响应数据
         result = []
         for store, distance in nearest_stores:
+            human_distance = ""
+            if distance > 1:
+                human_distance = f"{round(distance, 2)} km"
+            else:
+                human_distance = f"{int(distance * 1000)} m"
             result.append({
                 'id': store.id,
                 'name': store.name,
@@ -40,7 +45,7 @@ def get_nearest_stores(request):
                 'latitude': store.latitude,
                 'longitude': store.longitude,
                 'business_hours': store.business_hours,
-                'distance': round(distance, 2)  # 距离（千米）
+                'distance': human_distance
             })
 
         return JsonResponse({
@@ -71,7 +76,7 @@ def geocode_address(request):
             })
 
         # 调用高德地理编码API
-        api_key = getattr(settings, 'AMAP_API_KEY', '')
+        api_key = '12233ccf85da7031c00a3f4ca01eebd1'
         if not api_key:
             return JsonResponse({
                 'success': False,
@@ -121,7 +126,7 @@ def reverse_geocode(request):
         longitude = float(data.get('longitude'))
 
         # 调用高德逆地理编码API
-        api_key = getattr(settings, 'AMAP_API_KEY', '')
+        api_key = '12233ccf85da7031c00a3f4ca01eebd1'
         if not api_key:
             return JsonResponse({
                 'success': False,
@@ -140,10 +145,14 @@ def reverse_geocode(request):
 
         if result.get('status') == '1' and result.get('regeocode'):
             regeocode = result['regeocode']
-
+            human_address = ''
+            if len(regeocode['formatted_address']) > 0:
+                human_address = regeocode['formatted_address']
+            else:
+                human_address = f'纬度：{latitude} ,经度：{longitude}'
             return JsonResponse({
                 'success': True,
-                'address': regeocode.get('formatted_address', ''),
+                'address': human_address,
                 'province': regeocode.get('addressComponent', {}).get('province', ''),
                 'city': regeocode.get('addressComponent', {}).get('city', ''),
                 'district': regeocode.get('addressComponent', {}).get('district', ''),
@@ -170,3 +179,21 @@ def search_store(request):
     response = requests.get(url, params=params)
     result = response.json()
     return JsonResponse(result)
+
+
+def nearby_shops(request):
+    stores = Store.objects.filter(is_active=True)
+    return render(request, 'nearby_shops.html', locals())
+
+
+def introduction(request):
+    return render(request, 'introduction.html', locals())
+
+
+def tutorials(request):
+    return render(request, 'tutorials.html', locals())
+
+
+def trophy(request):
+    plush = Plush.objects.filter(is_latest=True).first()
+    return render(request, 'trophy.html', locals())

@@ -19,15 +19,23 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from credits import views as credits_views
+from stores import views as stores_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('credits/', include('credits.urls')),
 
     path('mall', credits_views.mall, name='mall'),
+    path('stores', stores_views.nearby_shops, name='stores'),
     path('account/', include('account.urls')),
     path('stores/', include('stores.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:  # 仅在调试模式启用
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),  # 添加调试路由
+    ]

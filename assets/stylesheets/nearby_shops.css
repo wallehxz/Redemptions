@@ -1,0 +1,232 @@
+.page {
+    background-color: rgba(239, 65, 36, 1);
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.section_menu {
+    padding: 10px 10px 11px 10px;
+}
+
+.box_menu {
+    display: flex; /* 启用弹性布局 */
+    justify-content: space-between; /* 子元素平均分布，首尾贴边 */
+}
+
+.box_content {
+    background-color: #fff;
+    background-size: 100% 100%;
+    align-self: center;
+    margin-top: -1px;
+    width: calc(100vw - 20px);
+    padding: 10px 12px 0 12px;
+}
+
+.box_content_trophy {
+    background-color: #fff;
+    background-size: 100% 100%;
+    align-self: center;
+    margin-top: -1px;
+    width: calc(100vw - 20px);
+}
+
+.description {
+    img {
+        width: 100% !important; /* 强制覆盖其他样式 */
+        height: auto; /* 保持宽高比 */
+    }
+    p {
+        margin-top: 0;
+    }
+}
+
+.group_head {
+    background-color: #fff;
+    padding-bottom: 10px;
+    img {
+        width: 100%;
+    }
+}
+
+.item_menu {
+    background-color: rgba(252, 236, 210, 0);
+    border-radius: 20px;
+    border: 1px solid rgba(252, 236, 210, 1);
+    padding: 7px 9px 6px 9px;
+    text-decoration: none;
+}
+
+
+
+.item_menu:hover, .active {
+    background-color: rgba(252, 236, 210, 1);
+    border-radius: 20px;
+    padding: 8px 10px 7px 10px;
+    .text_menu {
+        color: rgba(239, 65, 36, 1);
+    }
+}
+
+.text_menu {
+    overflow-wrap: break-word;
+    font-size: 15px;
+    color: rgba(252, 236, 210, 1);
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.group_content {
+    background-color: rgba(255, 249, 240, 1);
+    border: 2px solid rgba(252, 236, 210, 1);
+    padding-top: 8px;
+}
+
+.store_head {
+    width: calc(100vw - 68px);
+    height: 26px;
+    align-self: center;
+}
+
+.group_stores {
+    width: calc(100vw - 68px);
+    align-self: center;
+    margin-top: 7px;
+}
+
+.text_store {
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.current_location {
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, serif;
+    font-weight: 600;
+    text-align: justify;
+    line-height: 20px;
+    margin-left: 10px;
+    width: calc(100vw - 68px);
+}
+
+.more_store {
+    width: 10px;
+    height: 7px;
+    margin-left: 4px;
+}
+
+.store_total {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+}
+
+.store_split_line {
+    width: calc(100vw - 68px);
+    height: 1px;
+    margin: 6px 8px 0 10px;
+}
+
+.update_tip {
+    overflow-wrap: break-word;
+    color: rgba(239, 65, 36, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular,serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin: 4px 139px 0 12px;
+}
+
+.text_shop_name {
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 13px;
+    font-family: PingFangSC-Semibold,serif;
+    font-weight: 600;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 18px;
+    margin-left: 10px;
+}
+
+.group_address {
+    width: calc(100vw - 68px);
+    margin-top: 2px;
+}
+
+.text_address {
+    width: calc(100vw - 160px);
+    height: 34px;
+    overflow-wrap: break-word;
+    color: rgba(102, 102, 102, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    line-height: 17px;
+    margin-left: 10px;
+}
+
+.store_location {
+    width: 8px;
+    height: 10px;
+    margin: 4px 0 20px 17px;
+}
+
+.text_distance {
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 12px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 17px;
+    margin-left: 3px;
+}
+
+.more_line {
+    width: 301px;
+    height: 1px;
+    margin: 10px 8px 0 10px;
+}
+
+.overlay {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.box_description {
+    background-color: rgba(255, 255, 255, 1);
+    width: 100%;
+    margin-top: 100vh;
+    margin-bottom: 25vh;
+}

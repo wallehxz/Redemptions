@@ -71,13 +71,13 @@ class StoreAdmin(admin.ModelAdmin):
 
 @admin.register(Plush)
 class PlushAdmin(admin.ModelAdmin):
-    list_display = ['name','main_img','is_latest', 'created_at']
+    list_display = ['name','is_latest', 'created_at']
     list_filter = ['is_latest']
     search_fields = ['name']
 
     fieldsets = (
         ('基本信息', {
-            'fields': ('name', 'is_latest', 'main_image')
+            'fields': ('name', 'is_latest')
         }),
         ('周边详情', {
             'fields': ('description',)
