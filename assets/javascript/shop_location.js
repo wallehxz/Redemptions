@@ -157,15 +157,5 @@ function displayNearestStoresOneByOne(stores) {
 }
 
 function openNav(lat, lng, name) {
-  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-  const amapUrl = `amapuri://route/plan/?dlat=${lat}&dlon=${lng}&dname=${name}`;
-  const baiduUrl = `baidumap://map/direction?destination=${name}`;
-
-  // 高德优先，未安装则引导下载
-  if (isIOS && navigator.userAgent.includes('AMap')) {
-    location.href = amapUrl;
-  } else {
-    const choice = confirm("未安装高德，是否使用百度地图？");
-    choice ? location.href = baiduUrl : location.href = "https://lbs.amap.com/download";
-  }
+    window.open(`http://uri.amap.com/navigation?to=${lat},${lng},${name}`);
 }
