@@ -46,9 +46,9 @@
             <span class="update_tip">店铺信息持续更新中，敬请期待</span>
             <div id="shop_list" style="padding-top: 10px">
                 {% for item in stores %}
-                    <div class="item_shop" onclick="setMarker({{ item.latitude }}, {{ item.longitude }})">
-                        <span class="text_shop_name">{{ item.name }}</span>
-                        <div class="group_address justify-between">
+                    <div class="item_shop">
+                        <span class="text_shop_name" onclick="setMarker({{ item.latitude }}, {{ item.longitude }})">{{ item.name }}</span>
+                        <div class="group_address justify-between" onclick="openNav({{ item.latitude }}, {{ item.longitude }}, '{{ item.address }}')">
                             <span class="text_address">{{ item.address }}</span>
                             <div class="flex-row">
                                 <img class="store_location" src="{% static '/images/store_location.png' %}"/>
