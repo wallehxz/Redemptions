@@ -209,7 +209,7 @@
 }
 
 .more_line {
-    width: 301px;
+    width: calc(100vw - 68px);
     height: 1px;
     margin: 10px 8px 0 10px;
 }
@@ -227,7 +227,7 @@
 
 .box_description {
     background-color: rgba(255, 255, 255, 1);
-    width: 100%;
+    width: 95%;
     margin-top: 100vh;
-    margin-bottom: 25vh;
+    margin-bottom: 10vh;
 }

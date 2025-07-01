@@ -21,7 +21,7 @@ function successCallback(position) {
         longitude: position.coords.longitude
     };
     // 示例：显示在页面
-    reverseGeocode(lat, lng);
+    // reverseGeocode(lat, lng);
     findNearestStores();
 }
 
