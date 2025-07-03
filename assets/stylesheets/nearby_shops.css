@@ -44,8 +44,8 @@
 
 .description {
     img {
-        width: 100% !important; /* 强制覆盖其他样式 */
-        height: auto; /* 保持宽高比 */
+        width: 100% !important;
+        height: auto !important;
     }
     p {
         margin-top: 0;

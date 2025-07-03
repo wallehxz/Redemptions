@@ -80,8 +80,9 @@ class PlushAdmin(admin.ModelAdmin):
             'fields': ('is_latest', 'name')
         }),
         ('周边详情', {
-            'fields': ('description',),
-            'description': '如果有多张长图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接'
+            'fields': ('main_image', 'description',),
+            'description': '如有多张图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接<br>'
+                           '可以先将图片上传至服务器获取链接，然后再将图片链接复制至详情中'
         }),
     )
 

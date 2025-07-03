@@ -76,7 +76,7 @@ class Store(models.Model):
 
 class Plush(models.Model):
     name = models.CharField(max_length=200,verbose_name='标题')
-    main_image = models.ImageField(upload_to='plush/%Y%m%d/', null=True, verbose_name='封面图')
+    main_image = models.ImageField(upload_to='plush/%Y%m%d/', null=True, blank=True, verbose_name='图床链接')
     is_latest = models.BooleanField(default=False, verbose_name='是否最新')
     description = RichTextField(verbose_name="", blank=True, null=True)
     # 时间戳
