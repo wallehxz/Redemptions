@@ -84,7 +84,7 @@ class Plush(models.Model):
     updated_at = models.DateTimeField('更新时间', auto_now=True)
 
     class Meta:
-        verbose_name = '玩偶周边'
+        verbose_name = '每期周边'
         verbose_name_plural = verbose_name
         ordering = ['-is_latest']
 

@@ -77,10 +77,11 @@ class PlushAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('基本信息', {
-            'fields': ('name', 'is_latest')
+            'fields': ('is_latest', 'name')
         }),
         ('周边详情', {
-            'fields': ('description',)
+            'fields': ('description',),
+            'description': '如果有多张长图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接'
         }),
     )
 
