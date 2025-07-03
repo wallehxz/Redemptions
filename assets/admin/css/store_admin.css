@@ -1,0 +1,80 @@
+/* 店铺管理后台样式 */
+
+#amap-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.amap-info-window {
+    max-width: 300px;
+}
+
+.location-form {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.location-form input[type="text"] {
+    width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.location-form button {
+    padding: 8px 15px;
+    background: #417690;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.location-form button:hover {
+    background: #205067;
+}
+
+.location-form button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+#location-info {
+    background: #e8f4f8;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #417690;
+}
+
+.coordinates-display {
+    font-family: monospace;
+    background: #f5f5f5;
+    padding: 5px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.error-message {
+    color: #ba2121;
+    background: #fff2f2;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 4px solid #ba2121;
+    margin: 10px 0;
+}
+
+.success-message {
+    color: #155724;
+    background: #d4edda;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 4px solid #28a745;
+    margin: 10px 0;
+}
