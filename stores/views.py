@@ -194,7 +194,7 @@ def introduction(request):
 
 
 def tutorials(request):
-    fuxion_title = cache.get('fuxion_title', '福赏活动-购买教程')
+    fuxion_title = cache.get('fuxion_title', '福赏活动-购买流程')
     return render(request, 'tutorials.html', locals())
 
 
