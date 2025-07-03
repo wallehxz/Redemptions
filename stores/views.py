@@ -7,6 +7,7 @@ from django.conf import settings
 import json
 import requests
 from .models import Store, Plush
+from django.core.cache import cache
 
 
 def store_list(request):
@@ -182,18 +183,22 @@ def search_store(request):
 
 
 def nearby_shops(request):
+    fuxion_title = cache.get('fuxion_title', '福赏活动-附近门店')
     stores = Store.objects.filter(is_active=True)
     return render(request, 'nearby_shops.html', locals())
 
 
 def introduction(request):
+    fuxion_title = cache.get('fuxion_title', '福赏活动-介绍')
     return render(request, 'introduction.html', locals())
 
 
 def tutorials(request):
+    fuxion_title = cache.get('fuxion_title', '福赏活动-购买教程')
     return render(request, 'tutorials.html', locals())
 
 
 def trophy(request):
+    fuxion_title = cache.get('fuxion_title', '福赏活动-本期周边')
     plush = Plush.objects.filter(is_latest=True).first()
     return render(request, 'trophy.html', locals())

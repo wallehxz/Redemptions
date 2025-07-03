@@ -33,7 +33,13 @@
     align-self: center;
     margin-top: -1px;
     width: calc(100vw - 20px);
-    padding: 10px 12px 0 12px;
+    padding: 30px 10px 0 10px;
+
+    p {
+        img {
+            margin-top: -20px;
+        }
+    }
 }
 
 .description {
@@ -62,9 +68,7 @@
     text-decoration: none;
 }
 
-
-
-.item_menu:hover, .active {
+.active {
     background-color: rgba(252, 236, 210, 1);
     border-radius: 20px;
     padding: 8px 10px 7px 10px;

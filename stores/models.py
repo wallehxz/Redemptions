@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.core.cache import cache
 import math
 
 
@@ -74,7 +75,7 @@ class Store(models.Model):
 
 
 class Plush(models.Model):
-    name = models.CharField(max_length=200,verbose_name='名称')
+    name = models.CharField(max_length=200,verbose_name='标题')
     main_image = models.ImageField(upload_to='plush/%Y%m%d/', null=True, verbose_name='封面图')
     is_latest = models.BooleanField(default=False, verbose_name='是否最新')
     description = RichTextField(verbose_name="", blank=True, null=True)
@@ -90,3 +91,14 @@ class Plush(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def save(self, *args, **kwargs):
+        if self.is_latest:
+            cache.set('fuxion_title', self.name, timeout=None)
+            Plush.objects.filter(is_latest=True).update(is_latest=False)
+            redis_client = cache._cache.get_client(write=False)
+            for key in redis_client.scan_iter("*"):
+                key_string = key.decode("utf-8")
+                if 'trophy' in key_string:
+                    redis_client.delete(key_string)
+                    break
+            super().save(*args, **kwargs)

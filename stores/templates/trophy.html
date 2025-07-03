@@ -1,10 +1,11 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>本期周边</title>
+    <title>{{ fuxion_title }}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/nearby_shops.css' %}"/>
     <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
@@ -29,7 +30,9 @@
     </div>
     <div class="box_content_trophy flex-col">
         <div class="description">
-            {{ plush.description|safe }}
+            {% cache 10080 trophy %}
+                {{ plush.description|safe }}
+            {% endcache %}
         </div>
     </div>
 </div>
