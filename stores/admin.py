@@ -82,7 +82,7 @@ class PlushAdmin(admin.ModelAdmin):
         ('周边详情', {
             'fields': ('main_image', 'description',),
             'description': '如有多张图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接<br>'
-                           '可以先将图片上传至服务器获取链接，然后再将图片链接复制至详情中'
+                           '<span style="color: red;font-size:14px;font-weight:600">注意：请不要直接在下方的文本框中上传图片！！如果需要上传图片，请先点击“选择文件”上传图片，获取图片链接后，将图片链接粘贴到下方需要显示图片的位置</span>'
         }),
     )
 
