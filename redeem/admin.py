@@ -39,7 +39,7 @@ class RedeemAdmin(AjaxAdmin):
 
         header_font = Font(bold=True, color='FFFFFF')
         header_fill = PatternFill(start_color='4F81BD', end_color='4F81BD', fill_type='solid')
-        headers = ['兑换码', '奖品名称', '所属系列', '状态', '创建时间']
+        headers = ['兑换码', '所属系列', '奖品名称', '状态', '创建时间']
         for i, header in enumerate(headers):
             ws.cell(row=1, column=i + 1, value=header)
             ws.cell(row=1, column=i + 1).font = header_font
@@ -47,7 +47,7 @@ class RedeemAdmin(AjaxAdmin):
             ws.cell(row=1, column=i + 1).alignment = Alignment(horizontal='center')
 
         for obj in queryset:
-            row = [obj.number, obj.prize.name, obj.prize.series.name, obj.get_status_display(),
+            row = [obj.number, obj.get_series_name(), obj.get_prize_name(), obj.get_status_display(),
                    obj.created_at.strftime('%Y-%m-%d %H:%M:%S')]
             ws.append(row)
 

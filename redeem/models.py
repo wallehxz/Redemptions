@@ -27,6 +27,12 @@ class Redeem(models.Model):
     def __str__(self):
         return self.number
 
+    def get_prize_name(self):
+        return self.prize.name if self.prize else ''
+
+    def get_series_name(self):
+        return self.prize.series.name if self.prize and self.prize.series else ''
+
     @classmethod
     def generate_number(cls):
         chars = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ'
