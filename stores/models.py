@@ -1,3 +1,4 @@
+import requests
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.core.cache import cache
@@ -72,6 +73,21 @@ class Store(models.Model):
 
         # 返回最近的N个店铺
         return store_distances[:limit]
+
+    @classmethod
+    def geocode_address(cls, address):
+        try:
+            url = 'https://restapi.amap.com/v5/place/text'
+            params = {
+                'key': '12233ccf85da7031c00a3f4ca01eebd1',
+                'keywords': address,
+            }
+            response = requests.get(url, params=params)
+            result = response.json()
+            geocode = result.get('pois', [])[0].get('location').split(',')
+            return {"latitude": float(geocode[1]), "longitude": float(geocode[0])}
+        except Exception as e:
+            return {"latitude": 0, "longitude": 0, 'address': address}
 
 
 class Plush(models.Model):
