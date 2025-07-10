@@ -72,7 +72,10 @@ class Store(models.Model):
         store_distances.sort(key=lambda x: x[1])
 
         # 返回最近的N个店铺
-        return store_distances[:limit]
+        if limit > 0:
+            return store_distances[:limit]
+        else:
+            return store_distances
 
     @classmethod
     def geocode_address(cls, address):

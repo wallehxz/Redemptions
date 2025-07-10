@@ -62,7 +62,7 @@ function reverseGeocode(lat, lng) {
 }
 
 // 查找最近的店铺
-function findNearestStores() {
+function findNearestStores(limit=20) {
     if (!userLocation) {
         alert('请先获取您的位置');
         return;
@@ -76,7 +76,7 @@ function findNearestStores() {
         body: JSON.stringify({
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
-            limit: 10
+            limit: limit
         })
     })
         .then(response => response.json())
@@ -150,7 +150,7 @@ function displayNearestStoresOneByOne(stores) {
         }, 500);
 
         index++;
-        setTimeout(addStore, 1000); // 间隔300ms添加下一条
+        setTimeout(addStore, 50); // 间隔300ms添加下一条
     }
 
     addStore(); // 启动渲染
@@ -159,3 +159,18 @@ function displayNearestStoresOneByOne(stores) {
 function openNav(lat, lng, name) {
     window.open(`http://uri.amap.com/navigation?to=${lat},${lng},${name}`);
 }
+
+const selectElement = document.getElementById("store-select");
+const outputElement = document.getElementById("output");
+
+selectElement.addEventListener("change", function () {
+    const selectedValue = this.value; // 获取选中的 value
+    const selectedText = this.options[this.selectedIndex].text; // 获取选中的文本
+
+    outputElement.textContent = selectedText;
+    if (selectedValue === "all") {
+        findNearestStores(0);
+    } else if (selectedValue === "nearby") {
+        findNearestStores(20);
+    }
+});

@@ -35,8 +35,12 @@
         <div class="group_content flex-col">
             <img class="store_head" src="{% static '/images/stores_header.png' %}"/>
             <div class="group_stores flex-row justify-between">
-                <div>
-                    <span class="text_store">附近门店</span>
+                <div style="position: relative;">
+                    <label class="text_store" id="output">附近门店</label>
+                    <select id="store-select">
+                        <option value="all">全部</option>
+                        <option value="nearby">附近门店</option>
+                    </select>
                     <img class="more_store" src="{% static '/images/xiala.png' %}"/>
                 </div>
                 <span class="store_total">共 {{ stores.count }} 家店铺</span>
