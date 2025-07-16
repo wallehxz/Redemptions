@@ -41,6 +41,7 @@ def get_nearest_stores(request):
                 'id': store.id,
                 'name': store.name,
                 'address': store.address,
+                'navigation': store.navigation,
                 'phone': store.phone,
                 'description': store.description,
                 'latitude': store.latitude,

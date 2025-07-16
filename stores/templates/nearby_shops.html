@@ -52,7 +52,7 @@
                 {% for item in stores %}
                     <div class="item_shop">
                         <span class="text_shop_name" onclick="setMarker({{ item.latitude }}, {{ item.longitude }})">{{ item.name }}</span>
-                        <div class="group_address justify-between" onclick="openNav({{ item.latitude }}, {{ item.longitude }}, '{{ item.address }}')">
+                        <div class="group_address justify-between" onclick="openNav({{ item.latitude }}, {{ item.longitude }}, '{{ item.navigation }}')">
                             <span class="text_address">{{ item.address }}</span>
                             <div class="flex-row">
                                 <img class="store_location" src="{% static '/images/store_location.png' %}"/>

@@ -129,7 +129,7 @@ function displayNearestStoresOneByOne(stores) {
         col.className = 'item_shop';
         col.innerHTML = `
             <span class="text_shop_name" onclick="setMarker(${store.latitude}, ${store.longitude})">${store.name}</span>
-            <div class="group_address justify-between" onclick="openNav(${store.latitude}, ${store.longitude}, '${store.address}')">
+            <div class="group_address justify-between" onclick="openNav(${store.latitude}, ${store.longitude}, '${store.navigation}')">
                 <span class="text_address">${store.address}</span>
                 <div class="flex-row">
                     <img class="store_location" src="/assets/images/store_location.png"/>

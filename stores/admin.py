@@ -1,6 +1,6 @@
 import os
 from time import sleep
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.forms import ModelForm, Media
 from django.http import JsonResponse
 from django.utils.html import format_html
@@ -32,21 +32,21 @@ class StoreAdminForm(ModelForm):
 @admin.register(Store)
 class StoreAdmin(AjaxAdmin):
     form = StoreAdminForm
-    list_display = ['name', 'address', 'geo_info', 'is_active', 'created_at']
+    list_display = ['name', 'address_info', 'geo_info', 'is_active', 'created_at']
     list_filter = ['is_active', 'created_at']
     search_fields = ['name', 'address', 'phone']
-    actions = ['import_stores']
+    actions = ['import_stores', 'update_navigation']
 
     fieldsets = (
         ('基本信息', {
-            'fields': ('name', 'address', 'phone', 'description')
+            'fields': ('name', 'address', 'navigation')
         }),
         ('位置信息', {
             'fields': ('latitude', 'longitude', 'map_widget'),
             'description': '点击地图选择店铺位置，或输入地址搜索获取坐标'
         }),
         ('营业信息', {
-            'fields': ('business_hours', 'is_active')
+            'fields': ('business_hours', 'is_active', 'phone', 'description')
         }),
     )
 
@@ -139,6 +139,31 @@ class StoreAdmin(AjaxAdmin):
             return "--"
 
     geo_info.short_description = '地理经纬'
+
+    def address_info(self, obj):
+        if obj.latitude:
+            return format_html(
+                """
+                <span><strong>{}<br>{}</span>
+                """,
+                obj.navigation,
+                obj.address,
+            )
+        else:
+            return "--"
+
+    address_info.short_description = '地址信息'
+
+    def update_navigation(self, request, queryset):
+        try:
+            Store.update_all_navigation_with_address()
+            self.message_user(request, "操作成功！", level=messages.SUCCESS)
+        except Exception as e:
+            self.message_user(request, "操作失败！", level=messages.SUCCESS)
+
+    update_navigation.short_description = ' 导航地址'
+    update_navigation.type = 'danger'
+    update_navigation.icon = 'fa-solid fa-arrows-rotate'
 
 
 @admin.register(Plush)

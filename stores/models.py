@@ -1,3 +1,5 @@
+from time import sleep
+
 import requests
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -9,6 +11,7 @@ class Store(models.Model):
     """店铺模型"""
     name = models.CharField('店铺名称', max_length=200)
     address = models.CharField('详细地址', max_length=500)
+    navigation = models.CharField('导航地址', max_length=500, blank=True, null=True)
     phone = models.CharField('联系电话', max_length=20, blank=True)
     description = models.TextField('店铺描述', blank=True)
 
@@ -76,6 +79,34 @@ class Store(models.Model):
             return store_distances[:limit]
         else:
             return store_distances
+
+    @classmethod
+    def get_name_for_address(cls, address):
+        try:
+            url = 'https://restapi.amap.com/v5/place/text'
+            params = {
+                'key': '12233ccf85da7031c00a3f4ca01eebd1',
+                'keywords': address,
+            }
+            response = requests.get(url, params=params)
+            result = response.json()
+            name = result.get('pois', [])[0].get('name')
+            return name
+        except Exception as e:
+            return None
+
+    # from stores.models import Store
+    # Store.update_all_navigation_with_address()
+    @classmethod
+    def update_all_navigation_with_address(cls):
+        stores = cls.objects.filter(navigation=None).all()
+        for store in stores:
+            new_name = cls.get_name_for_address(store.address)
+            if new_name is not None:
+                sleep(0.35)
+                print(f'更新 {store.id} 的导航地址为 {new_name}')
+                store.navigation = new_name
+                store.save()
 
     @classmethod
     def geocode_address(cls, address):

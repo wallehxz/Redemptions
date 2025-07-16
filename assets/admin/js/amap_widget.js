@@ -191,9 +191,9 @@ class AmapWidget {
                     this.updateCoordinates(lat, lng);
                     this.addMarker([lng, lat], address);
                     this.updateLocationInfo(`搜索到地址：${full_address}`);
-                    const addressField = document.getElementById('id_address');
-                    if (addressField) {
-                        addressField.value = full_address;
+                    const navigationField = document.getElementById('id_navigation');
+                    if (navigationField) {
+                        navigationField.value = `${info.name}`;
                     }
                 } else {
                     this.showErrorMessage('未找到该地址，请检查地址名称是否正确');
