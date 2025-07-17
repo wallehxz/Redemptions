@@ -157,7 +157,15 @@ function displayNearestStoresOneByOne(stores) {
 }
 
 function openNav(lat, lng, name) {
-    window.open(`http://uri.amap.com/navigation?to=${lat},${lng},${name}`);
+    // 检测设备类型
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+        window.location.href = `iosamap://navi?sourceApplication=web导航&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0&style=2`;
+    } else if (navigator.userAgent.match(/android/i)) {
+        window.location.href = `androidamap://navi?sourceApplication=web导航&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0&style=2`;
+    } else {
+        // 网页版备用方案
+        window.open(`https://uri.amap.com/navigation?to=${lng},${lat},${encodeURIComponent(name)}&mode=car`);
+    }
 }
 
 const selectElement = document.getElementById("store-select");
