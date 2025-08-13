@@ -1,4 +1,7 @@
 import json
+import uuid
+import requests
+from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -6,7 +9,20 @@ from account.models import Shipping, Region
 from series.models import Series, Prize
 from django.http import JsonResponse
 from redeem.models import Redeem, Redemption
+from distribution.models import CashRedemption, CashExchange
 from urllib.parse import parse_qs
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import base64
+
+
+def wechat_decrypt(nonce, ciphertext, associated_data):
+    key = settings.WECHAT_APIV3KEY
+    key_bytes = str.encode(key)
+    nonce_bytes = str.encode(nonce)
+    ad_bytes = str.encode(associated_data)
+    data = base64.b64decode(ciphertext)
+    aesgcm = AESGCM(key_bytes)
+    return aesgcm.decrypt(nonce_bytes, data, ad_bytes)
 
 
 def post_data(body):
@@ -18,6 +34,13 @@ def post_data(body):
 
 
 def index(request):
+    if request.user.is_staff:
+        if request.user.staff_store_info_complete() is False:
+            return redirect('complete_store')
+        pending_cash = 0
+        exchange_lists = CashExchange.objects.filter(Q(user=request.user) & Q(status='pending')).all()
+        for exchange in exchange_lists:
+            pending_cash += exchange.cash
     series = Series.objects.all()
     return render(request, 'index.html', locals())
 
@@ -41,6 +64,17 @@ def get_prizes(request):
 def redemption(request):
     if request.method == 'POST':
         redeem_code = json.loads(request.body).get('redeem_code')
+        if request.user.is_staff:
+            cash_redemption = CashRedemption.objects.filter(Q(number=redeem_code) & Q(status=False)).first()
+            if cash_redemption:
+                CashExchange.objects.create(redemption=cash_redemption,
+                    user=request.user,
+                    number=uuid.uuid4().hex.upper(),
+                    cash=cash_redemption.cash,
+                )
+                cash_redemption.status = True
+                cash_redemption.save()
+                return JsonResponse({'status': 'cash_success', 'msg': f'兑换现金奖励 {cash_redemption.cash} 元'})
         redeem = Redeem.objects.filter(Q(number=redeem_code) & Q(status=0)).first()
         if redeem:
             prize = redeem.prize
@@ -199,4 +233,45 @@ def new_shipping(request):
     if int(shipping_id) > 0:
         address = Shipping.objects.filter(id=shipping_id).first()
     return render(request, 'new_shipping.html', locals())
-# Create your views here.
+
+
+from account.models import wxpay
+@csrf_exempt
+def transfer_notify(request):
+    try:
+        result = wxpay.callback(request.headers, request.body)
+        print(result)
+        if result.get('event_type') == 'TRANSFER.SUCCESS':
+            # 处理成功逻辑，如更新订单状态
+            pass
+        return JsonResponse({'code': 'SUCCESS'})
+    except Exception as e:
+        return JsonResponse({'code': 'FAIL', 'message': str(e)})
+
+
+def get_openid(request):
+    code = request.GET.get('code')
+    redemption_id = request.GET.get('redemption_id')
+    if not code:
+        return JsonResponse({'errmsg': 'missing code'}, status=400)
+
+    # 用 code 换 openid
+    url = 'https://api.weixin.qq.com/sns/oauth2/access_token'
+    params = {
+        'appid': settings.WECHAT_APPID,
+        'secret': settings.WECHAT_SECRET,
+        'code': code,
+        'grant_type': 'authorization_code'
+    }
+    data = requests.get(url, params=params, timeout=3).json()
+    openid = data.get('openid')
+    if not openid:
+        return JsonResponse({'errmsg': data}, status=400)
+
+    # 保存数据库（幂等）
+    if request.user.is_authenticated:
+        request.user.openid = openid
+        request.user.save()
+
+    return JsonResponse({'openid': openid})
+

@@ -15,4 +15,6 @@ urlpatterns = [
     path('set_redemption_shipping', views.set_redemption_shipping, name='set_redemption_shipping'),
     path('redemptions/show/<int:id>', views.show_redemption, name='show_redemption'),
     path('shipping/new', views.new_shipping, name='new_shipping'),
+    path('api/wx/transfer_notify', views.transfer_notify, name='transfer_notify'),
+    path('api/wx/get_openid', views.get_openid, name='get_openid'),
 ]

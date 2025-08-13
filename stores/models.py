@@ -1,5 +1,4 @@
 from time import sleep
-
 import requests
 from django.db import models
 from ckeditor.fields import RichTextField

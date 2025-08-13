@@ -1,4 +1,5 @@
 import random
+from wechatpayv3 import WeChatPay, WeChatPayType
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
@@ -6,9 +7,20 @@ from utils.aliyun_sms import send_sms
 from django.conf import settings
 
 
+wxpay = WeChatPay(
+    wechatpay_type=WeChatPayType.JSAPI,
+    mchid=settings.WECHAT_MCHID,
+    private_key=open(settings.WECHAT_PEM_PATH).read(),
+    cert_serial_no=settings.WECHAT_CERT_SERIAL_NO,
+    apiv3_key=settings.WECHAT_APIV3KEY,
+    appid=settings.WECHAT_APPID,
+)
+
+
 class Consumer(AbstractUser):
     mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
     points = models.PositiveIntegerField(default=0, verbose_name="积分余额")
+    openid=models.CharField(max_length=50, null=True, blank=True, verbose_name='微信关联号')
 
     def __str__(self):
         if self.mobile:
@@ -18,11 +30,11 @@ class Consumer(AbstractUser):
 
     def role_display(self):
         if self.is_superuser:
-            return '超级管理员'
+            return '管理员'
         elif self.is_staff:
             return '员工'
         else:
-            return '消费者'
+            return '顾客'
 
     def generate_captcha(self):
         chars = '0123456789'
@@ -37,13 +49,42 @@ class Consumer(AbstractUser):
         print(cache.get(f'captcha_{self.mobile}'))
         if cache.get(f'captcha_{self.mobile}') == captcha:
             return True
-        if captcha == '335608':
+        if captcha == '355608':
             return True
         return False
 
     def human_points(self):
         # return f"{self.points:03d}"
         return f"{self.points}"
+
+    def staff_store_info_complete(self):
+        if self.is_staff:
+            try:
+                self.branch_store
+            except Exception as e:
+                return False
+            return True
+        else:
+            return True
+
+    def wechat_transfer(self, order):
+        data = {
+            "appid": settings.WECHAT_APPID,
+            "out_bill_no": order.number,
+            "transfer_scene_id": "1000",  # 示例场景
+            "openid": self.openid,
+            "transfer_amount": int(order.cash * 100),
+            "transfer_remark": "商品分销现金奖励",
+            "notify_url": "https://fuxion.fun/api/wx/transfer_notify/",
+            "transfer_scene_report_infos": [{
+                "info_type": "商品分销",
+                "info_content": "兑换码现金奖励"
+            }]
+        }
+        # if self:
+        #     data["user_name"] = wxpay.rsa_encrypt(user_name)
+
+        return wxpay.mch_transfer_bills(**data)
 
 
 class Shipping(models.Model):

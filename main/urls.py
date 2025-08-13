@@ -29,6 +29,7 @@ urlpatterns = [
     path('stores', stores_views.nearby_shops, name='stores'),
     path('account/', include('account.urls')),
     path('stores/', include('stores.urls')),
+    path('employee/', include('distribution.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

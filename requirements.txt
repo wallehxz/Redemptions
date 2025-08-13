@@ -1,13 +1,14 @@
 Django==5.2.1
-#psycopg2-binary==2.9.10 #postgresql
+psycopg2-binary==2.9.10 #postgresql
 Pillow==11.1.0
 django-simpleui==2025.5.262
 openpyxl==3.1.5
 django-redis-cache==3.0.1
 django-redis==5.4.0
 cryptography==44.0.2
-mysqlclient==2.2.7
 pytz==2025.2
 django-ckeditor==6.7.3
 django-debug-toolbar==5.2.0
 requests==2.32.3
+cryptography==44.0.2
+wechatpayv3==2.0.1

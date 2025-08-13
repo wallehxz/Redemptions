@@ -4,3 +4,5 @@
 media/*
 __pycache__/
 desktop.ini
+apiclient_key.pem
+main/settings.py

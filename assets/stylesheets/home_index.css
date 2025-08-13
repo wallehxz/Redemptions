@@ -207,6 +207,10 @@ body {
     background-color: #4CAF50;
 }
 
+.notification.cash_success {
+    background-color: #4CAF50;
+}
+
 .notification.warning {
     background-color: #e8962e;
 }

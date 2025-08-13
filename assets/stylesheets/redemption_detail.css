@@ -1,0 +1,203 @@
+.cash_show_header {
+    background: url('/assets/images/cash_show_header.png') 100% no-repeat;
+    background-size: cover;
+    height: 100px;
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column; /* 将子元素排列为列 */
+    align-items: center;
+    justify-content: center; /* 水平居中 */
+    gap: 10px;
+
+    .head_logo {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 1px;
+    }
+
+    .head_tip {
+        overflow-wrap: break-word;
+        color: rgba(255, 255, 255, 1);
+        font-size: 18px;
+        font-family: PingFangSC-Semibold, serif;
+        font-weight: 600;
+        text-align: justify;
+        white-space: nowrap;
+        line-height: 25px;
+    }
+}
+
+.box_content {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    margin-top: -10px;
+}
+
+.box_body {
+    padding: 0 12px 0 12px;
+    margin-top: -20px;
+}
+
+.image-text_4 {
+    height: 90px;
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column; /* 将子元素排列为列 */
+    align-items: center;
+    justify-content: center; /* 水平居中 */
+    gap: 10px;
+}
+
+.text-wrapper_12 {
+    width: 111px;
+    margin: 47px 240px 0 0;
+}
+
+.text_3 {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text_4 {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text-wrapper_13 {
+    width: 220px;
+    margin: 20px 131px 0 0;
+}
+
+.text_5 {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text_6 {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text-wrapper_14 {
+    width: 115px;
+    margin: 20px 236px 0 0;
+}
+
+.text_7 {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text_status {
+    overflow-wrap: break-word;
+    color: rgba(239, 65, 36, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text_pending {
+    color: rgba(239, 65, 36, 1);
+}
+
+.text_processing {
+    color: rgb(239, 134, 36);
+}
+
+.text_completed {
+    color: rgba(13, 153, 62, 1);
+}
+
+.text-wrapper_17 {
+    width: 217px;
+    margin: 20px 10px 0 0;
+}
+
+.text_9 {
+    overflow-wrap: break-word;
+    color: rgba(153, 153, 153, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.text_10 {
+    overflow-wrap: break-word;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.withdraw_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(239, 65, 36, 1);
+    border-radius: 21px;
+    margin-top: 20px;
+    height: 40px;
+    width: 100%;
+}
+
+.get_now_text {
+    overflow-wrap: break-word;
+    color: rgba(255, 255, 255, 1);
+    font-size: 15px;
+    font-family: PingFangSC-Regular, serif;
+    font-weight: normal;
+    text-align: justify;
+    white-space: nowrap;
+    line-height: 21px;
+}
+
+.manual_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(13, 153, 62, 1);
+    border-radius: 21px;
+    margin-top: 20px;
+    height: 40px;
+    width: 100%;
+}

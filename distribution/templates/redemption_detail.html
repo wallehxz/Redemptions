@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>兑换详情</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/common.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/redemption_detail.css' %}"/>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body>
+<div class="page flex-col">
+    <div class="cash_show_header flex-row justify-between">
+        <img class="head_logo" referrerpolicy="no-referrer" src="{% static 'images/cash_success.png' %}"/>
+        <span class="head_tip">兑换成功</span>
+    </div>
+    <div class="box_content flex-col">
+        <div class="box_body flex-col">
+            <div class="text-wrapper_12 flex-row justify-between">
+                <span class="text_3">奖励金额：</span>
+                <span class="text_4">{{ exchange.cash }}元</span>
+            </div>
+            <div class="text-wrapper_13 flex-row justify-between">
+                <span class="text_5">奖励时间：</span>
+                <span class="text_6">{{ exchange.created_at }}</span>
+            </div>
+            <div class="text-wrapper_14 flex-row justify-between">
+                <span class="text_7">提现状态：</span>
+                {% if exchange.status == 'pending' %}
+                    <span class="text_status text_pending">未提现</span>
+                {% elif exchange.status == 'processing' %}
+                    <span class="text_status text_processing">提现中</span>
+                {% else %}
+                    <span class="text_status text_completed">已提现</span>
+                {% endif %}
+            </div>
+            {% if exchange.status == 'pending'%}
+                {% if openid %}
+                    <div class="withdraw_box flex-col">
+                        <a style="text-decoration: none" href="{% url 'withdrawal' exchange.id %}">
+                            <span class="get_now_text">立即提现</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="manual_box flex-col">
+                        <a style="text-decoration: none" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx62a5ff2ceec0b827&redirect_uri=https%3A%2F%2Ffuxion.fun%2Femployee%2Fmanual_openid%2F{{ redemption_id }}&response_type=code&scope=snsapi_base&state=1#wechat_redirect">
+                            <span class="get_now_text">微信授权</span>
+                        </a>
+                    </div>
+                {% endif %}
+            {% else %}
+            <div class="text-wrapper_17 flex-row justify-between">
+                <span class="text_9">提现时间：</span>
+                <span class="text_10">{{ exchange.withdrawal_at }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+/* 工具函数 */
+function getQuery(name) {
+    const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    const r = window.location.search.substr(1).match(reg);
+    return r ? decodeURIComponent(r[2]) : null;
+}
+
+/* 主流程 */
+(function () {
+    // 1. 先看本地有没有
+    let openid = "{{ openid|default:'' }}";
+    if (openid) {
+        console.log('已有 openid，无需授权', openid);
+        return;
+    }
+
+    // 2. 是否微信环境
+    const ua = navigator.userAgent.toLowerCase();
+    if (!/micromessenger/.test(ua)) {
+        alert('请在微信内打开');
+        return;
+    }
+
+    // 3. 当前链接里是否有 code
+    let code = getQuery('code');
+    if (!code) {
+        // 没有 code → 静默授权
+        const redirectUri = encodeURIComponent(location.href.split('#')[0]);
+        const appid = "{{ appid|default:'' }}";
+        location.replace(
+            `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=1#wechat_redirect`
+        );
+        return;   // 跳走后代码不再执行
+    }
+
+    // 4. 用 code 换 openid
+    fetch(`/api/wx/get_openid/?code=${code}`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.openid) {
+                localStorage.setItem('wx_openid', data.openid);
+                console.log('openid 已保存', data.openid);
+                // 如需刷新页面，可：location.replace(location.pathname);
+            } else {
+                console.error('获取 openid 失败', data);
+            }
+        });
+})();
+</script>
+
+</body>
+</html>
+
+

@@ -15,9 +15,15 @@
         <p id="message">这是一个通知提示信息！</p>
     </div>
     <div class="block_1 flex-col">
-        <div class="box_1 flex-col">
+        <div class="box_1 {% if user.is_staff == True %}staff_height_box{% endif %} flex-col">
             <div class="group_6 flex-row justify-between">
-                <span class="text_1">抽奖码</span>
+                <span class="text_1">
+                    {% if request.user.is_staff %}
+                        现金兑换码
+                    {% else %}
+                        抽奖码
+                    {% endif %}
+                </span>
                 <div class="image-text_4 flex-row justify-between" onclick="showDesc()">
                     <span class="text-group_1">使用说明</span>
                     <img class="thumbnail_1" src="{% static 'images/right_arrow.png' %}"/>
@@ -34,7 +40,13 @@
             </div>
             {% if user.is_authenticated %}
                 <div class="button_redeem flex-col">
-                    <button class="text_6" onclick="redemption()">立即抽奖</button>
+                    <button class="text_6" onclick="redemption()">
+                    {% if request.user.is_staff %}
+                        立即兑换
+                    {% else %}
+                        立即抽奖
+                    {% endif %}
+                    </button>
                 </div>
             {% else %}
                 <div class="button_redeem button_disabled flex-col">
@@ -91,33 +103,35 @@
             </div>
         </div>
         <div class="box_user flex-col">
-            <div class="section_2 flex-row justify-between">
+            <div class="section_2 {% if user.is_staff == True %}staff_info{% endif %} flex-col">
                 <div class="image-text_6 flex-row justify-between">
-                    <a href="/account/logout" title="登出">
-                        <img
-                                class="label_2"
-                                referrerpolicy="no-referrer"
-                                src="{% static 'images/avatar.png' %}"
-                        />
-                    </a>
-                    {% if user.is_authenticated %}
-                        <span class="text-group_3">你好，{{ user.mobile }}</span>
-                    {% else %}
-                        <span class="text-group_3">登录查看抽奖记录</span>
-                    {% endif %}
-                </div>
-                {% if user.is_authenticated %}
-                    <div class="text-wrapper_15 flex-col">
-                        <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
+                    <div class="login_user_info flex-row">
+                        <a href="/account/logout" title="登出">
+                            <img class="label_2" referrerpolicy="no-referrer" src="{% static 'images/avatar.png' %}"/>
+                        </a>
+                        {% if user.is_authenticated %}
+                            <span class="text-group_3">你好，{{ user.mobile }}</span>
+                        {% else %}
+                            <span class="text-group_3">登录查看抽奖记录</span>
+                        {% endif %}
                     </div>
-                {% else %}
+                    {% if user.is_authenticated %}
+                    <div class="text-wrapper_15 flex-col">
+                        {% if user.is_staff %}
+                            <a class="text_20" href="{% url 'exchange_history' %}">兑换记录</a>
+                        {% else %}
+                            <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
+                        {% endif %}
+                    </div>
+                    {% else %}
                     <div class="text-wrapper_12 flex-col">
                         <a class="text_17" onclick="showLogin()">登录</a>
                         <div class="overlay_login" id="login_overlay">
                             <div class="box_description">
                                 <div id="error-message" class="error-message" style="display: none;"></div>
                                 <div class="box_description_header flex-row">
-                                    <img class="box_description_close" id="login_close" src="{% static 'images/close.png' %}"/>
+                                    <img class="box_description_close" id="login_close"
+                                         src="{% static 'images/close.png' %}"/>
                                     <span class="box_description_title">登录/注册</span>
                                 </div>
                                 <form class="login-form" method="post" action="/account/login">
@@ -125,11 +139,13 @@
                                     <img class="box_description_line" src="{% static 'images/line.png' %}"/>
                                     <div class="login_phone_group flex-row">
                                         <span class="region_code">+86</span>
-                                        <input type="text" id="phone" class="text_input" name="mobile" placeholder="请输入手机号码" required>
+                                        <input type="text" id="phone" class="text_input" name="mobile"
+                                               placeholder="请输入手机号码" required>
                                     </div>
                                     <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
                                     <div class="login_code_group flex-row">
-                                        <input type="text" id="captcha" class="text_input captcha" name="captcha" placeholder="请输入验证码" maxlength="6" required>
+                                        <input type="text" id="captcha" class="text_input captcha" name="captcha"
+                                               placeholder="请输入验证码" maxlength="6" required>
                                         <span class="get_captcha" id="get-captcha">获取验证码</span>
                                     </div>
                                     <img class="login_form_line" src="{% static 'images/form_underline.png' %}"/>
@@ -138,6 +154,16 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                </div>
+                {% if user.is_staff == True %}
+                <div class="box_staff flex-row justify-between">
+                    <span class="staff_info_text">分销兑换明细</span>
+                    <div class="staff_cash_group flex-row justify-between">
+                        <span class="staff_cash_text">待提现(元)：{{ pending_cash }}</span>
+                        <img class="thumbnail_2" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
