@@ -125,8 +125,8 @@ function redemption() {
         .then(response => response.json()) // 解析响应为 JSON
         .then(result => {
             showNotification(result.msg, result.status)
-            if (result.status === 'success') {
-                location.href = `/redemptions/show/${result.id}`;
+            if (result.redirect_url) {
+                location.href = result.redirect_url;
             }
         })
         .catch(error => {

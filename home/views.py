@@ -74,7 +74,7 @@ def redemption(request):
                 )
                 cash_redemption.status = True
                 cash_redemption.save()
-                return JsonResponse({'status': 'cash_success', 'msg': f'兑换现金奖励 {cash_redemption.cash} 元'})
+                return JsonResponse({'status': 'success', 'msg': f'成功兑换奖励现金 {cash_redemption.cash} 元', 'redirect_url': '/employee/exchange_history'})
         redeem = Redeem.objects.filter(Q(number=redeem_code) & Q(status=0)).first()
         if redeem:
             prize = redeem.prize
@@ -90,7 +90,7 @@ def redemption(request):
                     if default_shipping:
                         new_redemption.shipping_id = default_shipping.id
                         new_redemption.save()
-                    return JsonResponse({'status': 'success', 'msg': f'获得奖品【{prize.name}】一件', 'id': new_redemption.id})
+                    return JsonResponse({'status': 'success', 'msg': f'获得奖品【{prize.name}】一件', 'redirect_url': f"/redemptions/show/{new_redemption.id}"})
                 else:
                     return JsonResponse({'status': 'warning', 'msg': f'奖品库存不足，我们会尽快补货！'})
             else:

@@ -95,13 +95,13 @@ function getQuery(name) {
     }
 
     // 4. 用 code 换 openid
-    fetch(`/api/wx/get_openid/?code=${code}`)
+    fetch(`/api/wx/get_openid?code=${code}`)
         .then(r => r.json())
         .then(data => {
             if (data.openid) {
                 localStorage.setItem('wx_openid', data.openid);
                 console.log('openid 已保存', data.openid);
-                // 如需刷新页面，可：location.replace(location.pathname);
+                location.replace(location.pathname);
             } else {
                 console.error('获取 openid 失败', data);
             }
