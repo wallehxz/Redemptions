@@ -77,8 +77,11 @@ class Consumer(AbstractUser):
             "transfer_remark": "商品分销现金奖励",
             "notify_url": "https://fuxion.fun/api/wx/transfer_notify/",
             "transfer_scene_report_infos": [{
-                "info_type": "商品分销",
-                "info_content": "兑换码现金奖励"
+                "info_type": "活动名称",
+                "info_content": "分销奖励"
+            },{
+                "info_type": "奖励说明",
+                "info_content": "通过商品的兑换码兑换现金"
             }]
         }
         # if self:
