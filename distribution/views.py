@@ -1,11 +1,13 @@
 from datetime import datetime
+import json
+from datetime import datetime
 import requests
 from django.conf import settings
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import BranchStore, CashExchange
-from account.models import Consumer
-
+from django.core.cache import cache
 
 def complete_store(request):
     if request.user.is_staff:
@@ -60,6 +62,7 @@ def redemption_detail(request, redemption_id):
         if exchange:
             openid = request.user.openid
             appid = settings.WECHAT_APPID
+            mch_id = settings.WECHAT_MCHID
             return render(request, 'redemption_detail.html', locals())
         else:
             return redirect('home')
@@ -76,11 +79,26 @@ def withdrawal(request, redemption_id):
                 order.status = 'processing'
                 order.withdrawal_at = datetime.now()
                 order.save()
-            return redirect('redemption_detail', redemption_id)
+                return JsonResponse(json.loads(body))
+            else:
+                return JsonResponse(json.loads(body))
         else:
-            return redirect('exchange_history')
+            return JsonResponse({'status': 'error', 'msg': '数据异常'})
     else:
-        return redirect('home')
+        return JsonResponse({'status': 'error', 'msg': '数据异常'})
+
+
+def confirm_transfer(request, redemption_id):
+    if request.user.is_staff:
+        order = CashExchange.objects.filter(Q(user=request.user) & Q(id=redemption_id)).first()
+        if order and order.status == 'processing':
+            order.status = 'completed'
+            order.save()
+            return JsonResponse({'status': 'success', 'msg': '成功确认提现'})
+        else:
+            return JsonResponse({'status': 'error', 'msg': '数据异常'})
+    else:
+        return JsonResponse({'status': 'error', 'msg': '数据异常'})
 
 
 def manual_openid(request, redemption_id):

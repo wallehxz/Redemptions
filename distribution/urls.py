@@ -8,5 +8,5 @@ urlpatterns = [
     path('redemption_detail/<int:redemption_id>', views.redemption_detail, name='redemption_detail'),
     path('withdrawal/<int:redemption_id>', views.withdrawal, name='withdrawal'),
     path('manual_openid/<int:redemption_id>', views.manual_openid, name='manual_openid'),
-
+    path('confirm_transfer/<int:redemption_id>', views.confirm_transfer, name='confirm_transfer'),
 ]

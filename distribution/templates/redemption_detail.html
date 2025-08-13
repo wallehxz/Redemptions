@@ -38,9 +38,7 @@
             {% if exchange.status == 'pending'%}
                 {% if openid %}
                     <div class="withdraw_box flex-col">
-                        <a style="text-decoration: none" href="{% url 'withdrawal' exchange.id %}">
-                            <span class="get_now_text">立即提现</span>
-                        </a>
+                        <span id="withdraw_cash" class="get_now_text">立即提现</span>
                     </div>
                 {% else %}
                     <div class="manual_box flex-col">
@@ -58,7 +56,70 @@
         </div>
     </div>
 </div>
+<!-- 1. 遮罩层 -->
+<div id="mask" class="mask hidden">
+  <div class="mask-box">
+    <p class="mask-title">确认收款</p>
+    <p class="mask-amount">{{ exchange.cash }} 元</p>
+    <button id="btn-confirm" class="btn-primary">确认收款</button>
+    <button id="btn-cancel" class="btn-default">取消</button>
+  </div>
+</div>
 <script>
+/* 统一封装调用 */
+function invokeConfirm(packageStr) {
+    if (typeof WeixinJSBridge === 'undefined') {
+        alert('请在微信内打开');
+        return;
+    }
+    WeixinJSBridge.invoke(
+        'requestMerchantTransfer',
+        {
+            mchId: '{{ mch_id }}',
+            appId: '{{ appid }}',
+            package: packageStr
+        },
+        function (res) {
+            if (res.err_msg === 'requestMerchantTransfer:ok') {
+                fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
+                location.reload();          // 成功 → 刷新页面
+            } else if (res.err_msg === 'requestMerchantTransfer:cancel') {
+                console.log('用户取消');
+            } else {
+                alert('确认失败：' + res.err_msg);
+            }
+        }
+    );
+}
+
+
+/* 点击遮罩按钮 */
+document.getElementById('btn-cancel').addEventListener('click', () => {
+    document.getElementById('mask').classList.add('hidden');
+});
+
+/* 点击遮罩按钮 */
+document.getElementById('withdraw_cash').addEventListener('click', () => {
+    document.getElementById('mask').classList.remove('hidden');
+});
+
+document.getElementById('btn-confirm').addEventListener('click', () => {
+    document.getElementById('btn-confirm').disabled = true;
+    fetch(`/employee/withdrawal/{{ redemption_id }}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.package_info) {
+            invokeConfirm(data.package_info);
+        } else {
+            alert(data.message || '提现请求失败');
+            document.getElementById('btn-confirm').disabled = false;
+        }
+    });
+});
+
 /* 工具函数 */
 function getQuery(name) {
     const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
