@@ -1,9 +1,9 @@
 from datetime import datetime
-
+from django.utils.html import format_html
 from django.contrib import admin, messages
 from django.http import JsonResponse, HttpResponse
 from simpleui.admin import AjaxAdmin
-from .models import BranchStore, CashRedemption, CashExchange
+from .models import BranchStore, CashRedemption, CashExchange, SalesInviteCode
 from redeem.models import Redeem
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -189,7 +189,7 @@ class CashExchangeAdmin(admin.ModelAdmin):
     )
 
     def staff_info(self, obj):
-        if obj.user.is_staff:
+        if obj.user.is_sales():
             try:
                 staff_store = obj.user.branch_store
                 return f"{staff_store.name} - {staff_store.employee} - {obj.user.mobile}"
@@ -200,4 +200,96 @@ class CashExchangeAdmin(admin.ModelAdmin):
 
     staff_info.short_description = '员工信息'
 
+
+@admin.register(SalesInviteCode)
+class SalesInviteCodeAdmin(AjaxAdmin):
+    list_display = [
+        "code",
+        "is_used",
+        "created_at",
+        "copy_code",
+    ]
+    list_filter = ["is_used"]
+    search_fields = ["code"]
+    readonly_fields = ["code", "created_at"]
+    actions = ["bulk_generate"]
+    list_per_page = 20
+    fieldsets = (
+        ('邀请码', {
+            'fields': ('code', "is_used")
+        }),
+    )
+
+    def copy_code(self, obj):
+        invite_url = f"https://fuxion.fun/employee/invite/{obj.code}"
+        return format_html(
+            """
+            <button onclick="
+                event.preventDefault();
+                var text = '{invite_url}';
+                if (navigator.clipboard) {{
+                    navigator.clipboard.writeText(text).then(() => alert('已复制邀请链接！\\n' + text));
+                }} else {{
+                    /* 兼容 http 或旧浏览器 */
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    alert('已复制邀请链接！\\n' + text);
+                }}
+            ">复制邀请链接</button>
+            """,
+            invite_url=invite_url
+        )
+
+    copy_code.short_description = " 复制"
+
+    # 隐藏默认的“增加”按钮，只允许列表页生成
+    def has_add_permission(self, request):
+        return False
+
+    def bulk_generate(self, request, queryset):
+        total = request.POST.get('count', 0)
+        code_list = []
+        for i in range(0, int(total)):
+            code_list.append(SalesInviteCode(code=SalesInviteCode.generate_code()))
+        SalesInviteCode.objects.bulk_create(code_list)
+        return JsonResponse(data={
+            'status': 'success',
+            'msg': f'批量生成 {len(code_list)} 邀请码',
+        })
+
+    bulk_generate.short_description = '  批量生成'
+    bulk_generate.type = 'success'
+    bulk_generate.icon = 'fa-solid fa-fill-drip'
+
+    bulk_generate.layer = {
+        # 弹出层中的输入框配置
+
+        # 这里指定对话框的标题
+        'title': '批量生成邀请码',
+        # 提示信息
+        'tips': '邀请用户成为销售角色，用以参与商品销售现金奖励，增加员工被动收入，调动主观积极性'
+                '更好服务于消费者，促进商品成交率',
+        # 确认按钮显示文本
+        'confirm_button': '提交',
+        # 取消按钮显示文本
+        'cancel_button': '取消',
+
+        # 弹出层对话框的宽度，默认50%
+        'width': '25%',
+
+        # 表单中 label的宽度，对应element-ui的 label-width，默认80px
+        'labelWidth': "80px",
+        'params': [{
+            'type': 'input',
+            'key': 'count',
+            'size': 'small',
+            'width': '200px',
+            'label': '数量',
+            'require': True
+        }]
+    }
 

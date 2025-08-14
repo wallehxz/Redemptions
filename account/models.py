@@ -20,7 +20,8 @@ wxpay = WeChatPay(
 class Consumer(AbstractUser):
     mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
     points = models.PositiveIntegerField(default=0, verbose_name="积分余额")
-    openid=models.CharField(max_length=50, null=True, blank=True, verbose_name='微信关联号')
+    openid = models.CharField(max_length=50, null=True, blank=True, verbose_name='微信关联号')
+    sales_rep = models.BooleanField(default=False, verbose_name='销售顾问')
 
     def __str__(self):
         if self.mobile:
@@ -31,10 +32,10 @@ class Consumer(AbstractUser):
     def role_display(self):
         if self.is_superuser:
             return '管理员'
-        elif self.is_staff:
-            return '员工'
+        elif self.sales_rep:
+            return '销售顾问'
         else:
-            return '顾客'
+            return '消费者'
 
     def generate_captcha(self):
         chars = '0123456789'
@@ -58,7 +59,7 @@ class Consumer(AbstractUser):
         return f"{self.points}"
 
     def staff_store_info_complete(self):
-        if self.is_staff:
+        if self.sales_rep:
             try:
                 self.branch_store
             except Exception as e:
@@ -66,6 +67,12 @@ class Consumer(AbstractUser):
             return True
         else:
             return True
+
+    def is_sales(self):
+        try:
+            return self.sales_rep and self.branch_store.status
+        except Exception as e:
+            return False
 
     def wechat_transfer(self, order):
         data = {

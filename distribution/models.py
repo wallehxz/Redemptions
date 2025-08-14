@@ -1,6 +1,7 @@
 import random
+import secrets
+import string
 import uuid
-
 from django.db import models
 from account.models import Consumer
 from redeem.models import Redeem
@@ -86,4 +87,32 @@ class CashExchange(models.Model):
             self.number = uuid.uuid4().hex.upper()
         super().save(*args, **kwargs)
 
+
+class SalesInviteCode(models.Model):
+    """销售邀请码"""
+    code = models.CharField(
+        max_length=16,
+        unique=True,
+        editable=False,
+        verbose_name="邀请码"
+    )
+    is_used = models.BooleanField(default=False, verbose_name="已使用")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    class Meta:
+        verbose_name = "销售邀请码"
+        verbose_name_plural = "销售邀请码"
+
+    def __str__(self):
+        return f"{self.code} ({'已用' if self.is_used else '未用'})"
+
+    def save(self, *args, **kwargs):
+        if not self.code:                 # 只在创建时生成
+            self.code = self.generate_code()
+        super().save(*args, **kwargs)
+
+    @staticmethod
+    def generate_code(length=8):
+        alphabet = string.ascii_uppercase + string.digits
+        return ''.join(secrets.choice(alphabet) for _ in range(length))
 # Create your models here.

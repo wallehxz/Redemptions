@@ -15,10 +15,10 @@
         <p id="message">这是一个通知提示信息！</p>
     </div>
     <div class="block_1 flex-col">
-        <div class="box_1 {% if user.is_staff == True %}staff_height_box{% endif %} flex-col">
+        <div class="box_1 {% if request.user.is_sales %}staff_height_box{% endif %} flex-col">
             <div class="group_6 flex-row justify-between">
                 <span class="text_1">
-                    {% if request.user.is_staff %}
+                    {% if request.user.is_sales %}
                         现金兑换码
                     {% else %}
                         抽奖码
@@ -41,7 +41,7 @@
             {% if user.is_authenticated %}
                 <div class="button_redeem flex-col">
                     <button class="text_6" onclick="redemption()">
-                    {% if request.user.is_staff %}
+                    {% if request.user.is_sales %}
                         立即兑换
                     {% else %}
                         立即抽奖
@@ -103,7 +103,7 @@
             </div>
         </div>
         <div class="box_user flex-col">
-            <div class="section_2 {% if user.is_staff == True %}staff_info{% endif %} flex-col">
+            <div class="section_2 {% if user.is_sales %}staff_info{% endif %} flex-col">
                 <div class="image-text_6 flex-row justify-between">
                     <div class="login_user_info flex-row">
                         <a href="/account/logout" title="登出">
@@ -117,7 +117,7 @@
                     </div>
                     {% if user.is_authenticated %}
                     <div class="text-wrapper_15 flex-col">
-                        {% if user.is_staff %}
+                        {% if user.is_sales %}
                             <a class="text_20" href="{% url 'exchange_history' %}">兑换记录</a>
                         {% else %}
                             <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
@@ -156,7 +156,7 @@
                     </div>
                     {% endif %}
                 </div>
-                {% if user.is_staff == True %}
+                {% if user.is_sales %}
                 <div class="box_staff flex-row justify-between">
                     <span class="staff_info_text">分销兑换明细</span>
                     <div class="staff_cash_group flex-row justify-between">

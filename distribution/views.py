@@ -6,21 +6,28 @@ from django.conf import settings
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import BranchStore, CashExchange
+from .models import BranchStore, CashExchange, SalesInviteCode
 from django.core.cache import cache
 
-def complete_store(request):
-    if request.user.is_staff:
-        if request.user.staff_store_info_complete():
-            return redirect('home')
-        return render(request, 'complete_store.html', locals())
-    else:
+def complete_store(request, code):
+    current_user = request.user
+    active_code = SalesInviteCode.objects.filter(Q(code=code) & Q(is_used=False)).first()
+    if not current_user.is_authenticated:
         return redirect('home')
+    if not active_code:
+        return redirect('home')
+    if current_user.is_sales():
+        return redirect('home')
+    active_code.is_used = True
+    active_code.save()
+    current_user.sales_rep = True
+    current_user.save()
+    return render(request, 'complete_store.html', locals())
 
 
 def create_staff_store(request):
     if request.method == 'POST':
-        if request.user.is_staff:
+        if request.user.sales_rep:
             cur_staff = BranchStore.objects.filter(consumer=request.user).first()
             if cur_staff:
                 cur_staff.name = request.POST['name']
@@ -40,7 +47,7 @@ def create_staff_store(request):
         return None
 
 def exchange_history(request):
-    if request.user.is_staff:
+    if request.user.sales_rep:
         exchange_lists = CashExchange.objects.filter(user=request.user).all()
         total_cash = 0
         pending_cash = 0
@@ -57,7 +64,7 @@ def exchange_history(request):
 
 
 def redemption_detail(request, redemption_id):
-    if request.user.is_staff:
+    if request.user.sales_rep:
         exchange = CashExchange.objects.filter(Q(user=request.user) & Q(id=redemption_id)).first()
         if exchange:
             openid = request.user.openid
@@ -71,7 +78,7 @@ def redemption_detail(request, redemption_id):
 
 
 def withdrawal(request, redemption_id):
-    if request.user.is_staff:
+    if request.user.is_sales():
         order = CashExchange.objects.filter(Q(user=request.user) & Q(id=redemption_id)).first()
         if order and order.status == 'pending':
             status_code, body = request.user.wechat_transfer(order)
@@ -89,12 +96,26 @@ def withdrawal(request, redemption_id):
 
 
 def confirm_transfer(request, redemption_id):
-    if request.user.is_staff:
+    if request.user.is_sales():
         order = CashExchange.objects.filter(Q(user=request.user) & Q(id=redemption_id)).first()
         if order and order.status == 'processing':
             order.status = 'completed'
             order.save()
             return JsonResponse({'status': 'success', 'msg': '成功确认提现'})
+        else:
+            return JsonResponse({'status': 'error', 'msg': '数据异常'})
+    else:
+        return JsonResponse({'status': 'error', 'msg': '数据异常'})
+
+
+def cancel_transfer(request, redemption_id):
+    if request.user.is_sales():
+        order = CashExchange.objects.filter(Q(user=request.user) & Q(id=redemption_id)).first()
+        if order and order.status == 'processing':
+            order.status = 'pending'
+            order.withdrawal_at = None
+            order.save()
+            return JsonResponse({'status': 'success', 'msg': '取消提现'})
         else:
             return JsonResponse({'status': 'error', 'msg': '数据异常'})
     else:

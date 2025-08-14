@@ -10,22 +10,12 @@ from account.models import Consumer, Shipping, Region
 class ConsumerAdmin(admin.ModelAdmin):
     search_fields = ('mobile', )
     list_display = ('mobile', 'openid', 'username', 'role_name', 'last_login', 'date_joined')
-    list_filter = ['mobile', 'is_staff', 'is_superuser']
+    list_filter = ['mobile', 'sales_rep', 'is_superuser']
     list_per_page = 20
-    actions = ['set_staff']
 
     def role_name(self, obj):
         return obj.role_display()
     role_name.short_description = '角色'
-
-    def set_staff(self, request, queryset):
-        queryset.update(is_staff=True)
-        self.message_user(request, "操作成功！", level=messages.SUCCESS)
-
-    set_staff.short_description = ' 升级为员工'
-    set_staff.type = 'warning'
-    set_staff.icon = 'fa-solid fa-face-grin'
-    set_staff.enable = True
 
 
 @admin.register(Shipping)

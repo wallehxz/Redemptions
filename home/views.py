@@ -34,9 +34,7 @@ def post_data(body):
 
 
 def index(request):
-    if request.user.is_staff:
-        if request.user.staff_store_info_complete() is False:
-            return redirect('complete_store')
+    if request.user.is_authenticated and request.user.is_sales():
         pending_cash = 0
         exchange_lists = CashExchange.objects.filter(Q(user=request.user) & Q(status='pending')).all()
         for exchange in exchange_lists:
@@ -64,7 +62,7 @@ def get_prizes(request):
 def redemption(request):
     if request.method == 'POST':
         redeem_code = json.loads(request.body).get('redeem_code')
-        if request.user.is_staff:
+        if request.user.is_sales():
             cash_redemption = CashRedemption.objects.filter(Q(number=redeem_code) & Q(status=False)).first()
             if cash_redemption:
                 CashExchange.objects.create(redemption=cash_redemption,

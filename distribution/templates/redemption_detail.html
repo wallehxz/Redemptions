@@ -56,15 +56,7 @@
         </div>
     </div>
 </div>
-<!-- 1. 遮罩层 -->
-<div id="mask" class="mask hidden">
-  <div class="mask-box">
-    <p class="mask-title">确认收款</p>
-    <p class="mask-amount">{{ exchange.cash }} 元</p>
-    <button id="btn-confirm" class="btn-primary">确认收款</button>
-    <button id="btn-cancel" class="btn-default">取消</button>
-  </div>
-</div>
+
 <script>
 /* 统一封装调用 */
 function invokeConfirm(packageStr) {
@@ -84,6 +76,7 @@ function invokeConfirm(packageStr) {
                 fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
                 location.reload();          // 成功 → 刷新页面
             } else if (res.err_msg === 'requestMerchantTransfer:cancel') {
+                fetch(`/employee/cancel_transfer/{{ redemption_id }}`)
                 console.log('用户取消');
             } else {
                 alert('确认失败：' + res.err_msg);
@@ -93,18 +86,8 @@ function invokeConfirm(packageStr) {
 }
 
 
-/* 点击遮罩按钮 */
-document.getElementById('btn-cancel').addEventListener('click', () => {
-    document.getElementById('mask').classList.add('hidden');
-});
 
-/* 点击遮罩按钮 */
 document.getElementById('withdraw_cash').addEventListener('click', () => {
-    document.getElementById('mask').classList.remove('hidden');
-});
-
-document.getElementById('btn-confirm').addEventListener('click', () => {
-    document.getElementById('btn-confirm').disabled = true;
     fetch(`/employee/withdrawal/{{ redemption_id }}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
@@ -115,7 +98,6 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
             invokeConfirm(data.package_info);
         } else {
             alert(data.message || '提现请求失败');
-            document.getElementById('btn-confirm').disabled = false;
         }
     });
 });
