@@ -20,9 +20,23 @@ class ConsumerAdmin(admin.ModelAdmin):
 
 @admin.register(Shipping)
 class ShippingAdmin(admin.ModelAdmin):
-    list_display = ('nick_name', 'mobile', 'is_default', 'address')
+    autocomplete_fields = ['consumer']
+    search_fields = ['consumer__mobile']
+    list_display = ('nick_name', 'mobile', 'is_default', 'region_address','address')
     list_per_page = 20
+    fieldsets = (
+        ('收件人信息', {
+            'fields': ('is_default','consumer','nick_name', "mobile")
+        }),
+        ('地址信息', {
+            'fields': ('province', 'city', "district", 'street', 'address')
+        }),
+    )
 
+    def region_address(self, obj):
+        return obj.region_address()
+
+    region_address.short_description = '地区信息'
 
 def region_set_province():
     provinces = Region.objects.filter(Q(city='0') & Q(area='0') & Q(town='0'))

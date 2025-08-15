@@ -222,29 +222,23 @@ class SalesInviteCodeAdmin(AjaxAdmin):
 
     def copy_code(self, obj):
         invite_url = f"https://fuxion.fun/employee/invite/{obj.code}"
-        return format_html(
-            """
-            <button onclick="
-                event.preventDefault();
-                var text = '{invite_url}';
-                if (navigator.clipboard) {{
-                    navigator.clipboard.writeText(text).then(() => alert('已复制邀请链接！\\n' + text));
-                }} else {{
-                    /* 兼容 http 或旧浏览器 */
-                    var ta = document.createElement('textarea');
-                    ta.value = text;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                    alert('已复制邀请链接！\\n' + text);
-                }}
-            ">复制邀请链接</button>
-            """,
-            invite_url=invite_url
-        )
+        if not obj.is_used:
+            return format_html(
+                """
+                <button class="el-button el-button--primary el-button--small" onclick="
+                    event.preventDefault();
+                    var text = '{invite_url}';
+                    if (navigator.clipboard) {{
+                        navigator.clipboard.writeText(text).then(() => alert('已复制邀请链接！\\n' + text));
+                    }}
+                ">复制邀请链接</button>
+                """,
+                invite_url=invite_url
+            )
+        else:
+            return '已使用'
 
-    copy_code.short_description = " 复制"
+    copy_code.short_description = " 操作"
 
     # 隐藏默认的“增加”按钮，只允许列表页生成
     def has_add_permission(self, request):
