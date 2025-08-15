@@ -54,6 +54,7 @@
                             <span class="get_now_text">微信授权</span>
                         </a>
                     </div>
+                    <span id="withdraw_cash" style="display: none"></span>
                 {% endif %}
             {% else %}
             <div class="text-wrapper_17 flex-row justify-between">
@@ -66,48 +67,6 @@
 </div>
 
 <script>
-/* 统一封装调用 */
-function invokeConfirm(packageStr) {
-    if (typeof WeixinJSBridge === 'undefined') {
-        alert('请在微信内打开');
-        return;
-    }
-    WeixinJSBridge.invoke(
-        'requestMerchantTransfer',
-        {
-            mchId: '{{ mch_id }}',
-            appId: '{{ appid }}',
-            package: packageStr
-        },
-        function (res) {
-            if (res.err_msg === 'requestMerchantTransfer:ok') {
-                location.reload();          // 成功 → 刷新页面
-            } else if (res.err_msg === 'requestMerchantTransfer:cancel') {
-                console.log('用户取消');
-            } else {
-                alert('确认失败：' + res.err_msg);
-            }
-        }
-    );
-}
-
-document.getElementById('withdraw_cash').addEventListener('click', () => {
-    fetch(`/employee/withdrawal/{{ redemption_id }}`, {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-    })
-    .then(r => r.json())
-    .then(data => {
-        if (data.package_info) {
-            fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
-            invokeConfirm(data.package_info);
-        } else {
-            fetch(`/employee/cancel_transfer/{{ redemption_id }}`)
-            alert(data.message || '提现请求失败');
-        }
-    });
-});
-
 /* 工具函数 */
 function getQuery(name) {
     const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -156,6 +115,48 @@ function getQuery(name) {
             }
         });
 })();
+
+/* 统一封装调用 */
+function invokeConfirm(packageStr) {
+    if (typeof WeixinJSBridge === 'undefined') {
+        alert('请在微信内打开');
+        return;
+    }
+    WeixinJSBridge.invoke(
+        'requestMerchantTransfer',
+        {
+            mchId: '{{ mch_id }}',
+            appId: '{{ appid }}',
+            package: packageStr
+        },
+        function (res) {
+            if (res.err_msg === 'requestMerchantTransfer:ok') {
+                location.reload();          // 成功 → 刷新页面
+            } else if (res.err_msg === 'requestMerchantTransfer:cancel') {
+                console.log('用户取消');
+            } else {
+                alert('确认失败：' + res.err_msg);
+            }
+        }
+    );
+}
+
+document.getElementById('withdraw_cash').addEventListener('click', () => {
+    fetch(`/employee/withdrawal/{{ redemption_id }}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.package_info) {
+            fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
+            invokeConfirm(data.package_info);
+        } else {
+            fetch(`/employee/cancel_transfer/{{ redemption_id }}`)
+            alert(data.message || '提现请求失败');
+        }
+    });
+});
 </script>
 
 </body>
