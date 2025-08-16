@@ -168,18 +168,17 @@ class StoreAdmin(AjaxAdmin):
 
 @admin.register(Plush)
 class PlushAdmin(admin.ModelAdmin):
-    list_display = ['name','is_latest', 'created_at']
+    list_display = ['name','main_img', 'is_latest', 'created_at']
     list_filter = ['is_latest']
     search_fields = ['name']
 
     fieldsets = (
         ('基本信息', {
-            'fields': ('is_latest', 'name')
+            'fields': ('is_latest', 'name', 'main_image')
         }),
         ('周边详情', {
-            'fields': ('main_image', 'description',),
+            'fields': ('description',),
             'description': '如有多张图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接<br>'
-                           '<span style="color: red;font-size:14px;font-weight:600">注意：请不要直接在下方的文本框中上传图片！！如果需要上传图片，请先点击“选择文件”上传图片，获取图片链接后，将图片链接粘贴到下方需要显示图片的位置</span>'
         }),
     )
 
@@ -187,4 +186,4 @@ class PlushAdmin(admin.ModelAdmin):
         if obj.main_image:
             return format_html('<img src="{}" width="auto" height="75" />', obj.main_image.url)
 
-    main_img.short_description = '封面'
+    main_img.short_description = '头图'

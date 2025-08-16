@@ -1,7 +1,7 @@
 from time import sleep
 import requests
 from django.db import models
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.core.cache import cache
 import math
 
@@ -125,9 +125,9 @@ class Store(models.Model):
 
 class Plush(models.Model):
     name = models.CharField(max_length=200,verbose_name='标题')
-    main_image = models.ImageField(upload_to='plush/%Y%m%d/', null=True, blank=True, verbose_name='图床链接')
+    main_image = models.ImageField(upload_to='plush/%Y%m%d/', null=True, blank=True, verbose_name='头图')
     is_latest = models.BooleanField(default=False, verbose_name='是否最新')
-    description = RichTextField(verbose_name="详情内容", blank=True, null=True)
+    description = CKEditor5Field(verbose_name="详情内容", blank=True, null=True)
     # 时间戳
     created_at = models.DateTimeField('创建时间', auto_now_add=True)
     updated_at = models.DateTimeField('更新时间', auto_now=True)

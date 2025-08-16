@@ -78,6 +78,7 @@
     margin-top: 10px;
     padding: 10px;
     margin-bottom: 70px;
+    figure { all: unset; }
     img {
         width: 100% !important; /* 强制覆盖其他样式 */
         height: auto; /* 保持宽高比 */

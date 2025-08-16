@@ -40,3 +40,8 @@ if settings.DEBUG:  # 仅在调试模式启用
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),  # 添加调试路由
     ]
+
+# CKEditor 5 文件上传 URL
+urlpatterns += [
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
+]

@@ -4,13 +4,13 @@ from django.db import models, transaction
 from django.db.models import Sum
 
 from account.models import Consumer, Shipping
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="商品名称")
-    main_image = models.ImageField(upload_to='products/%Y%m%d/', null=True, verbose_name='主图')
-    description = RichTextField(verbose_name="商品描述")
+    main_image = models.ImageField(upload_to='products/%Y%m%d/', null=True, verbose_name='头图')
+    description = CKEditor5Field(verbose_name="商品描述")
     points_required = models.PositiveIntegerField(verbose_name="所需福力")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="更新时间")

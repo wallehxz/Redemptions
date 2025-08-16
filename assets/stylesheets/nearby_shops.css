@@ -33,7 +33,7 @@
     align-self: center;
     margin-top: -1px;
     width: calc(100vw - 20px);
-    padding: 30px 10px 0 10px;
+    padding: 10px 10px 0 10px;
 
     p {
         img {
@@ -47,9 +47,7 @@
         width: 100% !important;
         height: auto !important;
     }
-    p {
-        margin-top: 0;
-    }
+    figure { all: unset; }
 }
 
 .group_head {

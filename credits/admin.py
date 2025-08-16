@@ -16,14 +16,34 @@ class ProductSpecInline(admin.TabularInline):
     extra = 0
     min_num = 1
     fields = ['name', 'points_required', 'stock', 'is_default']
+    
+    # 自定义列标题
+    verbose_name = "商品规格"
+    verbose_name_plural = "商品规格列表"
+    
+    # 设置列宽度和对齐
+    classes = ['tabular']
+
+    class Media:
+        css = {
+            'all': ('stylesheets/product_spec_fix.css',)
+        }
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'main_img', 'specs_list', 'created_at')
-    fields = ['name', 'points_required', 'main_image', 'description']
     search_fields = ['name']
     list_filter = ['specs__points_required']
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('name', 'points_required', 'main_image')
+        }),
+        ('商品详情', {
+            'fields': ('description',),
+            'description': '如有多张图推荐使用 <a href="https://fulicat.com/lab/pintu/" target="_blank">在线工具</a>  进行拼接<br>'
+        }),
+    )
     inlines = [ProductSpecInline]
 
     def specs_list(self, obj):

@@ -1,0 +1,7 @@
+#content-main .module {
+    width: 80% !important;
+}
+
+.inline-group .tabular td.original p {
+    display: none;
+}
