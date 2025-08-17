@@ -19,7 +19,7 @@
             <div class="group_6 flex-row justify-between">
                 <span class="text_1">
                     {% if request.user.is_sales %}
-                        现金兑换码
+                        抽奖码/兑换码
                     {% else %}
                         抽奖码
                     {% endif %}
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="box_redeem_input flex-row">
-                <input type="text" class="redeem_input flex-col" maxlength="15" inputmode="alphanumeric">
+                <input type="text" class="redeem_input flex-col" maxlength="19" inputmode="alphanumeric">
                 <div class="redeem_dash flex-col"></div>
                 <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
                 <div class="redeem_dash flex-col"></div>
@@ -39,10 +39,10 @@
                 <input type="text" class="redeem_input flex-col" maxlength="4" inputmode="alphanumeric">
             </div>
             {% if user.is_authenticated %}
-                <div class="button_redeem flex-col">
-                    <button class="text_6" onclick="redemption()">
+                <div onclick="redemption()" class="button_redeem flex-col">
+                    <button class="text_6">
                     {% if request.user.is_sales %}
-                        立即兑换
+                        抽奖/兑换
                     {% else %}
                         立即抽奖
                     {% endif %}
@@ -117,11 +117,7 @@
                     </div>
                     {% if user.is_authenticated %}
                     <div class="text-wrapper_15 flex-col">
-                        {% if user.is_sales %}
-                            <a class="text_20" href="{% url 'exchange_history' %}">兑换记录</a>
-                        {% else %}
-                            <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
-                        {% endif %}
+                        <a class="text_20" href="{% url 'all_history' %}">抽奖记录</a>
                     </div>
                     {% else %}
                     <div class="text-wrapper_12 flex-col">
@@ -157,13 +153,15 @@
                     {% endif %}
                 </div>
                 {% if user.is_sales %}
-                <div class="box_staff flex-row justify-between">
-                    <span class="staff_info_text">分销兑换明细</span>
-                    <div class="staff_cash_group flex-row justify-between">
-                        <span class="staff_cash_text">待提现(元)：{{ pending_cash }}</span>
-                        <img class="thumbnail_2" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                <a style="text-decoration: none;" href="{% url 'exchange_history' %}">
+                    <div class="box_staff flex-row justify-between">
+                        <span class="staff_info_text">分销兑换明细</span>
+                        <div class="staff_cash_group flex-row justify-between">
+                            <span class="staff_cash_text">待提现(元)：{{ pending_cash }}</span>
+                            <img class="thumbnail_2" referrerpolicy="no-referrer" src="{% static 'images/right_arrow.png' %}"/>
+                        </div>
                     </div>
-                </div>
+                </a>
                 {% endif %}
             </div>
         </div>

@@ -15,6 +15,7 @@ class BranchStoreAdmin(admin.ModelAdmin):
     search_fields = ('consumer__mobile', 'employee')
     actions = ['set_staff', 'reject_staff']
     autocomplete_fields = ('consumer', )
+    list_per_page = 20
     # fields = ['status', 'consumer', 'employee', 'name', 'address']
     fieldsets = (
         ('审核信息', {
@@ -27,6 +28,22 @@ class BranchStoreAdmin(admin.ModelAdmin):
             'fields': ('name', 'address')
         }),
     )
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def set_staff(self, request, queryset):
         queryset.update(status=True)
@@ -53,6 +70,7 @@ class BranchStoreAdmin(admin.ModelAdmin):
 class CashRedemptionAdmin(AjaxAdmin):
     list_display = ('number', 'redeem', 'cash', 'status', 'updated_at')
     search_fields = ('redeem__number', 'number')
+    list_per_page = 20
     actions = ['bulk_generate', 'export_data']
     fieldsets = (
         ('抽奖码信息', {
@@ -63,6 +81,22 @@ class CashRedemptionAdmin(AjaxAdmin):
         }),
     )
     autocomplete_fields = ('redeem',)
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def bulk_generate(self, request, queryset):
         total = request.POST.get('count', 0)
@@ -188,6 +222,22 @@ class CashExchangeAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
+
     def staff_info(self, obj):
         if obj.user.is_sales():
             try:
@@ -219,6 +269,22 @@ class SalesInviteCodeAdmin(AjaxAdmin):
             'fields': ('code', "is_used")
         }),
     )
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def copy_code(self, obj):
         invite_url = f"https://fuxion.fun/employee/invite/{obj.code}"

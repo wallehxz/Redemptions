@@ -46,6 +46,24 @@ class ProductAdmin(admin.ModelAdmin):
     )
     inlines = [ProductSpecInline]
 
+    list_per_page = 10
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
+
     def specs_list(self, obj):
         specs_str = ""
         for spec in obj.specs.all():
@@ -69,6 +87,22 @@ class RedemptionCodeAdmin(AjaxAdmin):
     list_filter = ['used_by', 'is_used']
     list_per_page = 20
     actions = ['bulk_generate', 'import_codes']
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def bulk_generate(self, request, queryset):
         total = request.POST.get('total', 0)
@@ -211,6 +245,23 @@ class RedemptionCodeAdmin(AjaxAdmin):
 class PointsTransactionAdmin(AjaxAdmin):
     list_filter = ('user__mobile',)
     list_display = ('user', 'amount', 'transaction_type', 'description', 'created_at')
+    list_per_page = 20
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 @admin.register(ExchangeOrder)
@@ -222,6 +273,22 @@ class ExchangeOrderAdmin(AjaxAdmin):
     list_display = ('user', 'express', 'status', 'note', 'harvest_info','created_at')
     list_per_page = 20
     actions = ['export_data']
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('harvest')

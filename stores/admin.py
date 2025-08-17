@@ -36,6 +36,23 @@ class StoreAdmin(AjaxAdmin):
     list_filter = ['is_active', 'created_at']
     search_fields = ['name', 'address', 'phone']
     actions = ['import_stores', 'update_navigation']
+    list_per_page = 10
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     fieldsets = (
         ('基本信息', {
@@ -171,6 +188,23 @@ class PlushAdmin(admin.ModelAdmin):
     list_display = ['name','main_img', 'is_latest', 'created_at']
     list_filter = ['is_latest']
     search_fields = ['name']
+    list_per_page = 10
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     fieldsets = (
         ('基本信息', {

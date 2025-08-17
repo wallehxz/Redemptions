@@ -30,12 +30,13 @@
         </div>
         <div class="list flex-col">
             {% for item in exchange_lists %}
+                <a style="text-decoration: none" href="{% url 'redemption_detail' redemption_id=item.id %}">
                 <div class="list-items flex-row justify-between">
                     <div class="text-group_9-0 flex-col">
                         <span class="text_9-0">分销奖励&nbsp;+{{ item.cash }}&nbsp;元</span>
                         <span class="text_10-0">{{ item.created_at }}</span>
                     </div>
-                    <a style="text-decoration: none" href="{% url 'redemption_detail' redemption_id=item.id %}">
+
                     <div class="image-text_2-0 flex-row justify-between">
                         {% if item.status == 'completed' %}
                             <span class="completed_text">已提现</span>
@@ -46,8 +47,8 @@
                         {% endif %}
                         <img class="thumbnail_1-0" referrerpolicy="no-referrer" src="{% static 'images/right_arrow_cash.png' %}"/>
                     </div>
-                    </a>
                 </div>
+                </a>
             {% endfor %}
         </div>
         <span class="text_11">没有更多了~</span>

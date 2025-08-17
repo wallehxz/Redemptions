@@ -1,47 +1,3 @@
-// 获取所有输入框
-const inputs = document.querySelectorAll('.redeem_input.flex-col');
-
-// 为每个输入框添加事件监听
-inputs.forEach((input, index) => {
-    let isComposing = false;
-    input.addEventListener('compositionstart', () => {
-        isComposing = true;
-    });
-
-    input.addEventListener('compositionend', (e) => {
-        isComposing = false;
-        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        e.target.value = e.target.value.toUpperCase();
-    });
-
-    input.addEventListener('input', (e) => {
-        // 限制输入长度为 4
-        // if (!isComposing) {
-        //     e.target.value = e.target.value.toUpperCase();
-        //     e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        // }
-        e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        e.target.value = e.target.value.toUpperCase();
-        if (e.target.value.length > 4 && index > 0) {
-            e.target.value = e.target.value.slice(0, 4);
-        }
-
-        // 如果输入满 4 个字符，自动聚焦到下一个输入框
-        if (e.target.value.length === 4 && index < inputs.length - 1 && index > 0) {
-            inputs[index + 1].focus();
-        }
-    });
-
-    // 监听退格键，删除字符后自动聚焦到上一个输入框
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
-            inputs[index - 1].focus();
-        }
-    });
-});
-
-
-// script.js
 const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('close-btn');
 const seriesTitle = document.getElementById('series-title');
@@ -165,3 +121,56 @@ desc_close.addEventListener('click', (e) => {
 function showDesc() {
     desc_overlay.style.display = 'flex';
 }
+
+(() => {
+    // 获取所有输入框
+    const inputs = [...document.querySelectorAll('.redeem_input.flex-col')];
+
+    // 统一的处理函数
+    const handleInput = (e, idx) => {
+        const el = e.target;
+        let val = el.value.toUpperCase().replace(/\s+/g, ''); // 统一大写
+        e.target.value = e.target.value.toUpperCase().replace(/\s+/g, '');
+
+        // 1. 粘贴或键入完整兑换码（包含 - ）
+        if (val.includes('-')) {
+            const parts = val.split('-');
+            let targetIdx = idx;
+
+            parts.forEach(part => {
+                if (targetIdx >= inputs.length) return;
+                inputs[targetIdx].value = part.slice(0, inputs[targetIdx].maxLength);
+                targetIdx++;
+            });
+
+            // 光标跳到下一个空框或最后一个框
+            const nextEmpty = inputs.findIndex((inp, i) => i >= idx && !inp.value);
+            const focusIdx = nextEmpty === -1 ? inputs.length - 1 : nextEmpty;
+            inputs[focusIdx].focus();
+            inputs[focusIdx].setSelectionRange(
+                inputs[focusIdx].value.length,
+                inputs[focusIdx].value.length
+            );
+
+            return;
+        }
+
+        // 2. 正常输入达到 maxlength 时自动前进一格
+        if (val.length >= el.maxLength && idx < inputs.length - 1) {
+            inputs[idx + 1].focus();
+        }
+    };
+
+    // 3. 删除键（Backspace）时，若当前框已空则退回上一格
+    const handleKeydown = (e, idx) => {
+        if (e.key === 'Backspace' && e.target.value === '' && idx > 0) {
+            inputs[idx - 1].focus();
+        }
+    };
+
+    // 绑定事件
+    inputs.forEach((input, idx) => {
+        input.addEventListener('input', e => handleInput(e, idx));
+        input.addEventListener('keydown', e => handleKeydown(e, idx));
+    });
+})();

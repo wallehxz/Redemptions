@@ -50,26 +50,26 @@
 }
 
 .text-wrapper_12 {
-    width: 111px;
     margin: 47px 240px 0 0;
 }
 
-.text_3 {
+.info_title {
     overflow-wrap: break-word;
     color: rgba(153, 153, 153, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
     font-weight: normal;
     text-align: justify;
     white-space: nowrap;
     line-height: 20px;
+    padding-left: 15px;
 }
 
-.text_4 {
+.info_value {
     overflow-wrap: break-word;
     color: rgba(51, 51, 51, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, serif;
     font-weight: normal;
     text-align: justify;
     white-space: nowrap;
@@ -77,57 +77,11 @@
 }
 
 .text-wrapper_13 {
-    width: 220px;
     margin: 20px 131px 0 0;
 }
 
-.text_5 {
-    overflow-wrap: break-word;
-    color: rgba(153, 153, 153, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
-}
-
-.text_6 {
-    overflow-wrap: break-word;
-    color: rgba(51, 51, 51, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
-}
-
 .text-wrapper_14 {
-    width: 115px;
     margin: 20px 236px 0 0;
-}
-
-.text_7 {
-    overflow-wrap: break-word;
-    color: rgba(153, 153, 153, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
-}
-
-.text_status {
-    overflow-wrap: break-word;
-    color: rgba(239, 65, 36, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
 }
 
 .text_pending {
@@ -143,30 +97,7 @@
 }
 
 .text-wrapper_17 {
-    width: 217px;
     margin: 20px 10px 0 0;
-}
-
-.text_9 {
-    overflow-wrap: break-word;
-    color: rgba(153, 153, 153, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
-}
-
-.text_10 {
-    overflow-wrap: break-word;
-    color: rgba(51, 51, 51, 1);
-    font-size: 14px;
-    font-family: PingFangSC-Regular, serif;
-    font-weight: normal;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 20px;
 }
 
 .withdraw_box {

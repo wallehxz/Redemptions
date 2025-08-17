@@ -1,0 +1,23 @@
+<!-- change_list.html -->
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+    {{ block.super }}
+{% endblock %}
+
+{% block result_list %}
+    {{ block.super }}
+
+    <!-- 添加每页显示数量选择器 -->
+    <div style="margin-top: 12px;float:left; margin-left: 20px;">
+        <label for="per-page-select">每页显示：</label>
+        <select id="per-page-select" onchange="location = this.value;">
+            {% for per_page_option in per_page_options %}
+                <option value="?{% querystring per_page=per_page_option %}"
+                        {% if per_page_option == cl.list_per_page %}selected{% endif %}>
+                    {{ per_page_option }}
+                </option>
+            {% endfor %}
+        </select> 条
+    </div>
+{% endblock %}

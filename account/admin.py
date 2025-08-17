@@ -13,6 +13,22 @@ class ConsumerAdmin(admin.ModelAdmin):
     list_filter = ['mobile', 'sales_rep', 'is_superuser']
     list_per_page = 20
 
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
+
     def role_name(self, obj):
         return obj.role_display()
     role_name.short_description = '角色'
@@ -32,6 +48,22 @@ class ShippingAdmin(admin.ModelAdmin):
             'fields': ('province', 'city', "district", 'street', 'address')
         }),
     )
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def region_address(self, obj):
         return obj.region_address()
@@ -74,6 +106,22 @@ class RegionAdmin(AjaxAdmin):
     search_fields = ['name', 'code']
     actions = ['export_data',]
     list_per_page = 20
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def children_area(self, obj):
         if obj.children.count() > 0:

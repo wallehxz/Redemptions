@@ -25,28 +25,28 @@
     </div>
     <div class="box_content flex-col">
         <div class="box_body flex-col">
-            <div class="text-wrapper_12 flex-row justify-between">
-                <span class="text_3">奖励金额：</span>
-                <span class="text_4">{{ exchange.cash }}元</span>
+            <div class="text-wrapper_12 flex-row">
+                <span class="info_title">奖励金额：</span>
+                <span class="info_value">{{ exchange.cash }}元</span>
             </div>
-            <div class="text-wrapper_13 flex-row justify-between">
-                <span class="text_5">奖励时间：</span>
-                <span class="text_6">{{ exchange.created_at }}</span>
+            <div class="text-wrapper_13 flex-row">
+                <span class="info_title">奖励时间：</span>
+                <span class="info_value">{{ exchange.created_at }}</span>
             </div>
-            <div class="text-wrapper_14 flex-row justify-between">
-                <span class="text_7">提现状态：</span>
+            <div class="text-wrapper_14 flex-row">
+                <span class="info_title">提现状态：</span>
                 {% if exchange.status == 'pending' %}
-                    <span class="text_status text_pending">未提现</span>
+                    <span class="info_value text_pending">未提现</span>
                 {% elif exchange.status == 'processing' %}
-                    <span class="text_status text_processing">提现中</span>
+                    <span class="info_value text_processing">提现中</span>
                 {% else %}
-                    <span class="text_status text_completed">已提现</span>
+                    <span class="info_value text_completed">已提现</span>
                 {% endif %}
             </div>
             {% if exchange.status == 'pending'%}
                 {% if openid %}
-                    <div class="withdraw_box flex-col">
-                        <span id="withdraw_cash" class="get_now_text">立即提现</span>
+                    <div id="withdraw_cash" class="withdraw_box flex-col">
+                        <span class="get_now_text">立即提现</span>
                     </div>
                 {% else %}
                     <div class="manual_box flex-col">
@@ -57,9 +57,9 @@
                     <span id="withdraw_cash" style="display: none"></span>
                 {% endif %}
             {% else %}
-            <div class="text-wrapper_17 flex-row justify-between">
-                <span class="text_9">提现时间：</span>
-                <span class="text_10">{{ exchange.withdrawal_at }}</span>
+            <div class="text-wrapper_17 flex-row">
+                <span class="info_title">提现时间：</span>
+                <span class="info_value">{{ exchange.withdrawal_at }}</span>
             </div>
             {% endif %}
         </div>

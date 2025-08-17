@@ -22,6 +22,22 @@ class RedeemAdmin(AjaxAdmin):
     # actions = ['bulk_generate', 'export_data']
     actions = ['export_data', 'bulk_generate', 'import_codes']
 
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
+
     def series_name(self, obj):
         if obj.prize and obj.prize.series:
             return obj.prize.series.name
@@ -209,6 +225,23 @@ class RedemptionAdmin(admin.ModelAdmin):
     # autocomplete_fields = ['redeem']
     search_fields = ['redeem__number']
     list_filter = ['status']
+    list_per_page = 20
+
+    def get_list_per_page(self, request):
+        try:
+            return int(request.GET.get('per_page', self.list_per_page))
+        except ValueError:
+            return self.list_per_page
+
+    def changelist_view(self, request, extra_context=None):
+        per_page = self.get_list_per_page(request)
+        extra_context = extra_context or {}
+        extra_context.update({
+            'per_page_options': [10, 20, 50, 100],
+            'per_page': per_page,
+        })
+        self.list_per_page = per_page  # 动态设置
+        return super().changelist_view(request, extra_context=extra_context)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
