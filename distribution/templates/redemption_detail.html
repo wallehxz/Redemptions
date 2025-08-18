@@ -142,6 +142,13 @@ function invokeConfirm(packageStr) {
 }
 
 document.getElementById('withdraw_cash').addEventListener('click', () => {
+    // 判断否微信环境
+    const ua = navigator.userAgent.toLowerCase();
+    if (!/micromessenger/.test(ua)) {
+        alert('请在微信内打开');
+        return;
+    }
+
     fetch(`/employee/withdrawal/{{ redemption_id }}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
@@ -149,8 +156,8 @@ document.getElementById('withdraw_cash').addEventListener('click', () => {
     .then(r => r.json())
     .then(data => {
         if (data.package_info) {
-            fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
             invokeConfirm(data.package_info);
+            fetch(`/employee/confirm_transfer/{{ redemption_id }}`)
         } else {
             fetch(`/employee/cancel_transfer/{{ redemption_id }}`)
             alert(data.message || '提现请求失败');
