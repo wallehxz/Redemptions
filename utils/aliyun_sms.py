@@ -70,20 +70,16 @@ def get_authorization(request):
         canonical_request = (
             f'{request.http_method}\n{request.canonical_uri}\n{canonical_query_string}\n'
             f'{canonical_headers}\n{signed_headers}\n{hashed_request_payload}')
-        print(canonical_request)
 
         # 步骤 2：拼接待签名字符串
         hashed_canonical_request = sha256_hex(canonical_request.encode('utf-8'))
         string_to_sign = f'{ALGORITHM}\n{hashed_canonical_request}'
-        print(string_to_sign)
 
         # 步骤 3：计算签名
         signature = hmac256(settings.ALIYUN_API_SECRET.encode('utf-8'), string_to_sign).hex().lower()
-        print(signature)
 
         # 步骤 4：拼接Authorization
         authorization = f'{ALGORITHM} Credential={settings.ALIYUN_API_KEY},SignedHeaders={signed_headers},Signature={signature}'
-        print(authorization)
         request.headers['Authorization'] = authorization
     except Exception as e:
         print("Failed to get authorization")
@@ -140,7 +136,6 @@ def call_api(request):
     url = f'https://{request.host}{request.canonical_uri}'
     if request.query_param:
         url += '?' + urlencode(request.query_param, doseq=True, safe='*')
-    print(url)
     headers = {k: v for k, v in request.headers.items()}
     if request.body:
         data = request.body
@@ -150,7 +145,6 @@ def call_api(request):
     try:
         response = requests.request(method=request.http_method, url=url, headers=headers, data=data)
         response.raise_for_status()
-        print(response.text)
     except requests.RequestException as e:
         print("Failed to send request")
         print(e)
