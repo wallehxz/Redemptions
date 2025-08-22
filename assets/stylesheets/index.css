@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'mono';
+    src: url('/assets/fonts/5cetamono.ttf') format('truetype');
+}
+
 .image_1 {
     width: 375px;
     height: 87px;
@@ -72,8 +77,9 @@
     background-color: rgba(247, 247, 247, 1);
     border-radius: 4px;
     height: 40px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: normal;
+    font-family: 'mono';
     text-align: center;
     white-space: nowrap;
     color: rgba(51, 51, 51, 1);
