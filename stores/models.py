@@ -1,6 +1,7 @@
 from time import sleep
 import requests
 from django.db import models
+from django.conf import settings
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.cache import cache
 import math
@@ -84,7 +85,7 @@ class Store(models.Model):
         try:
             url = 'https://restapi.amap.com/v5/place/text'
             params = {
-                'key': '12233ccf85da7031c00a3f4ca01eebd1',
+                'key': settings.AMAP_API_KEY,
                 'keywords': address,
             }
             response = requests.get(url, params=params)
@@ -112,7 +113,7 @@ class Store(models.Model):
         try:
             url = 'https://restapi.amap.com/v5/place/text'
             params = {
-                'key': '12233ccf85da7031c00a3f4ca01eebd1',
+                'key': settings.AMAP_API_KEY,
                 'keywords': address,
             }
             response = requests.get(url, params=params)

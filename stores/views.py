@@ -78,7 +78,7 @@ def geocode_address(request):
             })
 
         # 调用高德地理编码API
-        api_key = '12233ccf85da7031c00a3f4ca01eebd1'
+        api_key = settings.AMAP_API_KEY
         if not api_key:
             return JsonResponse({
                 'success': False,
@@ -128,7 +128,7 @@ def reverse_geocode(request):
         longitude = float(data.get('longitude'))
 
         # 调用高德逆地理编码API
-        api_key = '12233ccf85da7031c00a3f4ca01eebd1'
+        api_key = settings.AMAP_API_KEY
         if not api_key:
             return JsonResponse({
                 'success': False,
@@ -175,7 +175,7 @@ def reverse_geocode(request):
 def search_store(request):
     url = 'https://restapi.amap.com/v5/place/text'
     params = {
-        'key': '12233ccf85da7031c00a3f4ca01eebd1',
+        'key': settings.AMAP_API_KEY,
         'keywords': f'{request.GET.get("keywords")}',
     }
     response = requests.get(url, params=params)
